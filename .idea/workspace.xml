@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="HTML File" />
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="C:\dev\ck" />
+        <option name="mavenHome" value="C:/dev/apache-maven-3.8.5-bin/apache-maven-3.8.5" />
+        <option name="useMavenConfig" value="true" />
+        <option name="userSettingsFile" value="C:\dev\apache-maven-3.8.5-bin\apache-maven-3.8.5\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+  </component>
+  <component name="ProjectId" id="2Hkud2Uroewl8gMwU9T5HUnKUGG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-1.8&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/java-dev/xgksyjxpt/target/xgksyjxpt-0.0.1-SNAPSHOT.jar&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;模块&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;8b4b94b399c2e8a3ee2d2a35a3e835e3&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.xgksyjxpt.xgksyjxpt.webssh.domain" />
+      <recent name="com.xgksyjxpt.xgksyjxpt.webssh.ssh" />
+      <recent name="com.xgksyjxpt.xgksyjxpt.webssh.websocket" />
+      <recent name="com.xgksyjxpt.xgksyjxpt.websocket" />
+      <recent name="com.xgksyjxpt.xgksyjxpt.webssh.domain." />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\java-dev\xgksyjxpt\src\main\resources" />
+      <recent name="E:\java-dev\xgksyjxpt\src\main\resources\static" />
+      <recent name="E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\util" />
+      <recent name="E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\java-dev\xgksyjxpt\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.XgksyjxptApplication">
+    <configuration name="XgksyjxptApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="xgksyjxpt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.xgksyjxpt.xgksyjxpt.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.xgksyjxpt.xgksyjxpt" />
+      <option name="MAIN_CLASS_NAME" value="com.xgksyjxpt.xgksyjxpt.XgksyjxptApplicationTests" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="XgksyjxptApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="xgksyjxpt" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.xgksyjxpt.xgksyjxpt.XgksyjxptApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.XgksyjxptApplicationTests.contextLoads" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="SshConsoleOptionsProvider">
+    <option name="myEncoding" value="UTF-8" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="" />
+      <created>1668841487325</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668841487325</updated>
+      <workItem from="1668841490519" duration="3375000" />
+      <workItem from="1668863835491" duration="3675000" />
+      <workItem from="1668907780779" duration="4868000" />
+      <workItem from="1668912698953" duration="124000" />
+      <workItem from="1668912834476" duration="22002000" />
+      <workItem from="1669004993701" duration="17510000" />
+      <workItem from="1669102002751" duration="42000" />
+      <workItem from="1669102058027" duration="11548000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
