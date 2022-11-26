@@ -22,8 +22,8 @@ public class MyWebSocketInterceptor implements HandshakeInterceptor {
                                    Map<String, Object> attributes) throws Exception {
         logger.info("用户建立连接。。。");
         if (request instanceof ServletServerHttpRequest) {
-            String userId = ((ServletServerHttpRequest) request).getServletRequest().getParameter("userId");
-            attributes.put("userId", userId);
+            String userId = ((ServletServerHttpRequest) request).getServletRequest().getParameter("id");
+            attributes.put("id", userId);
             logger.info("用户唯一标识:" + userId);
         }
         return true;

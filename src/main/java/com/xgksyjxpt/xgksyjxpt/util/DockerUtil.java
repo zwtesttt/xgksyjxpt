@@ -1,14 +1,12 @@
 package com.xgksyjxpt.xgksyjxpt.util;
 
 import com.github.dockerjava.api.DockerClient;
-import com.github.dockerjava.api.command.CreateContainerResponse;
-import com.github.dockerjava.api.command.InspectContainerCmd;
-import com.github.dockerjava.api.command.InspectContainerResponse;
-import com.github.dockerjava.api.command.ListContainersCmd;
+import com.github.dockerjava.api.command.*;
 import com.github.dockerjava.api.model.*;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
 import com.github.dockerjava.core.DockerClientConfig;
+import com.github.dockerjava.core.command.ExecStartResultCallback;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -23,7 +21,7 @@ public class DockerUtil {
      * @param url
      * @return
      */
-    public static DockerClient createCon(String url){
+    public static DockerClient queryDockerClient(String url){
 //                设置docker配置
         DockerClientConfig custom = DefaultDockerClientConfig.createDefaultConfigBuilder()
                 .withDockerHost(url)
@@ -49,7 +47,7 @@ public class DockerUtil {
         //创建容器配置
 //        HostConfig hostConfig=new HostConfig().withNetworkMode("mynet1").withPrivileged(true);
 //        创建容器
-        CreateContainerResponse container1 = dockerClient.createContainerCmd(imagesName) //创建容器，使用镜像为student
+        CreateContainerResponse container1 = dockerClient.createContainerCmd(imagesName) //创建容器
                 .withName(containersName) //设置容器名
                 .withHostConfig(hostConfig) //应用容器配置
                 .withStdinOpen(true) ////开启标准输入
@@ -57,6 +55,7 @@ public class DockerUtil {
 
 //        运行容器
         dockerClient.startContainerCmd(container1.getId()).exec();
+        execC(dockerClient,container1.getId());
         return container1.getId();
     }
     /**
@@ -90,11 +89,37 @@ public class DockerUtil {
        //拿到容器该网卡的网络设置
        ContainerNetwork containerNetwork=map.get(networkName);
        ContainerNetwork.Ipam ipam=containerNetwork.getIpamConfig();
-       //赋值
-       containersIp=ipam.getIpv4Address();
-
+        if (ipam==null){
+           containersIp=containerNetwork.getIpAddress();
+        }else{
+            //赋值
+            containersIp=ipam.getIpv4Address();
+        }
         return containersIp;
     }
 
+    /**
+     * 获取镜像列表
+     *
+     * @param client
+     * @return
+     */
+    public static List<Image> imageList(DockerClient client) {
+        List<Image> imageList = client.listImagesCmd().withShowAll(true).exec();
+        return imageList;
+    }
+
+    /**
+     * 在容器内执行命令
+     */
+    public static void execC(DockerClient client,String id){
+        // 创建命令
+        ExecCreateCmdResponse execCreateCmdResponse = client.execCreateCmd(id)
+                .withAttachStdout(true)
+                .withAttachStderr(true)
+                .withCmd("/usr/sbin/sshd") //运行ssh
+                .exec();
+        client.execStartCmd(execCreateCmdResponse.getId()).exec(new ExecStartResultCallback(System.out, System.err));
+    }
 
 }

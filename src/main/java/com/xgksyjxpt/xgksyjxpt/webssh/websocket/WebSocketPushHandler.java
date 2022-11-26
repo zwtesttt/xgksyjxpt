@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.xgksyjxpt.xgksyjxpt.course.serivce.DockerService;
+import com.xgksyjxpt.xgksyjxpt.domain.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.webssh.domain.SSHConnection;
 import com.xgksyjxpt.xgksyjxpt.webssh.domain.WebSSHData;
 import com.xgksyjxpt.xgksyjxpt.webssh.ssh.SSHService;
@@ -28,34 +30,40 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final List<WebSocketSession> userList = new ArrayList<>();
-
+    //sshservice对象
     @Autowired
     private SSHService sshService;
+    //dockerservice对象
+    @Autowired
+    private DockerService dockerService;
+
+
 
     /**
      * 用户进入系统监听
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        logger.info("用户进入系统。。。");
-        logger.info("用户信息:" + session.getAttributes());
+        logger.info("成功建立websocket连接");
+        //获取会话域对象
         Map<String, Object> map = session.getAttributes();
         for (String key : map.keySet()) {
             logger.info("key:" + key + " and value:" + map.get(key));
         }
+        logger.info("开始查询id:"+map.get("id")+"的IP地址");
+        String ip=dockerService.getIp((String)map.get("id"),DockerConfig.DOCKER_API_URL,DockerConfig.DOCKER_NETWORK_NAME);
+        logger.info("ip:"+ip);
         userList.add(session);
         //在websocket建立连接后直接建立ssh连接
-        sshService.initConnection(session);
+        logger.info("连接ssh");
+        sshService.initConnection(session,WebSSHData.builder().port(22).username("root").host(ip).password("123123").build());
     }
-
     /**
      * 处理用户请求
      */
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         //接收到前端消息
-        System.out.println("用户输入信息为"+message.getPayload());
-
         sshService.recvHandle(message.asBytes(), session);
     }
 

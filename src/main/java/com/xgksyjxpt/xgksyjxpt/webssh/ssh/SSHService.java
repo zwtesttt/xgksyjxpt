@@ -5,21 +5,25 @@ import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.xgksyjxpt.xgksyjxpt.util.FileUtil;
 import com.xgksyjxpt.xgksyjxpt.webssh.domain.SSHConnection;
 import com.xgksyjxpt.xgksyjxpt.webssh.domain.WebSSHData;
+import org.apache.commons.io.FileUtils;
+import org.bouncycastle.math.ec.ScaleYNegateXPointMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,7 +41,8 @@ public class SSHService {
     /**
      * 初始化连接,直接ssh连接容器
      */
-    public void initConnection(WebSocketSession session) throws JSchException {
+    public void initConnection(WebSocketSession session,WebSSHData webSSHData) throws JSchException, IOException {
+        logger.info("开始初始化ssh");
         JSch jSch = new JSch();
         SSHConnection sshConnectInfo = new SSHConnection();
         sshConnectInfo.setJSch(jSch);
@@ -51,7 +56,7 @@ public class SSHService {
             public void run() {
                 try {
                     //连接到终端
-                    connectToSSH(sshConnectInfo,WebSSHData.builder().port(22).username("root").host("172.19.0.4").password("123123").build(),session);
+                    connectToSSH(sshConnectInfo,webSSHData,session);
                 } catch (JSchException | IOException e) {
                     logger.error("webssh连接异常");
                     logger.error("异常信息:{}", e.getMessage());
@@ -83,19 +88,18 @@ public class SSHService {
 
     public void connectToSSH(SSHConnection sshConnection,WebSSHData webSSHData,WebSocketSession webSocketSession) throws JSchException, IOException {
         Session session = null;
-//        Properties config = new Properties();
-//        config.put("StrictHostKeyChecking", "no");
-        //获取jsch的会话
 
+        //获取jsch的会话
         session = sshConnection.getJSch().getSession(webSSHData.getUsername(), webSSHData.getHost(), webSSHData.getPort());
         session.setConfig("StrictHostKeyChecking", "no");
-//        session.sendKeepAliveMsg();
+
         //设置密码
         session.setPassword(webSSHData.getPassword());
         //连接  超时时间30s
-        session.connect(3000);
+        session.connect(10000);
 
         if (session.isConnected()){
+            logger.info("ssh连接成功");
 
             //开启shell通道
             Channel channel = session.openChannel("shell");
@@ -106,7 +110,7 @@ public class SSHService {
             InputStream inputStream = channel.getInputStream();
 
             //通道连接 超时时间3s
-            channel.connect(3000);
+            channel.connect(10000);
             try {
                 //循环读取
                 byte[] buffer = new byte[1024];
@@ -115,8 +119,6 @@ public class SSHService {
                 while ((i = inputStream.read(buffer)) != -1) {
                     sendMessage(webSocketSession, Arrays.copyOfRange(buffer, 0, i));
                 }
-
-
             } finally {
                 //断开连接后关闭会话
                 session.disconnect();
