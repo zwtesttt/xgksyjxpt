@@ -42,20 +42,20 @@ public class DockerUtil {
      * @param containersName
      * @return
      */
-    public static String runContainers(DockerClient dockerClient,String imagesName,String containersName,HostConfig hostConfig){
-
-        //创建容器配置
-//        HostConfig hostConfig=new HostConfig().withNetworkMode("mynet1").withPrivileged(true);
+    public static String runContainers(DockerClient dockerClient,String imagesName,String containersName,HostConfig hostConfig,String sshpasswd){
 //        创建容器
         CreateContainerResponse container1 = dockerClient.createContainerCmd(imagesName) //创建容器
                 .withName(containersName) //设置容器名
                 .withHostConfig(hostConfig) //应用容器配置
                 .withStdinOpen(true) ////开启标准输入
                 .exec();//执行
-
 //        运行容器
         dockerClient.startContainerCmd(container1.getId()).exec();
-        execC(dockerClient,container1.getId());
+//        启动时运行ssh
+        //修改密码
+        execC(dockerClient,container1.getId(),"/usr/sbin/sshd");
+        //启动时设置root密码
+        execC(dockerClient,container1.getId(),"/bin/sh","-c","echo root:"+sshpasswd+"|chpasswd");
         return container1.getId();
     }
     /**
@@ -112,12 +112,14 @@ public class DockerUtil {
     /**
      * 在容器内执行命令
      */
-    public static void execC(DockerClient client,String id){
+    public static void execC(DockerClient client,String id,String... cmd){
         // 创建命令
         ExecCreateCmdResponse execCreateCmdResponse = client.execCreateCmd(id)
                 .withAttachStdout(true)
                 .withAttachStderr(true)
-                .withCmd("/usr/sbin/sshd") //运行ssh
+                .withCmd(cmd)
+                .withPrivileged(true)
+                .withUser("root")
                 .exec();
         client.execStartCmd(execCreateCmdResponse.getId()).exec(new ExecStartResultCallback(System.out, System.err));
     }

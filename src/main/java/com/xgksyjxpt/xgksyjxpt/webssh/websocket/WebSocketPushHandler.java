@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.xgksyjxpt.xgksyjxpt.course.serivce.ContainerService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.DockerService;
 import com.xgksyjxpt.xgksyjxpt.domain.DockerConfig;
+import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import com.xgksyjxpt.xgksyjxpt.webssh.domain.SSHConnection;
 import com.xgksyjxpt.xgksyjxpt.webssh.domain.WebSSHData;
 import com.xgksyjxpt.xgksyjxpt.webssh.ssh.SSHService;
@@ -37,6 +39,9 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
     @Autowired
     private DockerService dockerService;
 
+    @Autowired
+    private ContainerService containerService;
+
 
 
     /**
@@ -56,7 +61,11 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
         userList.add(session);
         //在websocket建立连接后直接建立ssh连接
         logger.info("连接ssh");
-        sshService.initConnection(session,WebSSHData.builder().port(22).username("root").host(ip).password("123123").build());
+//        从数据库获取密码
+        String passwd=containerService.queryPasswd((String)map.get("id"));
+
+//        将密码进行解密
+        sshService.initConnection(session,WebSSHData.builder().port(22).username("root").host(ip).password(Base64Converter.decode(passwd)).build());
     }
     /**
      * 处理用户请求

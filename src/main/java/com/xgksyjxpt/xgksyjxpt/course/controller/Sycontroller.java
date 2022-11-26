@@ -2,37 +2,33 @@ package com.xgksyjxpt.xgksyjxpt.course.controller;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.Image;
+import com.xgksyjxpt.xgksyjxpt.course.domain.Container;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.ContainerService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.DockerService;
 import com.xgksyjxpt.xgksyjxpt.domain.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.domain.ResturnStuatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.util.DockerUtil;
-import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.entity.mime.FileBody;
-import org.apache.hc.client5.http.entity.mime.InputStreamBody;
-import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
+
+import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class Sycontroller {
 
+
+    //注入Containerservice对象
+    @Autowired
+    private ContainerService containerService;
+
+
+    //注入dockerservice对象
     @Autowired
     private DockerService dockerService;
 
@@ -47,9 +43,6 @@ public class Sycontroller {
         String url= DockerConfig.DOCKER_API_URL;
         String networkName=DockerConfig.DOCKER_NETWORK_NAME;
         ip=dockerService.getIp(id,url,networkName);
-//        if (ip!=null){
-//
-//        }
         return ip;
     }
     /**
@@ -60,7 +53,7 @@ public class Sycontroller {
     public Object createContain(String imagesName,String stuId){
         ReturnObject re=new ReturnObject();
         try {
-            String id= dockerService.createQueryId(DockerConfig.DOCKER_API_URL,imagesName,imagesName+"-"+stuId,DockerConfig.DOCKER_NETWORK_NAME);
+            String id= dockerService.createQueryId(DockerConfig.DOCKER_API_URL,imagesName,stuId,DockerConfig.DOCKER_NETWORK_NAME);
             if (id!=null){
                 re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_CG);
                 re.setMessage("运行成功");
