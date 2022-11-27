@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Duration;
+
 @RestController
 public class LoginController {
     @Autowired
@@ -36,6 +38,8 @@ public class LoginController {
     @PostMapping("/login")
     @ResponseBody
     public Object login(String id,String passwd){
+//        过期时间,单位为秒
+        int es=60*5;
         ReturnObject re=new ReturnObject();
         //对密码解密
         String depasswd= Base64Converter.decode(passwd);
@@ -46,16 +50,22 @@ public class LoginController {
             Student user= studentService.selectStudent(id);
             if (user!=null&&user.getPasswd().equals(depasswd)){
                 token= jwtUitls.createToken(id,user.getName());
+                //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
+                redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
             }
         } else if (fid.equals("t")) {
             Teacher user=teacherService.selectTeacher(id);
             if (user!=null&&user.getPasswd().equals(depasswd)){
                 token= jwtUitls.createToken(id,user.getTname());
+                //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
+                redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
             }
         } else if (fid.equals("r")) {
             Admin user=adminService.selectAdmin(id);
             if (user!=null&&user.getPasswd().equals(depasswd)){
                 token= jwtUitls.createToken(id,user.getName());
+                //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
+                redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
             }
         }
         if (token==null){

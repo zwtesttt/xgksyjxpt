@@ -43,51 +43,53 @@ public class DockerService {
      */
     public String createQueryId(String url,String imagesName,String stuId,String networkName) throws Exception {
         DockerClient dockerClient= DockerUtil.queryDockerClient(url);
-        HostConfig hostConfig=new HostConfig().withNetworkMode(networkName).withPrivileged(true);
-        List<Image> imageList=DockerUtil.imageList(dockerClient);
-        String id=null;
-        //存放本地镜像名
-        String localName=null;
-        int count=0;
-        //生成随机8位密码
-        String sshpasswd=PasswordUtils.getLowerLetterNumber(8);
-        //对密码进行加密
-        String bash64pa= Base64Converter.encode(sshpasswd);
-        for (Image im :imageList) {
-            //不处理none镜像
-            if(!im.getRepoTags()[0].split(":")[0].equals("<none>")){
-                localName=im.getRepoTags()[0].split(":")[0];
-                //判断本地是否有该镜像
-                if (localName.equals(imagesName)){
-                    id=DockerUtil.runContainers(dockerClient,im.getRepoTags()[0],imagesName+"-"+stuId,hostConfig,sshpasswd);
-                    break;
+        String id=DockerUtil.getContainersId(dockerClient,imagesName+"-"+stuId);
+//        先判断本地是不是已经存在该名称的容器,不存在才创建
+        if(id==null){
+            HostConfig hostConfig=new HostConfig().withNetworkMode(networkName).withPrivileged(true);
+            List<Image> imageList=DockerUtil.imageList(dockerClient);
+            //存放本地镜像名
+            String localName=null;
+            int count=0;
+            //生成随机8位密码
+            String sshpasswd=PasswordUtils.getLowerLetterNumber(8);
+            //对密码进行加密
+            String bash64pa= Base64Converter.encode(sshpasswd);
+            for (Image im :imageList) {
+                //不处理none镜像
+                if(!im.getRepoTags()[0].split(":")[0].equals("<none>")){
+                    localName=im.getRepoTags()[0].split(":")[0];
+                    //判断本地是否有该镜像
+                    if (localName.equals(imagesName)){
+                        id=DockerUtil.runContainers(dockerClient,im.getRepoTags()[0],imagesName+"-"+stuId,hostConfig,sshpasswd);
+                        break;
+                    }
+                    count++;
                 }
-                count++;
             }
-        }
-        //保存到数据库中
-        Container container= Container.builder()
-                .id(UuidUtil.getUUID())
-                .container_id(id)
-                .container_startTime(new Date())
-                .passwd(bash64pa)
-                .test_id("123123")//实验id
-                .stu_id(stuId)
-                .build();
-        try {
-            //插入记录
-            int stu=containerService.createContainer(container);
-            //如果插入记录失败则删除容器
-            if (stu==0){
+            //保存到数据库中
+            Container container= Container.builder()
+                    .id(UuidUtil.getUUID())
+                    .container_id(id)
+                    .container_startTime(new Date())
+                    .passwd(bash64pa)
+                    .test_id("123123")//实验id
+                    .stu_id(stuId)
+                    .build();
+            try {
+                //插入记录
+                int stu=containerService.createContainer(container);
+                //如果插入记录失败则删除容器
+                if (stu==0){
+                    DockerUtil.removeContainer(dockerClient,id);
+                    id=null;
+                }
+            }catch (Exception e){
                 DockerUtil.removeContainer(dockerClient,id);
                 id=null;
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            DockerUtil.removeContainer(dockerClient,id);
-            id=null;
-            e.printStackTrace();
         }
-
         return id;
     }
 

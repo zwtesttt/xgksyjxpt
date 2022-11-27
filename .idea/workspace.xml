@@ -4,33 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="创建容器后生成随机密码并加密,根据容器id查询加密密码进行解密后连接">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/JwtUitls.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/MyFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/serivce/AdminService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/serivce/AdminServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/serivce/StudentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/serivce/StudentServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/serivce/TeacherService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/serivce/TeacherServiceImpl.java" afterDir="false" />
+    <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/XgksyjxptApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/XgksyjxptApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/Sycontroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/Sycontroller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/DockerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/DockerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/domain/DockerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/domain/DockerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/JwtUitls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/JwtUitls.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/MyFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/MyFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/util/DockerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/util/DockerUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/util/PasswordUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/util/PasswordUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/XgksyjxptApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/XgksyjxptApplication.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/Sycontroller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/Sycontroller.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/DockerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/DockerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/util/DockerUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/util/DockerUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/domain/DockerConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/domain/DockerConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/domain/JwtUitls.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/domain/JwtUitls.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/domain/MyFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/domain/MyFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/webssh/websocket/WebSocketPushHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/webssh/websocket/WebSocketPushHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
     </list>
@@ -51,6 +42,12 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -96,6 +93,9 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.xgksyjxpt.xgksyjxpt.login.serivce" />
@@ -175,6 +175,7 @@
       <workItem from="1669477797104" duration="3357000" />
       <workItem from="1669481208732" duration="1899000" />
       <workItem from="1669518427321" duration="16373000" />
+      <workItem from="1669549402516" duration="5726000" />
     </task>
     <task id="LOCAL-00001" summary="修复webssh输入后响应问题">
       <created>1669120575079</created>
@@ -211,7 +212,21 @@
       <option name="project" value="LOCAL" />
       <updated>1669482703951</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="登录校验">
+      <created>1669549430037</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669549430037</updated>
+    </task>
+    <task id="LOCAL-00007" summary="登录校验">
+      <created>1669549597532</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1669549597532</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,7 +237,8 @@
     <MESSAGE value="添加接口：查询镜像列表，根据镜像名+学生id创建容器，" />
     <MESSAGE value="测试提交" />
     <MESSAGE value="创建容器后生成随机密码并加密,根据容器id查询加密密码进行解密后连接" />
-    <option name="LAST_COMMIT_MESSAGE" value="创建容器后生成随机密码并加密,根据容器id查询加密密码进行解密后连接" />
+    <MESSAGE value="登录校验" />
+    <option name="LAST_COMMIT_MESSAGE" value="登录校验" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

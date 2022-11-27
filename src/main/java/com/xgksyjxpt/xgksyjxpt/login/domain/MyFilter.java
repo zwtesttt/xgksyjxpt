@@ -3,6 +3,7 @@ package com.xgksyjxpt.xgksyjxpt.login.domain;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -34,11 +35,8 @@ public class MyFilter implements Filter {
                     //token验证结果
                     int verify  = jwtUitls.verify(token);
                     if(verify != 1){
-                        //验证失败
-                        if(verify == 2){
-                            map.put("errorMsg","token已过期");
-                        }else if(verify == 0){
-                            map.put("errorMsg","用户信息验证失败");
+                         if(verify == 0){
+                            map.put("data","token验证失败");
                         }
                     }else if(verify  == 1){
                         //验证成功，放行
@@ -47,7 +45,7 @@ public class MyFilter implements Filter {
                     }
                 }else{
                     //token为空的返回
-                    map.put("errorMsg","未授权");
+                    map.put("data","未授权");
                 }
             }
             JSONObject jsonObject = new JSONObject(map);

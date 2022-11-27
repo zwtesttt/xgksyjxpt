@@ -72,7 +72,9 @@ public class DockerUtil {
         listContainersCmd.getFilters().put("name", Arrays.asList(containersName));
         //执行命令
         List<Container> containers = listContainersCmd.exec();
-        containersId=containers.get(0).getId();
+        if (containers.size()!=0){
+            containersId=containers.get(0).getId();
+        }
         return containersId;
     }
 
