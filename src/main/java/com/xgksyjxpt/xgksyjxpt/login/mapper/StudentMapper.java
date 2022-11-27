@@ -3,6 +3,7 @@ package com.xgksyjxpt.xgksyjxpt.login.mapper;
 import com.xgksyjxpt.xgksyjxpt.login.domain.Student;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentMapper {
     /**
@@ -56,4 +57,6 @@ public interface StudentMapper {
     Student selectStudent(String id);
 
     List<Student> queryAllStudent();
+
+    int updateStudent(Student student);
 }

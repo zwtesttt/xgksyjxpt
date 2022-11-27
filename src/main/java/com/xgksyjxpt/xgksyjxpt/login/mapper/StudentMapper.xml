@@ -11,7 +11,6 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="age" property="age" jdbcType="INTEGER" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
-    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     <!--
@@ -61,8 +60,12 @@
   </select>
 <!--  返回所有学生信息-->
   <select id="queryAllStudent" resultType="com.xgksyjxpt.xgksyjxpt.login.domain.Student">
-    select <include refid="Base_Column_List" /> from student_t
+    select stu_id, name, age, sex from student_t
   </select>
+<!--  修改学生基本信息,不包括学号密码-->
+  <update id="updateStudent" parameterType="com.xgksyjxpt.xgksyjxpt.login.domain.Student">
+    update student_t set name=#{name},age=#{age},sex=#{sex} where stu_id=#{stu_id}
+  </update>
   <insert id="insertSelective" parameterType="com.xgksyjxpt.xgksyjxpt.login.domain.Student" >
     <!--
       WARNING - @mbggenerated

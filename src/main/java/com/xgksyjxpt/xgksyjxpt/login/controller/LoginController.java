@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class LoginController {
@@ -43,7 +47,7 @@ public class LoginController {
         ReturnObject re=new ReturnObject();
         //对密码解密
         String depasswd= Base64Converter.decode(passwd);
-        //截取id第一个字符，判断身份
+        //截取id第一个字符，判断身份，s表示学生，t表示教师，r表示管理员登录
         String token=null;
         String fid=id.substring(0,1);
         if (fid.equals("s")){
@@ -79,4 +83,29 @@ public class LoginController {
 
         return re;
     }
+
+    /**
+     * 查询所有学生
+     * @return
+     */
+    @GetMapping("/getStudents")
+    public List<Map<String,String>> getStudents(){
+        List<Map<String,String>> list=new ArrayList();
+        List<Student> ss=studentService.queryStudents();
+        for (Student s:ss) {
+            Map<String,String> map=new HashMap<>();
+            map.put("stu_id",s.getStu_id());
+            map.put("name",s.getName());
+            map.put("sex",s.getSex());
+            map.put("age",s.getAge()+"");
+            list.add(map);
+        }
+        return list;
+    }
+
+    /**
+     * 更新学生信息
+     */
+//    @PostMapping("/updateStudent")
+//    public
 }
