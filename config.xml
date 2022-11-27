@@ -21,7 +21,7 @@
 
         <javaModelGenerator
 
-        targetPackage="com.xgksyjxpt.xgksyjxpt.course.domain"
+        targetPackage="com.xgksyjxpt.xgksyjxpt.login.domain"
         targetProject="src/main/java/">
         <property name="enableSubPackages" value="false" />
         <property name="trimStrings" value="false" />
@@ -29,18 +29,23 @@
 
 
     <sqlMapGenerator
-    targetPackage="com.xgksyjxpt.xgksyjxpt.course.mapper"
+    targetPackage="com.xgksyjxpt.xgksyjxpt.login.mapper"
     targetProject="src/main/java/">
     <property name="enableSubPackages" value="false" />
 </sqlMapGenerator>
 
 <javaClientGenerator type="XMLMAPPER"
-        targetPackage="com.xgksyjxpt.xgksyjxpt.course.mapper"
+        targetPackage="com.xgksyjxpt.xgksyjxpt.login.mapper"
         targetProject="src/main/java/">
 
 <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
-<table tableName="runcontainer" domainObjectName="Container" >
+<table tableName="student_t" domainObjectName="Student"
+       enableCountByExample="false"
+       enableUpdateByExample="false"
+       enableDeleteByExample="false"
+       enableSelectByExample="false"
+       selectByExampleQueryId="false">
 <property name="useActualColumnNames" value="true"/>
 <generatedKey column="ID" sqlStatement="DB2" identity="true" />
 <columnOverride column="DATE_FIELD" property="startDate" />

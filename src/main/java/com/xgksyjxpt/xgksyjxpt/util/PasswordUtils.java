@@ -31,4 +31,21 @@ public class PasswordUtils {
         return builder.toString();
     }
 
+    /**
+     * 获取随机字符串 0-9,a-z,0-9
+     * 有两遍0-9，增加数字概率
+     * @param length	长度
+     * @return
+     */
+    public static String getLowerLetterNumber(int length) {
+        String str = "0123456789abcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; ++i) {
+            sb.append(str.charAt(random.nextInt(46)));
+        }
+        return sb.toString();
+    }
+
+
 }

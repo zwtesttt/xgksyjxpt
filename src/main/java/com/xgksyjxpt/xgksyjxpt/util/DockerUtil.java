@@ -75,6 +75,14 @@ public class DockerUtil {
         containersId=containers.get(0).getId();
         return containersId;
     }
+
+    /**
+     * 根据容器id删除容器
+     */
+    public static void removeContainer(DockerClient client, String containerId) {
+        client.removeContainerCmd(containerId).withForce(true).exec();
+    }
+
     /**
      * 根据id查询容器的ip
      */

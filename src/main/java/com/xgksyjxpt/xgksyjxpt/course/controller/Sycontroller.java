@@ -14,6 +14,7 @@ import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class Sycontroller {
     /**
      * 根据镜像名和学生id创建容器返回容器id
      */
-    @GetMapping("/createContain")
+    @PostMapping("/createContain")
     @ResponseBody
     public Object createContain(String imagesName,String stuId){
         ReturnObject re=new ReturnObject();

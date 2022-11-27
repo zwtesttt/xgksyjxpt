@@ -12,6 +12,7 @@ import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ public class DockerService {
         return ip;
     }
 
+
     /**
      * 根据镜像名和学生id创建容器并并返回id
      */
@@ -48,7 +50,7 @@ public class DockerService {
         String localName=null;
         int count=0;
         //生成随机8位密码
-        String sshpasswd=PasswordUtils.randomPassword(8);
+        String sshpasswd=PasswordUtils.getLowerLetterNumber(8);
         //对密码进行加密
         String bash64pa= Base64Converter.encode(sshpasswd);
         for (Image im :imageList) {
@@ -72,10 +74,20 @@ public class DockerService {
                 .test_id("123123")//实验id
                 .stu_id(stuId)
                 .build();
-        int stu=containerService.createContainer(container);
-        if (stu==0){
-            throw new Exception("添加记录失败");
+        try {
+            //插入记录
+            int stu=containerService.createContainer(container);
+            //如果插入记录失败则删除容器
+            if (stu==0){
+                DockerUtil.removeContainer(dockerClient,id);
+                id=null;
+            }
+        }catch (Exception e){
+            DockerUtil.removeContainer(dockerClient,id);
+            id=null;
+            e.printStackTrace();
         }
+
         return id;
     }
 
