@@ -2,26 +2,21 @@ package com.xgksyjxpt.xgksyjxpt.login.controller;
 
 import com.xgksyjxpt.xgksyjxpt.domain.ResturnStuatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
-import com.xgksyjxpt.xgksyjxpt.login.domain.Admin;
+import com.xgksyjxpt.xgksyjxpt.course.domain.Admin;
 import com.xgksyjxpt.xgksyjxpt.login.domain.JwtUitls;
-import com.xgksyjxpt.xgksyjxpt.login.domain.Student;
-import com.xgksyjxpt.xgksyjxpt.login.domain.Teacher;
-import com.xgksyjxpt.xgksyjxpt.login.serivce.AdminService;
-import com.xgksyjxpt.xgksyjxpt.login.serivce.StudentService;
-import com.xgksyjxpt.xgksyjxpt.login.serivce.TeacherService;
+import com.xgksyjxpt.xgksyjxpt.course.domain.Student;
+import com.xgksyjxpt.xgksyjxpt.course.domain.Teacher;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.AdminService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.StudentService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.TeacherService;
 import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class LoginController {
@@ -84,28 +79,5 @@ public class LoginController {
         return re;
     }
 
-    /**
-     * 查询所有学生
-     * @return
-     */
-    @GetMapping("/getStudents")
-    public List<Map<String,String>> getStudents(){
-        List<Map<String,String>> list=new ArrayList();
-        List<Student> ss=studentService.queryStudents();
-        for (Student s:ss) {
-            Map<String,String> map=new HashMap<>();
-            map.put("stu_id",s.getStu_id());
-            map.put("name",s.getName());
-            map.put("sex",s.getSex());
-            map.put("age",s.getAge()+"");
-            list.add(map);
-        }
-        return list;
-    }
 
-    /**
-     * 更新学生信息
-     */
-//    @PostMapping("/updateStudent")
-//    public
 }

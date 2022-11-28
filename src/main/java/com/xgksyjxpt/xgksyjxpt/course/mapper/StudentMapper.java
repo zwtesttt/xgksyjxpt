@@ -1,9 +1,8 @@
-package com.xgksyjxpt.xgksyjxpt.login.mapper;
+package com.xgksyjxpt.xgksyjxpt.course.mapper;
 
-import com.xgksyjxpt.xgksyjxpt.login.domain.Student;
+import com.xgksyjxpt.xgksyjxpt.course.domain.Student;
 
 import java.util.List;
-import java.util.Map;
 
 public interface StudentMapper {
     /**
@@ -59,4 +58,8 @@ public interface StudentMapper {
     List<Student> queryAllStudent();
 
     int updateStudent(Student student);
+
+    int insertStudent(Student[] students);
+
+    int insertStudentOne(Student student);
 }

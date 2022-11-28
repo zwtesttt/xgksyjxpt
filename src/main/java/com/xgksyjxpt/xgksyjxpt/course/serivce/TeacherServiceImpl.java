@@ -1,7 +1,7 @@
-package com.xgksyjxpt.xgksyjxpt.login.serivce;
+package com.xgksyjxpt.xgksyjxpt.course.serivce;
 
-import com.xgksyjxpt.xgksyjxpt.login.domain.Teacher;
-import com.xgksyjxpt.xgksyjxpt.login.mapper.TeacherMapper;
+import com.xgksyjxpt.xgksyjxpt.course.domain.Teacher;
+import com.xgksyjxpt.xgksyjxpt.course.mapper.TeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

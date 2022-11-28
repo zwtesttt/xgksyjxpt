@@ -1,4 +1,4 @@
-package com.xgksyjxpt.xgksyjxpt.login.domain;
+package com.xgksyjxpt.xgksyjxpt.course.domain;
 
 public class Teacher {
     /**

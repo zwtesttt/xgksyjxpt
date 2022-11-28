@@ -1,6 +1,6 @@
-package com.xgksyjxpt.xgksyjxpt.login.mapper;
+package com.xgksyjxpt.xgksyjxpt.course.mapper;
 
-import com.xgksyjxpt.xgksyjxpt.login.domain.Teacher;
+import com.xgksyjxpt.xgksyjxpt.course.domain.Teacher;
 
 public interface TeacherMapper {
     /**

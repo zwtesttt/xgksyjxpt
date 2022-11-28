@@ -1,8 +1,8 @@
 package com.xgksyjxpt.xgksyjxpt.login.domain;
 
-import com.xgksyjxpt.xgksyjxpt.login.serivce.AdminService;
-import com.xgksyjxpt.xgksyjxpt.login.serivce.StudentService;
-import com.xgksyjxpt.xgksyjxpt.login.serivce.TeacherService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.AdminService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.StudentService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.TeacherService;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -63,7 +63,7 @@ public class JwtUitls {
      */
     public int verify(String token){
         Claims claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
-        int re=0;
+        int re=TokenStatus.NO_FOUND_CODE;
         //判断redis中是否有这个token
         if (StringUtils.hasText(token) && redisTemplate.hasKey(token)) {
             //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
@@ -81,11 +81,38 @@ public class JwtUitls {
             if(user != null){
 //                刷新token的时间为5分钟
                 redisTemplate.expire(token,60*5,TimeUnit.SECONDS);
-                re=1;
+                re=TokenStatus.ALLOW_CODE;
             }else{
-                re=0;
+                re=TokenStatus.NO_USER_CODE;
             }
         }
         return re;
+    }
+
+    /**
+     * 判断是否有权限访问该url
+     */
+    public Boolean authPerm(String token,String url){
+//        解析token
+        Claims claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
+        boolean stu=false;
+        //判断redis中是否有这个token
+        if (StringUtils.hasText(token) && redisTemplate.hasKey(token)) {
+            //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
+            String id = claims.getId();
+            //截取id第一个字符，判断身份
+            String fid=id.substring(0,1);
+//            如果id为学生学号并且访问的是学生的接口，则返回true
+            if (fid.equals("s")&&url.contains("/student/")){
+                stu=true;
+//                如果id为教师号并且访问的是老师的接口，则返回true
+            } else if (fid.equals("t")&&url.contains("/teacher/")) {
+                stu=true;
+//                如果id为管理员账号并且访问的是管理员的接口，则返回true
+            } else if (fid.equals("r")&&url.contains("/admin/")) {
+                stu=true;
+            }
+        }
+        return stu;
     }
 }

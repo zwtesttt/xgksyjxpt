@@ -39,11 +39,13 @@ public class Sycontroller {
     @GetMapping("/getIp")
     @ResponseBody
     public Object getIp(String id){
-        ReturnObject re=new ReturnObject();
-        String ip=null;
+//        ReturnObject re=new ReturnObject();
         String url= DockerConfig.DOCKER_API_URL;
         String networkName=DockerConfig.DOCKER_NETWORK_NAME;
-        ip=dockerService.getIp(id,url,networkName);
+        String ip=dockerService.getIp(id,url,networkName);
+//        if (ip!=null){
+//
+//        }
         return ip;
     }
     /**
