@@ -2,15 +2,13 @@ package com.xgksyjxpt.xgksyjxpt.course.controller;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.Image;
-import com.xgksyjxpt.xgksyjxpt.course.domain.Container;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.ContainerService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.DockerService;
-import com.xgksyjxpt.xgksyjxpt.domain.DockerConfig;
-import com.xgksyjxpt.xgksyjxpt.domain.ResturnStuatus;
+import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
+import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.util.DockerUtil;
 
-import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,16 +56,16 @@ public class Sycontroller {
         try {
             String id= dockerService.createQueryId(DockerConfig.DOCKER_API_URL,imagesName,stuId,DockerConfig.DOCKER_NETWORK_NAME);
             if (id!=null){
-                re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_CG);
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                 re.setMessage("运行成功");
                 re.setData(id);
             }else{
-                re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_SB);
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                 re.setMessage("运行容器失败");
             }
         }catch (Exception e){
             e.printStackTrace();
-            re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_SB);
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
             re.setMessage("运行容器失败");
         }
         return re;

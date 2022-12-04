@@ -1,6 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.login.controller;
 
-import com.xgksyjxpt.xgksyjxpt.domain.ResturnStuatus;
+import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.domain.Admin;
 import com.xgksyjxpt.xgksyjxpt.login.domain.JwtUitls;
@@ -12,10 +12,12 @@ import com.xgksyjxpt.xgksyjxpt.course.serivce.TeacherService;
 import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 
 @RestController
@@ -68,14 +70,40 @@ public class LoginController {
             }
         }
         if (token==null){
-            re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_SB);
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
             re.setMessage("登录失败");
         }else{
-            re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_CG);
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
             re.setMessage("登录成功");
             re.setData(token);
         }
-
+        return re;
+    }
+    /**
+     * 退出登录
+     */
+    @GetMapping("/logout")
+    public Object logout(HttpServletRequest request){
+        ReturnObject re=new ReturnObject();
+        String token=request.getHeader("token");
+        //判断token是否为空
+        if(token!=null){
+            //到数据库移除token
+            try {
+                Boolean stu=redisTemplate.delete(token);
+                if (stu==true){
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                    re.setMessage("登出成功");
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("登出失败");
+                }
+            }catch (Exception e){
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("登出失败");
+                e.printStackTrace();
+            }
+        }
         return re;
     }
 

@@ -59,11 +59,19 @@ public class JwtUitls {
     /**
      * 验证token是否有效
      * @param token  请求头中携带的token
-     * @return  token验证结果  1-token认证通过；0-token认证失败
+     * @return  token验证结果
      */
     public int verify(String token){
-        Claims claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
         int re=TokenStatus.NO_FOUND_CODE;
+        Claims claims=null;
+        try {
+             claims= Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
+        }catch (Exception e){
+            re=TokenStatus.NO_FOUND_CODE;
+            e.printStackTrace();
+        }
+
+
         //判断redis中是否有这个token
         if (StringUtils.hasText(token) && redisTemplate.hasKey(token)) {
             //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过

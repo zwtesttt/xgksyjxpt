@@ -1,6 +1,7 @@
 package com.xgksyjxpt.xgksyjxpt.course.mapper;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.Student;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -53,13 +54,46 @@ public interface StudentMapper {
      */
     int updateByPrimaryKey(Student record);
 
+    /**
+     * 查询单个学生信息
+     * @param id
+     * @return
+     */
     Student selectStudent(String id);
 
+    /**
+     * 查询所有学生
+     * @return
+     */
     List<Student> queryAllStudent();
 
+    /**
+     * 修改学生基本信息(不包括密码)
+     * @param student
+     * @return
+     */
     int updateStudent(Student student);
 
+    /**
+     * 批量添加学生
+     * @param students
+     * @return
+     */
     int insertStudent(Student[] students);
 
+    /**
+     * 添加单个学生
+     * @param student
+     * @return
+     */
     int insertStudentOne(Student student);
+    /**
+     * 修改学生密码
+     */
+    int updateStuPass(@Param("stu_id")String sid, @Param("passwd")String passwd);
+
+    /**
+     * 查询学生密码
+     */
+    String selectStuPass(String stu_id);
 }

@@ -7,15 +7,13 @@ import java.util.Map;
 
 import com.xgksyjxpt.xgksyjxpt.course.serivce.ContainerService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.DockerService;
-import com.xgksyjxpt.xgksyjxpt.domain.DockerConfig;
+import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
-import com.xgksyjxpt.xgksyjxpt.webssh.domain.SSHConnection;
 import com.xgksyjxpt.xgksyjxpt.webssh.domain.WebSSHData;
 import com.xgksyjxpt.xgksyjxpt.webssh.ssh.SSHService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.socket.AbstractWebSocketMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;

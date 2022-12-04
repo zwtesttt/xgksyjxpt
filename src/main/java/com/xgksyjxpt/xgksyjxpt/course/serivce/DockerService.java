@@ -4,7 +4,6 @@ import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.Image;
 import com.xgksyjxpt.xgksyjxpt.course.domain.Container;
-import com.xgksyjxpt.xgksyjxpt.domain.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import com.xgksyjxpt.xgksyjxpt.util.DockerUtil;
 import com.xgksyjxpt.xgksyjxpt.util.PasswordUtils;
@@ -12,11 +11,8 @@ import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 @Service
 public class DockerService {

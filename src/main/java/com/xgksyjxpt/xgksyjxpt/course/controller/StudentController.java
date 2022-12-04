@@ -1,6 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller;
 
-import com.xgksyjxpt.xgksyjxpt.domain.ResturnStuatus;
+import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.domain.Student;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.StudentService;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public class StudentController {
     @GetMapping("/toIndex")
     public Object toIndex(){
         ReturnObject re=new ReturnObject();
-        re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_CG);
+        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
         re.setMessage("请求成功");
         return re;
     }
@@ -74,6 +75,41 @@ public class StudentController {
             e.printStackTrace();
             re.setCode(0);
             re.setMessage("修改失败");
+        }
+        return re;
+    }
+
+    /**
+     * 修改学生密码
+     */
+    @PostMapping("/updatePass")
+    public Object updatePass(String sid,String oldPass,String newPass){
+        ReturnObject re=new ReturnObject();
+        if (sid!=null){
+            //核对学生旧密码
+           String pass= studentService.selectStuPass(sid);
+           if(oldPass.equals(pass)){
+               try {
+                   //开始修改密码
+                   int stu=studentService.updateStuPass(sid,newPass);
+//                   修改是否成功
+                   if (stu!=0){
+                       re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                       re.setMessage("修改成功");
+                   }else{
+                       re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                       re.setMessage("修改失败");
+                   }
+               }catch (Exception e){
+                   re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                   re.setMessage("修改失败");
+                   e.printStackTrace();
+               }
+
+           }else {
+               re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+               re.setMessage("密码不匹配");
+           }
         }
         return re;
     }

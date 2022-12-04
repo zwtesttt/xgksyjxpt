@@ -1,6 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller;
 
-import com.xgksyjxpt.xgksyjxpt.domain.ResturnStuatus;
+import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class TeacherController {
     @GetMapping("/toIndex")
     public Object toIndex(){
         ReturnObject re=new ReturnObject();
-        re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_CG);
+        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
         re.setMessage("请求成功");
         return re;
     }

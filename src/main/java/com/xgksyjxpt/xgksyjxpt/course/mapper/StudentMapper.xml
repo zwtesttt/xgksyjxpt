@@ -77,6 +77,14 @@
   <insert id="insertStudentOne" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.Student">
     insert into student_t values(#{stu_id},#{name},#{age},#{sex},#{passwd})
   </insert>
+<!--  修改学生密码-->
+  <update id="updateStuPass" parameterType="string">
+    update student_t set passwd=#{passwd} where stu_id=#{stu_id}
+  </update>
+<!--  查询学生密码-->
+  <select id="selectStuPass" parameterType="string" resultType="string">
+    select passwd from student_t where stu_id=#{stu_id}
+  </select>
   <insert id="insertSelective" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.Student" >
     <!--
       WARNING - @mbggenerated

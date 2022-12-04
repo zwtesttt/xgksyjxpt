@@ -13,4 +13,8 @@ public interface StudentService {
     int insertStudent(Student[] students);
 
     int insertStudentOne(Student student);
+
+    int updateStuPass(String sid,String passwd);
+
+    String selectStuPass(String sid);
 }

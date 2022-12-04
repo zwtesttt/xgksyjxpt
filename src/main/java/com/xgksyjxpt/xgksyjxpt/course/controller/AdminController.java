@@ -2,14 +2,12 @@ package com.xgksyjxpt.xgksyjxpt.course.controller;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.Student;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.StudentService;
-import com.xgksyjxpt.xgksyjxpt.domain.ResturnStuatus;
+import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.AdminService;
 import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -25,7 +23,7 @@ public class AdminController {
     @GetMapping("/toIndex")
     public Object toIndex(){
         ReturnObject re=new ReturnObject();
-        re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_CG);
+        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
         re.setMessage("请求成功");
         return re;
     }
@@ -39,15 +37,15 @@ public class AdminController {
         try {
             int stu=studentService.insertStudent(students);
             if (stu==students.length){
-                re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_CG);
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                 re.setMessage("添加成功");
             }else{
-                re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_SB);
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                 re.setMessage("添加失败");
             }
         }catch (Exception e){
             e.printStackTrace();
-            re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_SB);
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
             re.setMessage("添加失败");
         }
         return re;
@@ -65,15 +63,15 @@ public class AdminController {
             student.setPasswd(passwd);
             int stu=studentService.insertStudentOne(student);
             if (stu!=0){
-                re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_CG);
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                 re.setMessage("添加成功");
             }else{
-                re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_SB);
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                 re.setMessage("添加失败");
             }
         }catch (Exception e){
             e.printStackTrace();
-            re.setCode(ResturnStuatus.RETURN_STUTAS_CODE_SB);
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
             re.setMessage("添加失败");
         }
         return re;

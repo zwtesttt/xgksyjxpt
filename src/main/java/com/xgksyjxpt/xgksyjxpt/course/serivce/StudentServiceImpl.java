@@ -62,4 +62,25 @@ public class StudentServiceImpl implements StudentService {
     public int insertStudentOne(Student student) {
         return studentMapper.insertStudentOne(student);
     }
+
+    /**
+     * 修改学生密码
+     * @param sid
+     * @param passwd
+     * @return
+     */
+    @Override
+    public int updateStuPass(String sid, String passwd) {
+        return studentMapper.updateStuPass(sid,passwd);
+    }
+
+    /**
+     * 查询学生密码
+     * @param sid
+     * @return
+     */
+    @Override
+    public String selectStuPass(String sid) {
+        return studentMapper.selectStuPass(sid);
+    }
 }
