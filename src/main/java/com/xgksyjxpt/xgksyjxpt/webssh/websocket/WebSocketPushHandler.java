@@ -83,7 +83,7 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
             session.close();
         }
         userList.remove(session);
-        logger.info("xxx用户退出系统。。。");
+        logger.info("用户退出系统。。。");
     }
 
     /**

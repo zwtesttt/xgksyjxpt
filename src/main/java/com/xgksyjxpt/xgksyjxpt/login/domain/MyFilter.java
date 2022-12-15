@@ -32,8 +32,30 @@ public class MyFilter implements Filter {
         String url =  ((HttpServletRequest)servletRequest).getRequestURI();
         int verify=0;
         if(url != null){
-            //登录请求直接放行
-            if (ALLOW_URI.contains(url)){
+            //如果是ws请求则单独验证
+            if (url.contains("/ws")){
+//                String wstoken=((HttpServletRequest)servletRequest).getHeader("Sec-WebSocket-Protocol");
+//                //token验证结果
+//                verify  = jwtUitls.verify(wstoken);
+//                System.out.println("用户请求连接ws");
+//                if(verify != TokenStatus.ALLOW_CODE){
+//                    if(verify == TokenStatus.NO_FOUND_CODE){
+//                        re.setCode(TokenStatus.NO_FOUND_CODE);
+//                        re.setMessage("token验证失败");
+//                    } else if (verify==TokenStatus.NO_USER_CODE) {
+//                        re.setCode(TokenStatus.NO_USER_CODE);
+//                        re.setMessage("token用户丢失");
+//                    }
+//                }else if(verify  == TokenStatus.ALLOW_CODE){
+//                    //验证成功，放行
+//                    filterChain.doFilter(servletRequest,servletResponse);
+//                    return;
+//                }
+//                如果是ws请求直接放行
+                filterChain.doFilter(servletRequest,servletResponse);
+                return;
+                //登录请求直接放行
+            }else if (ALLOW_URI.contains(url)){
                 filterChain.doFilter(servletRequest,servletResponse);
                 return;
             }else{
