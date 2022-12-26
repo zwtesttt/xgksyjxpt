@@ -133,5 +133,12 @@ public class DockerUtil {
                 .exec();
         client.execStartCmd(execCreateCmdResponse.getId()).exec(new ExecStartResultCallback(System.out, System.err));
     }
-
+    /**
+     * 根据id查询容器的名字
+     */
+    public static String getContainersName(DockerClient dockerClient,String containersId){
+        //获取容器详细信息
+        InspectContainerResponse info =dockerClient.inspectContainerCmd(containersId).exec();
+        return info.getName().substring(1);
+    }
 }

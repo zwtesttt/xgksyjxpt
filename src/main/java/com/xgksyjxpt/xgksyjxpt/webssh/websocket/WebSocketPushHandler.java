@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.xgksyjxpt.xgksyjxpt.course.serivce.ContainerService;
-import com.xgksyjxpt.xgksyjxpt.course.serivce.DockerService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.course.ContainerService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.course.DockerService;
 import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import com.xgksyjxpt.xgksyjxpt.webssh.domain.WebSSHData;
@@ -54,14 +54,13 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
             logger.info("key:" + key + " and value:" + map.get(key));
         }
         logger.info("开始查询id:"+map.get("id")+"的IP地址");
-        String ip=dockerService.getIp((String)map.get("id"),DockerConfig.DOCKER_API_URL,DockerConfig.DOCKER_NETWORK_NAME);
+        String ip=dockerService.getIp((String)map.get("id"),DockerConfig.DOCKER_NETWORK_NAME);
         logger.info("ip:"+ip);
         userList.add(session);
         //在websocket建立连接后直接建立ssh连接
         logger.info("连接ssh");
 //        从数据库获取密码
         String passwd=containerService.queryPasswd((String)map.get("id"));
-
 //        将密码进行解密
         sshService.initConnection(session,WebSSHData.builder().port(22).username("root").host(ip).password(Base64Converter.decode(passwd)).build());
     }
