@@ -58,7 +58,7 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
         logger.info("ip:"+ip);
         userList.add(session);
         //在websocket建立连接后直接建立ssh连接
-        logger.info("连接ssh");
+        logger.info("开始建立ssh连接");
 //        从数据库获取密码
         String passwd=containerService.queryPasswd((String)map.get("id"));
 //        将密码进行解密
@@ -82,7 +82,7 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
             session.close();
         }
         userList.remove(session);
-        logger.info("用户退出系统。。。");
+        logger.info("用户断开ws连接");
     }
 
     /**

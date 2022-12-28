@@ -63,4 +63,14 @@ public class ContainerServiceImpl implements ContainerService {
     public List<String> selectContainerIdByTestId(String testId) {
         return containerMapper.selectContainerIdByTestId(testId);
     }
+
+    /**
+     * 根据实验id查询容器
+     * @param testId
+     * @return
+     */
+    @Override
+    public List<Container> selectContainerByTestId(String testId,Integer pageNum,Integer pageSize) {
+        return containerMapper.selectContainerByTestId(testId,pageNum,pageSize);
+    }
 }

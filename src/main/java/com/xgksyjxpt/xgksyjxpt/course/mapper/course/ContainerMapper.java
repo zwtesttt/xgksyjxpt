@@ -128,4 +128,9 @@ public interface ContainerMapper {
      */
     List<String> selectContainerIdByTestId(String testId);
 
+    /**
+     * 根据实验id查询容器信息
+     */
+    List<Container> selectContainerByTestId(@Param("testId")String testId,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+
 }

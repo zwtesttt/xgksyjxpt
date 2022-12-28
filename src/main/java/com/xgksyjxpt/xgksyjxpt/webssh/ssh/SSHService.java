@@ -58,6 +58,7 @@ public class SSHService {
                     //连接到终端
                     connectToSSH(sshConnectInfo,webSSHData,session);
                 } catch (JSchException | IOException e) {
+                    e.printStackTrace();
                     logger.error("webssh连接异常");
                     logger.error("异常信息:{}", e.getMessage());
                     try {
@@ -87,16 +88,16 @@ public class SSHService {
     }
 
     public void connectToSSH(SSHConnection sshConnection,WebSSHData webSSHData,WebSocketSession webSocketSession) throws JSchException, IOException {
-        Session session = null;
-
         //获取jsch的会话
-        session = sshConnection.getJSch().getSession(webSSHData.getUsername(), webSSHData.getHost(), webSSHData.getPort());
-        session.setConfig("StrictHostKeyChecking", "no");
-
+        Session session = sshConnection.getJSch().getSession(webSSHData.getUsername(), webSSHData.getHost(), webSSHData.getPort());
+        java.util.Properties config = new java.util.Properties();
+        config.put("StrictHostKeyChecking", "no");
+        session.setConfig(config);
+//        session.setConfig("StrictHostKeyChecking", "no");
         //设置密码
         session.setPassword(webSSHData.getPassword());
-        //连接  超时时间30s
-        session.connect(10000);
+        //连接  超时时间10s
+        session.connect(1000);
 
         if (session.isConnected()){
             logger.info("ssh连接成功");

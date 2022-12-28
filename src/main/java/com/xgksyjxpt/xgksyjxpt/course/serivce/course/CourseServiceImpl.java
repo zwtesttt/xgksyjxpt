@@ -1,19 +1,20 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.course;
 
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.Course;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseHead;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSectionImage;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.*;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.course.*;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentTestMapper;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
+import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -55,7 +56,41 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
+    @Transactional
     public int insertCourse(Course course) {
+        //设置课程状态
+        //比较课程开始时间和当前时间
+        //现在时间
+        Date nowdate=new Date();
+        Date start=null;
+        Date end=null;
+        //开始时间
+        try {
+            start=DateUtil.getDate(course.getCourse_start());
+            //结束时间
+            end=DateUtil.getDate(course.getCourse_end());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //结束时间在当前时间之后则添加定时任务
+        if(end.compareTo(nowdate)>0){
+            //开课时间在当前时间之后
+            if (start.compareTo(nowdate)>0){
+                //创建数据库定时事件
+                createEvent(course.getCourse_start(),course.getCid(),"event"+course.getCid()+"start",CourseStatus.COURSE_START);
+                course.setCourse_status(CourseStatus.COURSE_NOT_START);
+                //开课时间在当前时间之前或者等于当前时间
+            }else{
+                course.setCourse_status(CourseStatus.COURSE_START);
+            }
+            //创建数据库定时事件
+            createEvent(course.getCourse_end(),course.getCid(),"event"+course.getCid()+"end",CourseStatus.COURSE_END);
+            //结束时间在当前之间之前或者相等则把课程状态设置成已结束
+        }else{
+            course.setCourse_status(CourseStatus.COURSE_END);
+        }
+
+
         return courseMapper.insertCourse(course);
     }
 
@@ -135,6 +170,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> queryAllCourse(Integer pageNum,Integer pageSize) {
         return courseMapper.queryAllCourse(pageNum,pageSize);
+    }
+
+    /**
+     * 定时修改课程状态
+     * @param date
+     * @param cid
+     * @return
+     */
+    @Override
+    public int createEvent(String date, String cid,String eventName,String courseStatus) {
+        return courseMapper.createEvent(date,cid,eventName,courseStatus);
     }
 
     /**
@@ -294,6 +340,47 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseTest> queryCourseTestByCid(String cid,Integer pageNum,Integer pageSize) {
         return courseTestMapper.queryAllCourseTestByCid(cid,pageNum,pageSize);
+    }
+
+    /**
+     * 添加课程实验
+     * @param courseTest
+     * @return
+     */
+    @Override
+    public int insertCourseTest(CourseTest courseTest) {
+        //设置实验状态
+        //比较课程开始时间和当前时间
+        //现在时间
+        Date nowdate=new Date();
+        Date start=null;
+        Date end=null;
+        //开始时间
+        try {
+            start=DateUtil.getDate(courseTest.getTest_start_time());
+            //结束时间
+            end=DateUtil.getDate(courseTest.getTest_end_time());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        //结束时间在当前时间之后则添加定时任务
+        if(end.compareTo(nowdate)>0){
+            //实验开始时间在当前时间之后
+            if (start.compareTo(nowdate)>0){
+                //创建数据库定时事件
+                courseTestMapper.createCourseTestEvent(courseTest.getTest_start_time(),courseTest.getTest_id(),"courseevent"+courseTest.getTest_id()+"start",CourseStatus.COURSE_START);
+                courseTest.setTest_status(CourseStatus.COURSE_NOT_START);
+                //开课时间在当前时间之前或者等于当前时间
+            }else{
+                courseTest.setTest_status(CourseStatus.COURSE_START);
+            }
+            //创建数据库定时事件
+            courseTestMapper.createCourseTestEvent(courseTest.getTest_end_time(),courseTest.getTest_id(),"courseevent"+courseTest.getTest_id()+"end",CourseStatus.COURSE_END);
+            //结束时间在当前之间之前或者相等则把课程状态设置成已结束
+        }else{
+            courseTest.setTest_status(CourseStatus.COURSE_END);
+        }
+        return courseTestMapper.insertCourseTest(courseTest);
     }
 
     /**

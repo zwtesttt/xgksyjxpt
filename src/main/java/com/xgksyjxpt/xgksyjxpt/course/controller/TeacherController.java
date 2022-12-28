@@ -3,6 +3,7 @@ package com.xgksyjxpt.xgksyjxpt.course.controller;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.Course;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseHead;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSectionImage;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
@@ -11,6 +12,7 @@ import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
 import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
+import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -240,6 +242,54 @@ public class TeacherController {
             re.setMessage("删除失败");
         }
     return re;
+    }
+    /**
+     * 添加课程实验
+     */
+    @PostMapping("/addCourseTest")
+    public Object addCourseTest(CourseTest courseTest){
+        ReturnObject re=new ReturnObject();
+
+        try {
+            if (courseTest != null) {
+//                验证课程是否存在
+                Course t = courseService.selectCourseByCid(courseTest.getCid());
+                if (t == null) {
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("课程不存在");
+                } else {
+                    //判断课程状态
+                    if ("已结束".equals(t.getCourse_status())){
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("该课程已结束");
+//                        实验结束时间不能超过课程结束时间
+                    }else if(DateUtil.getDate(courseTest.getTest_end_time()).compareTo(DateUtil.getDate(t.getCourse_end()))>0){
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("实验结束时间不能超过课程结束时间");
+                    }else{
+                        //添加课程实验记录
+                        //生成uuid作为课程实验主键
+                        courseTest.setTest_id(UuidUtil.getUUID());
+                        int stu = courseService.insertCourseTest(courseTest);
+                        if (stu != 0) {
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                            re.setMessage("添加成功");
+                        } else {
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("添加失败");
+                        }
+                    }
+                }
+            } else {
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("实验信息不能为空");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("添加失败");
+        }
+        return re;
     }
 
 }

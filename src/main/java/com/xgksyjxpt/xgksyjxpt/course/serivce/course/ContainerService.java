@@ -14,4 +14,6 @@ public interface ContainerService {
 
     int deleteContainerByTestId(String testId);
     List<String> selectContainerIdByTestId(String testId);
+
+    List<Container> selectContainerByTestId(String testId,Integer pageNum,Integer pageSize);
 }

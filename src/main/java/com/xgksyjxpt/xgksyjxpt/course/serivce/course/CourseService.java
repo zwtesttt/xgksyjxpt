@@ -4,7 +4,9 @@ import com.xgksyjxpt.xgksyjxpt.course.domain.course.Course;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseHead;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSectionImage;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface CourseService {
@@ -19,6 +21,7 @@ public interface CourseService {
     List<String> selectCourseIdByTid(String tid);
     int deleteCourses(String[] cids);
     List<Course> queryAllCourse(Integer pageNum,Integer pageSize);
+    int createEvent(String date,String cid,String eventName,String courseStatus);
 
 
     /**
@@ -41,6 +44,7 @@ public interface CourseService {
     List<String> selectCourseTestIdByCid(String cid);
     List<CourseTest> queryAllCourseTest();
     List<CourseTest> queryCourseTestByCid(String cid,Integer pageNum,Integer pageSize);
+    int insertCourseTest(CourseTest courseTest);
 
     /**
      * 操作章节内容图片表的接口
