@@ -8,6 +8,8 @@ import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
+@Api(tags = "公用接口")
 public class PublicController {
 
 
@@ -42,6 +45,7 @@ public class PublicController {
      * 根据容器id查询容器ip
      */
     @GetMapping("/getIp")
+    @ApiOperation("根据容器id查询容器ip")
     public Object getIp(String id){
 //        ReturnObject re=new ReturnObject();
         String networkName=DockerConfig.DOCKER_NETWORK_NAME;
@@ -55,6 +59,7 @@ public class PublicController {
      * 根据镜像名和学生id创建容器返回容器id
      */
     @PostMapping("/createContain")
+    @ApiOperation("根据镜像名和学生id创建容器返回容器id")
     public Object createContain(String imagesName,String stuId,String testid){
         ReturnObject re=new ReturnObject();
         try {
@@ -79,6 +84,7 @@ public class PublicController {
 
     //查询学生头像链接
     @GetMapping("/selectStuHead")
+    @ApiOperation("查询学生头像链接")
     public String selectStuHead(String sid){
         String url = studentService.selectStuHeadUrl(sid);
 //        截取字符串,去除url中的group信息
@@ -89,6 +95,7 @@ public class PublicController {
      * 根据容器id获取容器名称
      */
     @GetMapping("/getContainerName")
+    @ApiOperation("根据容器id获取容器名称")
     public String getContainerName(String cid){
         return dockerService.selectContainersName(cid);
     }

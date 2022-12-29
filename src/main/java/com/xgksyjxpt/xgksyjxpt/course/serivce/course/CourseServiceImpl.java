@@ -50,6 +50,9 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private DockerService dockerService;
 
+    @Autowired
+    private CourseTestImagesMapper courseTestImagesMapper;
+
     /**
      * 添加新课程
      * @param course
@@ -476,6 +479,35 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public String selectCourseHeadUrlByCid(String cid) {
         return courseHeadMapper.selectCourseHeadUrlByCid(cid);
+    }
+
+    /**
+     * 查询所有可用镜像名
+     * @return
+     */
+    @Override
+    public List<CourseTestImages> selectAllImagesName() {
+        return courseTestImagesMapper.selectAllImagesName();
+    }
+
+    /**
+     * 添加新实验可用镜像
+     * @param courseTestImages
+     * @return
+     */
+    @Override
+    public int insertCourseTestImages(CourseTestImages courseTestImages) {
+        return courseTestImagesMapper.insertCourseTestImages(courseTestImages);
+    }
+
+    /**
+     * 批量删除可用镜像
+     * @param imagesNames
+     * @return
+     */
+    @Override
+    public int deleteCourseTestImages(String[] imagesNames) {
+        return courseTestImagesMapper.deleteCourseTestImages(imagesNames);
     }
 
     /**

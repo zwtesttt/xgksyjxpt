@@ -5,10 +5,10 @@ import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.Image;
 import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.Container;
-import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import com.xgksyjxpt.xgksyjxpt.util.DockerUtil;
 import com.xgksyjxpt.xgksyjxpt.util.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -19,6 +19,9 @@ public class DockerService {
 
     @Autowired
     private ContainerService containerService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private static DockerClient dockerClient= DockerUtil.queryDockerClient(DockerConfig.DOCKER_API_URL);
 
@@ -47,11 +50,10 @@ public class DockerService {
             //存放本地镜像名
             String localName=null;
 
-            int count=0;
             //生成随机8位密码
             String sshpasswd=PasswordUtils.getLowerLetterNumber(8);
-            //对密码进行加密
-            String bash64pa= Base64Converter.encode(sshpasswd);
+//            //对密码进行加密
+//            String bash64pa= passwordEncoder.encode(sshpasswd);
             for (Image im :imageList) {
                 //不处理none镜像
                 if(!im.getRepoTags()[0].split(":")[0].equals("<none>")){
@@ -62,14 +64,13 @@ public class DockerService {
                         id=DockerUtil.runContainers(dockerClient,im.getRepoTags()[0],imagesName+"-"+stuId,hostConfig,sshpasswd);
                         break;
                     }
-                    count++;
                 }
             }
             //保存到数据库中
             Container container= Container.builder()
                     .container_id(id)
                     .container_startTime(new Date())
-                    .passwd(bash64pa)
+                    .passwd(sshpasswd)
                     .test_id(testid)//实验id
                     .stu_id(stuId)
                     .build();

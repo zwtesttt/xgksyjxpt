@@ -5,9 +5,11 @@ import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
-import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/student")//给该controller类所有接口加上/student的url前缀
+@Api(tags = "学生接口")
 public class StudentController {
     @Autowired
     private StudentService studentService;
 
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private FastdfsUtil fastdfsUtil;
@@ -29,6 +33,7 @@ public class StudentController {
      * 访问学生首页
      */
     @GetMapping("/toIndex")
+    @ApiOperation("访问学生首页")
     public Object toIndex(){
         ReturnObject re=new ReturnObject();
         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
@@ -40,6 +45,7 @@ public class StudentController {
      * 更新学生信息
      */
     @PostMapping("/updateStudent")
+    @ApiOperation("更新学生信息")
     public Object updateStudent(Student student){
         ReturnObject re=new ReturnObject();
         try {
@@ -61,19 +67,18 @@ public class StudentController {
 
     /**
      * 修改学生密码
-     * 前端要先对密码使用base64加密算法加密
      */
     @PostMapping("/updatePass")
+    @ApiOperation("修改学生密码")
     public Object updatePass(String sid,String oldPass,String newPass){
         ReturnObject re=new ReturnObject();
         if (sid!=null){
             //核对学生旧密码
-            //密码解密
-            String oldpasswd=Base64Converter.decode(oldPass);
-            String newpasswd=Base64Converter.decode(newPass);
+            //对新密码加密
+            String newpasswd=passwordEncoder.encode(newPass);
             //查询旧密码
            String pass= studentService.selectStuPass(sid);
-           if(oldpasswd.equals(pass)){
+           if(passwordEncoder.matches(oldPass,pass)){
                try {
                    //开始修改密码
                    int stu=studentService.updateStuPass(sid,newpasswd);
@@ -103,6 +108,7 @@ public class StudentController {
      * 修改学生头像
      */
     @PostMapping("/updateStuHead")
+    @ApiOperation("修改学生头像")
     public Object updateStuHead(MultipartFile file, String sid) {
         ReturnObject re =new ReturnObject();
         try {
@@ -153,6 +159,7 @@ public class StudentController {
      * @return
      */
     @PostMapping("/upload")
+    @ApiOperation("上传学生头像(最大支持5m)")
     public Object toDetail(MultipartFile file,String sid) {
 //        System.out.println(myfile.getBytes());//返回该文件的byte数组
 //        System.out.println(myfile.getName());//返回表单参数名

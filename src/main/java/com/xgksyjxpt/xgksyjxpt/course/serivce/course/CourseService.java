@@ -1,9 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.course;
 
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.Course;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseHead;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSectionImage;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -67,7 +64,12 @@ public interface CourseService {
     int deleteCourseHead(String cid);
     String selectCourseHeadUrlByCid(String cid);
 
-
+    /**
+     * 课程实验镜像接口
+     */
+    List<CourseTestImages> selectAllImagesName();
+    int insertCourseTestImages(CourseTestImages courseTestImages);
+    int deleteCourseTestImages(String[] imagesNames);
 
 
 }

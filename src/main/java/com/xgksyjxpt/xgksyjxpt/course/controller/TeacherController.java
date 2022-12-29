@@ -11,11 +11,13 @@ import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
-import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +28,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/teacher")
+@Api(tags = "教师接口")
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
@@ -38,6 +41,8 @@ public class TeacherController {
     @Autowired
     private FastdfsUtil fastdfsUtil;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     /**
@@ -45,6 +50,7 @@ public class TeacherController {
      * @return
      */
     @GetMapping("/toIndex")
+    @ApiOperation("访问教师首页")
     public Object toIndex(){
         ReturnObject re=new ReturnObject();
         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
@@ -57,6 +63,7 @@ public class TeacherController {
      * @return
      */
     @GetMapping("/getStudentsName")
+    @ApiOperation("查询所有学生姓名")
     public List<Map<String,String>> getStudents(){
         List<Map<String,String>> list=new ArrayList();
         //获取所有学生列表
@@ -75,6 +82,7 @@ public class TeacherController {
      * 更新老师信息
      */
     @PostMapping("/updateTeacher")
+    @ApiOperation("更新老师信息")
     public Object updateStudent(Teacher teacher){
         ReturnObject re=new ReturnObject();
         try {
@@ -95,19 +103,19 @@ public class TeacherController {
     }
     /**
      * 修改老师密码
-     * 前端要先对密码使用base64加密算法加密
      */
     @PostMapping("/updatePass")
+    @ApiOperation("修改老师密码")
     public Object updatePass(String tid,String oldPass,String newPass){
         ReturnObject re=new ReturnObject();
         if (tid!=null){
             //核对学生旧密码
-            //密码解密
-            String oldpasswd=Base64Converter.decode(oldPass);
-            String newpasswd=Base64Converter.decode(newPass);
+            //新密码加密
+            String newpasswd=passwordEncoder.encode(newPass);
             //查询旧密码
             String pass= teacherService.selectTeaPaawd(tid);
-            if(oldpasswd.equals(pass)){
+            //核对密码
+            if(passwordEncoder.matches(oldPass,pass)){
                 try {
                     //开始修改密码
                     int stu=teacherService.updateTeaPasswd(tid,newpasswd);
@@ -136,6 +144,7 @@ public class TeacherController {
      * 上传图片
      */
     @PostMapping("/uploadImage")
+    @ApiOperation("上传图片")
     public String uploadImage(MultipartFile file,String cid,Integer chapterId,Integer sectionId){
         String url=null;
         try{
@@ -162,6 +171,7 @@ public class TeacherController {
      * @return
      */
     @PostMapping("/addCourse")
+    @ApiOperation("添加课程")
     public Object addCourse(Course course,MultipartFile file){
         ReturnObject re=new ReturnObject();
 
@@ -212,6 +222,7 @@ public class TeacherController {
      * 根据课程号删除课程
      */
     @DeleteMapping("/deleteCourse")
+    @ApiOperation("根据课程号删除课程")
     public Object deleteCourse(String cid){
         ReturnObject re=new ReturnObject();
         try {
@@ -247,6 +258,7 @@ public class TeacherController {
      * 添加课程实验
      */
     @PostMapping("/addCourseTest")
+    @ApiOperation("添加课程实验")
     public Object addCourseTest(CourseTest courseTest){
         ReturnObject re=new ReturnObject();
 

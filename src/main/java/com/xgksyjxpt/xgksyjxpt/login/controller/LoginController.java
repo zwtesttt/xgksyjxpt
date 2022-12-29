@@ -9,9 +9,9 @@ import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
-import com.xgksyjxpt.xgksyjxpt.util.Base64Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,21 +36,22 @@ public class LoginController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/login")
     @ResponseBody
     public Object login(String id,String passwd){
 //        过期时间,单位为秒
         int es=60*5;
         ReturnObject re=new ReturnObject();
-        //对密码解密
-        String depasswd= Base64Converter.decode(passwd);
         //截取id第一个字符，判断身份，s表示学生，t表示教师，r表示管理员登录
         String token=null;
         String fid=id.substring(0,1);
         if (fid.equals("s")){
             Student user= studentService.selectStudent(id);
             if (user!=null){
-                if (user.getPasswd().equals(depasswd)){
+                if (passwordEncoder.matches(passwd,user.getPasswd())){
                     token= jwtUitls.createToken(id,user.getName());
                     //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
                     redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
@@ -67,7 +68,7 @@ public class LoginController {
         } else if (fid.equals("t")) {
             Teacher user=teacherService.selectTeacher(id);
             if (user!=null){
-                if(user.getPasswd().equals(depasswd)){
+                if(passwordEncoder.matches(passwd,user.getPasswd())){
                     token= jwtUitls.createToken(id,user.getTname());
                     //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
                     redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
@@ -84,7 +85,7 @@ public class LoginController {
         } else if (fid.equals("r")) {
             Admin user=adminService.selectAdmin(id);
             if (user!=null){
-                if(user.getPasswd().equals(depasswd)){
+                if(passwordEncoder.matches(passwd,user.getPasswd())){
                     token= jwtUitls.createToken(id,user.getName());
                     //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
                     redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));

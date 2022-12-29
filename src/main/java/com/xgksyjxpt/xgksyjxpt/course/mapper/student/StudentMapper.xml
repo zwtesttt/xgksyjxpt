@@ -82,7 +82,7 @@
   </insert>
 <!--  添加学生-->
   <insert id="insertStudentOne" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
-    insert into student_t values(#{stu_id},#{name},#{age},#{sex},#{passwd},#{class_name})
+    insert into student_t(stu_id, name, age, sex, passwd,class_name) values(#{stu_id},#{name},#{age},#{sex},#{passwd},#{class_name})
   </insert>
 <!--  修改学生密码-->
   <update id="updateStuPass" parameterType="string">
