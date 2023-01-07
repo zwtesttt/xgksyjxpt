@@ -79,11 +79,11 @@ public class JwtUitls {
             String fid=id.substring(0,1);
             Object user=null;
             if (fid.equals("s")){
-                user= studentService.selectStudent(id);
+                user= studentService.selectNotDelStudent(id);
             } else if (fid.equals("t")) {
-                user=teacherService.selectTeacher(id);
+                user=teacherService.selectNotDelTeacher(id);
             } else if (fid.equals("r")) {
-                user=adminService.selectAdmin(id);
+                user=adminService.selectNotDelAdmin(id);
             }
             if(user != null){
 //                刷新token的时间为5分钟

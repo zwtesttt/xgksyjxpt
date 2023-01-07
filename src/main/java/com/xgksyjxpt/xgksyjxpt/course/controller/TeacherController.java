@@ -15,6 +15,8 @@ import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,7 +52,7 @@ public class TeacherController {
      * @return
      */
     @GetMapping("/toIndex")
-    @ApiOperation("访问教师首页")
+    @ApiOperation(value = "访问教师首页",hidden = true)
     public Object toIndex(){
         ReturnObject re=new ReturnObject();
         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
@@ -83,6 +85,7 @@ public class TeacherController {
      */
     @PostMapping("/updateTeacher")
     @ApiOperation("更新老师信息")
+    @ApiImplicitParam(name="passwd",value="密码(不用填)",dataType="string",required = false)
     public Object updateStudent(Teacher teacher){
         ReturnObject re=new ReturnObject();
         try {
@@ -106,6 +109,11 @@ public class TeacherController {
      */
     @PostMapping("/updatePass")
     @ApiOperation("修改老师密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="oldPass",value="旧密码",dataType="string",required = true),
+            @ApiImplicitParam(name="tid",value="老师id",dataType="string",required = true),
+            @ApiImplicitParam(name="newPass",value="新密码",dataType="string",required = true)
+    })
     public Object updatePass(String tid,String oldPass,String newPass){
         ReturnObject re=new ReturnObject();
         if (tid!=null){
@@ -135,7 +143,7 @@ public class TeacherController {
 
             }else {
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("密码不匹配");
+                re.setMessage("原密码不匹配");
             }
         }
         return re;
@@ -144,7 +152,13 @@ public class TeacherController {
      * 上传图片
      */
     @PostMapping("/uploadImage")
-    @ApiOperation("上传图片")
+    @ApiOperation("上传小节图片")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="file",value="图片流",dataType="multipartFile",required = true),
+            @ApiImplicitParam(name="cid",value="课程id",dataType="string",required = true),
+            @ApiImplicitParam(name="chapterId",value="章节id",dataType="string",required = true),
+            @ApiImplicitParam(name="sectionId",value="小节id",dataType="string",required = true)
+    })
     public String uploadImage(MultipartFile file,String cid,Integer chapterId,Integer sectionId){
         String url=null;
         try{
@@ -172,13 +186,16 @@ public class TeacherController {
      */
     @PostMapping("/addCourse")
     @ApiOperation("添加课程")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="file",value="图片流",dataType="file",required = true)
+    })
     public Object addCourse(Course course,MultipartFile file){
         ReturnObject re=new ReturnObject();
 
         try{
             if (course!=null&&file!=null){
 //                验证教师号是否存在
-                Teacher t=teacherService.selectTeacher(course.getTid());
+                Teacher t=teacherService.selectNotDelTeacher(course.getTid());
                 if (t == null) {
                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                     re.setMessage("教师不存在");
@@ -223,6 +240,7 @@ public class TeacherController {
      */
     @DeleteMapping("/deleteCourse")
     @ApiOperation("根据课程号删除课程")
+    @ApiImplicitParam(name="cid",value="课程号",dataType="string",required = true)
     public Object deleteCourse(String cid){
         ReturnObject re=new ReturnObject();
         try {

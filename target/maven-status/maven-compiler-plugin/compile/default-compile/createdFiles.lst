@@ -22,8 +22,10 @@ com\xgksyjxpt\xgksyjxpt\domain\ReturnObject.class
 com\xgksyjxpt\xgksyjxpt\course\controller\AdminStudentController.class
 com\xgksyjxpt\xgksyjxpt\webssh\domain\SSHConnection.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentTestMapper.class
+com\xgksyjxpt\xgksyjxpt\util\GetCellValue.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseChapterMapper.class
 com\xgksyjxpt\xgksyjxpt\util\FileUtil.class
+com\xgksyjxpt\xgksyjxpt\course\domain\admin\AdminHead.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseStatus.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseTestImagesMapper.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\ContainerService.class
@@ -39,6 +41,7 @@ com\xgksyjxpt\xgksyjxpt\course\mapper\teacher\TeacherHeadMapper.class
 com\xgksyjxpt\xgksyjxpt\webssh\ssh\SSHService.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\teacher\TeacherService.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseMapper.class
+com\xgksyjxpt\xgksyjxpt\course\mapper\admin\AdminHeadMapper.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseChapterKey.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\ContainerExample.class
 com\xgksyjxpt\xgksyjxpt\domain\ReturnStatus.class

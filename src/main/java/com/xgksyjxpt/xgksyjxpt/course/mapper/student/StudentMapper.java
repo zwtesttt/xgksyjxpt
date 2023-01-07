@@ -55,11 +55,15 @@ public interface StudentMapper {
     int updateByPrimaryKey(Student record);
 
     /**
-     * 查询单个学生信息
+     * 在所有学生账号内查询学生
      * @param id
      * @return
      */
     Student selectStudent(String id);
+    /**
+     * 查询正常状态的学生
+     */
+    Student selectNotDelStudent(String id);
 
     /**
      * 查询所有学生

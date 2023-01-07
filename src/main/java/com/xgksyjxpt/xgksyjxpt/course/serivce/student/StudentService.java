@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface StudentService {
     Student selectStudent(String id);
+    Student selectNotDelStudent(String id);
     List<Student> queryStudents(Integer pageNum,Integer pageSize);
 
     int updateStudent(Student student);

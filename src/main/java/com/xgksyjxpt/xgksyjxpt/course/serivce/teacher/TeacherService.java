@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface TeacherService {
     Teacher selectTeacher(String id);
+    Teacher selectNotDelTeacher(String id);
 
     int addTeachers(Teacher[] teachers);
 
@@ -19,6 +20,11 @@ public interface TeacherService {
 
     int uploadTeaHead(TeacherHead teacherHead);
     int deleteTeaHeadByTid(String tid);
+    int deleteTeaHeadByTids(String[] tids);
     int deleteTeachers(String[] tids);
     String selectTeaHeadUrl(String tid);
+
+    int insertTeacher(Teacher teacher);
+
+    int insertTeachers(Teacher[] teachers);
 }

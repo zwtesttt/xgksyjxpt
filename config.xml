@@ -21,7 +21,7 @@
 
         <javaModelGenerator
 
-        targetPackage="com.xgksyjxpt.xgksyjxpt.course.domain.course"
+        targetPackage="com.xgksyjxpt.xgksyjxpt.course.domain.admin"
         targetProject="src/main/java/">
         <property name="enableSubPackages" value="false" />
         <property name="trimStrings" value="false" />
@@ -29,18 +29,18 @@
 
 
     <sqlMapGenerator
-    targetPackage="com.xgksyjxpt.xgksyjxpt.course.mapper.course"
+    targetPackage="com.xgksyjxpt.xgksyjxpt.course.mapper.admin"
     targetProject="src/main/java/">
     <property name="enableSubPackages" value="false" />
 </sqlMapGenerator>
 
 <javaClientGenerator type="XMLMAPPER"
-        targetPackage="com.xgksyjxpt.xgksyjxpt.course.mapper.course"
+        targetPackage="com.xgksyjxpt.xgksyjxpt.course.mapper.admin"
         targetProject="src/main/java/">
 
 <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
-<table tableName="course_test_images" domainObjectName="CourseTestImages"
+<table tableName="admin_head_t" domainObjectName="AdminHead"
        enableCountByExample="false"
        enableUpdateByExample="false"
        enableDeleteByExample="false"

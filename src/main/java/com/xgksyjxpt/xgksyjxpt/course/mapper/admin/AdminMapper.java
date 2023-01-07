@@ -1,6 +1,7 @@
 package com.xgksyjxpt.xgksyjxpt.course.mapper.admin;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin;
+import org.apache.ibatis.annotations.Param;
 
 public interface AdminMapper {
     /**
@@ -51,6 +52,31 @@ public interface AdminMapper {
      */
     int updateByPrimaryKey(Admin record);
 
-    Admin selectAdmin(String id);
+    /**
+     * 查询正常状态的管理员账号
+     * @param id
+     * @return
+     */
+    Admin selectNotDelAdmin(String id);
 
+    /**
+     * 添加管理员
+     */
+    int insertAdmin(Admin admin);
+    /**
+     * 修改管理员信息
+     */
+    int updateAdmin(Admin admin);
+    /**
+     * 修改管理员密码
+     */
+    int updateAdminPass(@Param("rid") String rid,@Param("pass") String pass);
+    /**
+     * 删除管理员
+     */
+    int deleteAdmin(String rid);
+    /**
+     * 查询所有管理员账号
+     */
+    Admin selectAdmin(String rid);
 }

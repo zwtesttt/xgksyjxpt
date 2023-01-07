@@ -1,12 +1,15 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
+import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,7 +36,7 @@ public class StudentController {
      * 访问学生首页
      */
     @GetMapping("/toIndex")
-    @ApiOperation("访问学生首页")
+    @ApiOperation(value = "访问学生首页",hidden = true)
     public Object toIndex(){
         ReturnObject re=new ReturnObject();
         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
@@ -46,6 +49,7 @@ public class StudentController {
      */
     @PostMapping("/updateStudent")
     @ApiOperation("更新学生信息")
+    @ApiImplicitParam(name="passwd",value="密码(不用填)",dataType="string",required = false)
     public Object updateStudent(Student student){
         ReturnObject re=new ReturnObject();
         try {
@@ -68,8 +72,13 @@ public class StudentController {
     /**
      * 修改学生密码
      */
-    @PostMapping("/updatePass")
+    @PostMapping("/updateStuPass")
     @ApiOperation("修改学生密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true),
+            @ApiImplicitParam(name="oldPass",value="旧密码",dataType="string",required = true),
+            @ApiImplicitParam(name="newPass",value="新密码",dataType="string",required = true)
+    })
     public Object updatePass(String sid,String oldPass,String newPass){
         ReturnObject re=new ReturnObject();
         if (sid!=null){
@@ -98,7 +107,7 @@ public class StudentController {
 
            }else {
                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-               re.setMessage("密码不匹配");
+               re.setMessage("原密码不匹配");
            }
         }
         return re;
@@ -109,6 +118,10 @@ public class StudentController {
      */
     @PostMapping("/updateStuHead")
     @ApiOperation("修改学生头像")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="file",value="头像文件流",dataType="multipartFile",required = true),
+            @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true)
+    })
     public Object updateStuHead(MultipartFile file, String sid) {
         ReturnObject re =new ReturnObject();
         try {
@@ -117,7 +130,10 @@ public class StudentController {
                 if (fileType.equals("image/png")||fileType.equals("image/jpg")||fileType.equals("image/jpeg")){
                     //删除原来头像
                     String fileurl=studentService.selectStuHeadUrl(sid);
-                    fastdfsUtil.deleteFile(fileurl);
+                    //排除默认头像
+                    if(!HeadUrl.DEFAULT_STU_HEAD.equals(fileurl)){
+                        fastdfsUtil.deleteFile(fileurl);
+                    }
 //                上传新头像
                     String url=fastdfsUtil.uploadFile(file);
                     if (url!=null){
@@ -160,6 +176,10 @@ public class StudentController {
      */
     @PostMapping("/upload")
     @ApiOperation("上传学生头像(最大支持5m)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="file",value="头像文件流",dataType="multipartFile",required = true),
+            @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true)
+    })
     public Object toDetail(MultipartFile file,String sid) {
 //        System.out.println(myfile.getBytes());//返回该文件的byte数组
 //        System.out.println(myfile.getName());//返回表单参数名

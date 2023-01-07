@@ -5,6 +5,7 @@ import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.TeacherHead;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.teacher.TeacherHeadMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.teacher.TeacherMapper;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
+import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,16 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher selectTeacher(String id) {
         return teacherMapper.selectTeacher(id);
+    }
+
+    /**
+     * 查询正常状态老师
+     * @param id
+     * @return
+     */
+    @Override
+    public Teacher selectNotDelTeacher(String id) {
+        return teacherMapper.selectNotDelTeacher(id);
     }
 
     /**
@@ -100,6 +111,15 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherHeadMapper.deleteTeaHeadByTid(tid);
     }
 
+
+    /**
+     * 批量删除老师头像记录
+     */
+    @Override
+    public int deleteTeaHeadByTids(String[] tids) {
+        return teacherHeadMapper.deleteTeaHeadByTids(tids);
+    }
+
     /**
      * 根据教师号批量删除删除老师
      * @param tids
@@ -111,8 +131,6 @@ public class TeacherServiceImpl implements TeacherService {
         //删除该老师名下的课程
         for (String tid:tids
              ) {
-            //删除数据库中老师头像记录
-            deleteTeaHeadByTid(tid);
             //查询老师名下所有课程号
             List<String> cids=courseService.selectCourseIdByTid(tid);
             if (cids.size()!=0){
@@ -123,6 +141,8 @@ public class TeacherServiceImpl implements TeacherService {
                 }
             }
         }
+        //删除数据库中老师头像记录
+        deleteTeaHeadByTids(tids);
         return teacherMapper.deleteTeacherByTids(tids);
     }
 
@@ -134,5 +154,43 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public String selectTeaHeadUrl(String tid) {
         return teacherHeadMapper.selectTeaHeadUrlByTid(tid);
+    }
+
+    /**
+     * 添加老师
+     * @param teacher
+     * @return
+     */
+    @Override
+    public int insertTeacher(Teacher teacher) {
+        //添加默认头像
+        TeacherHead head=new TeacherHead();
+        head.setTid(teacher.getTid());
+        head.setHead_link(HeadUrl.DEFAULT_TEA_HEAD);
+        teacherHeadMapper.uploadTeaHead(head);
+
+        return teacherMapper.insertTeacher(teacher);
+    }
+
+    /**
+     * 批量添加老师
+     * @param teachers
+     * @return
+     */
+    @Override
+    @Transactional
+    public int insertTeachers(Teacher[] teachers) {
+        TeacherHead head=null;
+
+        for (Teacher t:teachers
+             ) {
+            //给老师添加默认头像
+            head=new TeacherHead();
+            head.setTid(t.getTid());
+            head.setHead_link(HeadUrl.DEFAULT_TEA_HEAD);
+            teacherHeadMapper.uploadTeaHead(head);
+        }
+
+        return teacherMapper.insertTeachers(teachers);
     }
 }

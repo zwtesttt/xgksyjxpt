@@ -97,16 +97,16 @@
   </insert>
 <!--  查询容器ssh密码-->
   <select id="queryPasswd" parameterType="string" resultType="string">
-    select passwd from runcontainer where container_id=#{cid}
+    select passwd from runcontainer where container_id=#{cid} and delete_time is null
   </select>
 <!--  批量删除运行容器记录-->
-  <delete id="deleteStuContainer" parameterType="string">
-    delete from runcontainer where stu_id in(
+  <update id="deleteStuContainer" parameterType="string">
+    update runcontainer set delete_time=now() where stu_id in(
     <foreach collection="array" item="stuIds" separator=",">
       #{stuIds}
     </foreach>
-    )
-  </delete>
+    ) and delete_time is null
+  </update>
 <!--  查询学生的容器名-->
   <select id="selectStuContainerId" parameterType="string" resultType="string">
     select container_id from runcontainer where stu_id=#{stuId} and delete_time is null

@@ -9,18 +9,23 @@ import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.apache.catalina.authenticator.SingleSignOnSessionKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
+@Api(tags = "登录接口")
 public class LoginController {
     @Autowired
     private JwtUitls jwtUitls;
@@ -39,80 +44,119 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * 登录
+     * @param map
+     * @return
+     */
     @PostMapping("/login")
-    @ResponseBody
-    public Object login(String id,String passwd){
-//        过期时间,单位为秒
-        int es=60*5;
+    @ApiOperation("登录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="map",value="id和密码",dataType="map",required = true)
+    })
+    public Object login(@RequestBody Map<String,String> map){
+        String id=map.get("id");
+        String passwd=map.get("passwd");
+        Map<String,Object> remap=new HashMap<>();
+        Map<String,Object> userInfo=new HashMap<>();
         ReturnObject re=new ReturnObject();
-        //截取id第一个字符，判断身份，s表示学生，t表示教师，r表示管理员登录
-        String token=null;
-        String fid=id.substring(0,1);
-        if (fid.equals("s")){
-            Student user= studentService.selectStudent(id);
-            if (user!=null){
-                if (passwordEncoder.matches(passwd,user.getPasswd())){
-                    token= jwtUitls.createToken(id,user.getName());
-                    //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
-                    redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
-                }else{
+        if(id!=null && !"".equals(id) && passwd!=null && !"".equals(passwd)){
+            //        过期时间,单位为秒
+            int es=60*5;
+            //截取id第一个字符，判断身份，s表示学生，t表示教师，r表示管理员登录
+            String token=null;
+            String fid=id.substring(0,1);
+            if (fid.equals("s")){
+                Student user= studentService.selectNotDelStudent(id);
+                if (user!=null){
+                    //密码匹配
+                    if (passwordEncoder.matches(passwd,user.getPasswd())){
+                        //封装用户信息
+                        userInfo.put("id",user.getStu_id());
+                        userInfo.put("name",user.getName());
+                        String url=studentService.selectStuHeadUrl(user.getStu_id());
+                        userInfo.put("head_url",url.substring(7));
+                        //创建token
+                        token= jwtUitls.createToken(id,user.getName());
+                        //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
+                        redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("密码错误");
+                        return re;
+                    }
+                }else {
                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                    re.setMessage("密码错误");
+                    re.setMessage("该用户不存在");
                     return re;
                 }
-            }else {
-                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("该用户不存在");
-                return re;
+            } else if (fid.equals("t")) {
+                Teacher user=teacherService.selectNotDelTeacher(id);
+                if (user!=null){
+                    if(passwordEncoder.matches(passwd,user.getPasswd())){
+                        //封装用户信息
+                        userInfo.put("id",user.getTid());
+                        userInfo.put("name",user.getTname());
+                        String url= teacherService.selectTeaHeadUrl(user.getTid());
+                        userInfo.put("head_url",url.substring(7));
+                        token= jwtUitls.createToken(id,user.getTname());
+                        //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
+                        redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("密码错误");
+                        return re;
+                    }
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("该用户不存在");
+                    return re;
+                }
+            } else if (fid.equals("r")) {
+                Admin user=adminService.selectNotDelAdmin(id);
+                if (user!=null){
+                    if(passwordEncoder.matches(passwd,user.getPasswd())){
+                        //封装用户信息
+                        userInfo.put("id",user.getRid());
+                        userInfo.put("name",user.getName());
+                        String url=adminService.selectAdminHeadUrl(user.getRid());
+                        userInfo.put("head_url",url.substring(7));
+                        token= jwtUitls.createToken(id,user.getName());
+                        //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
+                        redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("密码错误");
+                        return re;
+                    }
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("该用户不存在");
+                    return re;
+                }
             }
-        } else if (fid.equals("t")) {
-            Teacher user=teacherService.selectTeacher(id);
-            if (user!=null){
-                if(passwordEncoder.matches(passwd,user.getPasswd())){
-                    token= jwtUitls.createToken(id,user.getTname());
-                    //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
-                    redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
-                }else{
-                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                    re.setMessage("密码错误");
-                    return re;
-                }
+            if (token==null){
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("登录失败");
             }else{
-                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("该用户不存在");
-                return re;
+                remap.put("token",token);
+                remap.put("userInfo",userInfo);
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                re.setMessage("登录成功");
+                re.setData(remap);
             }
-        } else if (fid.equals("r")) {
-            Admin user=adminService.selectAdmin(id);
-            if (user!=null){
-                if(passwordEncoder.matches(passwd,user.getPasswd())){
-                    token= jwtUitls.createToken(id,user.getName());
-                    //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
-                    redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
-                }else{
-                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                    re.setMessage("密码错误");
-                    return re;
-                }
-            }else{
-                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("该用户不存在");
-                return re;
-            }
-        }
-        if (token==null){
-            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-            re.setMessage("登录失败");
         }else{
-            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-            re.setMessage("登录成功");
-            re.setData(token);
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("用户名或密码不能为空");
         }
+
+
         return re;
     }
     /**
      * 退出登录
      */
+    @ApiOperation("退出登录")
     @GetMapping("/logout")
     public Object logout(HttpServletRequest request){
         ReturnObject re=new ReturnObject();

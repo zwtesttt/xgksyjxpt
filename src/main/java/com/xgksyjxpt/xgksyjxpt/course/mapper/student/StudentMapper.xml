@@ -58,9 +58,16 @@
     from student_t
     where stu_id=#{id}
   </select>
+  <!--  查询正常学生账号信息-->
+  <select id="selectNotDelStudent" parameterType="string" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
+    select
+    <include refid="Base_Column_List" />
+    from student_t
+    where stu_id=#{id} and delete_time is null
+  </select>
 <!--  返回所有学生信息-->
   <select id="queryAllStudent" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
-    select stu_id, name, age, sex,passwd from student_t
+    select stu_id, name, age, sex,passwd from student_t where delete_time is null
     <if test="pageNum !=null and passwd!='' and pageSize !=null and pageSize!=''">
       limit #{pageNum},#{pageSize}
     </if>
@@ -90,7 +97,7 @@
   </update>
 <!--  查询学生密码-->
   <select id="selectStuPass" parameterType="string" resultType="string">
-    select passwd from student_t where stu_id=#{stu_id} and delete_time is null
+    select passwd from student_t where stu_id=#{stu_id}
   </select>
 <!--  批量删除学生-->
   <update id="deleteStudents" parameterType="string">
@@ -98,7 +105,7 @@
     <foreach collection="array" item="stuIds" separator=",">
       #{stuIds}
     </foreach>
-    )
+    ) and delete_time is null
   </update>
   <insert id="insertSelective" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student" >
     <!--

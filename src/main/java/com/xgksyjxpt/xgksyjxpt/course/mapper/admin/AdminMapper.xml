@@ -29,6 +29,7 @@
     from admin_t
     where rid = #{rid,jdbcType=VARCHAR}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     <!--
       WARNING - @mbggenerated
@@ -38,10 +39,30 @@
     delete from admin_t
     where rid = #{rid,jdbcType=VARCHAR}
   </delete>
-<!--  查询账号信息-->
+<!--  查询正常账号信息-->
+  <select id="selectNotDelAdmin" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin" parameterType="string">
+    select rid, passwd,name from admin_t where rid=#{id} and delete_time is null
+  </select>
+  <!--  查询所有账号信息-->
   <select id="selectAdmin" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin" parameterType="string">
     select rid, passwd,name from admin_t where rid=#{id}
   </select>
+<!--  添加管理员-->
+  <insert id="insertAdmin" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin">
+    insert into admin_t(rid, passwd,name) values(#{rid},#{passwd},#{name})
+  </insert>
+<!--  更新管理员信息-->
+  <update id="updateAdmin" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin">
+    update admin_t set name=#{name} where rid=#{rid} and delete_time is null
+  </update>
+<!--  修改管理员密码-->
+  <update id="updateAdminPass" parameterType="string">
+    update admin_t set passwd=#{pass} where rid=#{rid} and delete_time is null
+  </update>
+<!--  删除管理员-->
+  <update id="deleteAdmin" parameterType="string">
+    update admin_t set delete_time=now() where rid=#{rid} and delete_time is null
+  </update>
   <insert id="insert" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin" >
     <!--
       WARNING - @mbggenerated

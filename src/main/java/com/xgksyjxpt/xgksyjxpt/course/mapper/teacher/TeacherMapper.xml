@@ -21,8 +21,23 @@
     -->
     tid, tname, age, sex, passwd,delete_time
   </sql>
+<!--  添加老师-->
+  <insert id="insertTeacher" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher">
+    insert into teacher_t(tid, tname, age, sex, passwd) values(#{tid},#{tname},#{age},#{sex},#{passwd})
+  </insert>
+  <!--  批量添加老师-->
+  <insert id="insertTeachers" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher">
+    insert into teacher_t(tid, tname, age, sex, passwd) values
+    <foreach collection="array" item="teachers" separator=",">
+      (#{teachers.tid},#{teachers.tname},#{teachers.age},#{teachers.sex},#{teachers.passwd})
+    </foreach>
+  </insert>
 <!--  查询老师信息-->
   <select id="selectTeacher" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher" parameterType="string">
+    select tid, tname, age, sex, passwd from teacher_t where tid=#{id}
+  </select>
+  <!--  查询正常老师信息-->
+  <select id="selectNotDelTeacher" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher" parameterType="string">
     select tid, tname, age, sex, passwd from teacher_t where tid=#{id} and delete_time is null
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -49,11 +64,11 @@
     <if test="passwd !=null and passwd!=''">
       ,passwd = #{passwd}
     </if>
-    where tid=#{tid}
+    where tid=#{tid} and delete_time is null
   </update>
 <!--  单独修改老师密码-->
   <update id="updateTeaPasswd" >
-    update teacher_t set passwd=#{passwd} where tid=#{tid}
+    update teacher_t set passwd=#{passwd} where tid=#{tid} and delete_time is null
   </update>
 <!--  查询所有老师信息-->
   <select id="queryAllTeacher" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher">
@@ -65,14 +80,14 @@
   </select>
 <!--  查询老师密码-->
   <select id="selectTeaPasswd" parameterType="string" resultType="string">
-    select passwd from teacher_t where tid=#{tid}
+    select passwd from teacher_t where tid=#{tid} and delete_time is null
   </select>
 <!--  批量删除老师账号-->
   <update id="deleteTeacherByTids" parameterType="string">
     update teacher_t set delete_time=NOW() where tid in(
     <foreach collection="array" item="tids" separator=",">
         #{tids}
-    </foreach>)
+    </foreach>) and delete_time is null
   </update>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     <!--

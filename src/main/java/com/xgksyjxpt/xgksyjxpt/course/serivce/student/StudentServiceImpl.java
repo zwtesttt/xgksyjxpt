@@ -7,6 +7,7 @@ import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentHeadMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentTestMapper;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.ContainerService;
+import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +45,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     /**
+     * 只查询正常状态的学生
+     * @param id
+     * @return
+     */
+    @Override
+    public Student selectNotDelStudent(String id) {
+        return studentMapper.selectNotDelStudent(id);
+    }
+
+    /**
      * 查询所有学生
      * @return
      */
@@ -70,6 +81,16 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional//开启事务
     public int insertStudent(Student[] students) {
+        StudentHead head=null;
+//        添加默认头像
+        for (Student s:students
+             ) {
+            head=new StudentHead();
+            head.setStu_id(s.getStu_id());
+            head.setHead_link(HeadUrl.DEFAULT_STU_HEAD);
+            studentHeadMapper.uploadStuHead(head);
+        }
+
         return studentMapper.insertStudent(students);
     }
 
@@ -79,7 +100,14 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
+    @Transactional
     public int insertStudentOne(Student student) {
+//        学生设置默认头像
+        StudentHead head=new StudentHead();
+        head.setStu_id(student.getStu_id());
+        head.setHead_link(HeadUrl.DEFAULT_STU_HEAD);
+        studentHeadMapper.uploadStuHead(head);
+
         return studentMapper.insertStudentOne(student);
     }
 

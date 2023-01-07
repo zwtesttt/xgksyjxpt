@@ -9,6 +9,8 @@ import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +48,7 @@ public class PublicController {
      */
     @GetMapping("/getIp")
     @ApiOperation("根据容器id查询容器ip")
+    @ApiImplicitParam(name="id",value="容器id",dataType="string",required = true)
     public Object getIp(String id){
 //        ReturnObject re=new ReturnObject();
         String networkName=DockerConfig.DOCKER_NETWORK_NAME;
@@ -60,10 +63,15 @@ public class PublicController {
      */
     @PostMapping("/createContain")
     @ApiOperation("根据镜像名和学生id创建容器返回容器id")
-    public Object createContain(String imagesName,String stuId,String testid){
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="imagesName",value="镜像名称",dataType="string",required = true),
+            @ApiImplicitParam(name="stuId",value="学生id",dataType="string",required = true),
+            @ApiImplicitParam(name="testId",value="实验id",dataType="string",required = true)
+    })
+    public Object createContain(String imagesName,String stuId,String testId){
         ReturnObject re=new ReturnObject();
         try {
-            String id= dockerService.createQueryId(imagesName,stuId,DockerConfig.DOCKER_NETWORK_NAME,testid);
+            String id= dockerService.createQueryId(imagesName,stuId,DockerConfig.DOCKER_NETWORK_NAME,testId);
             if (id!=null){
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                 re.setMessage("运行成功");
@@ -85,6 +93,9 @@ public class PublicController {
     //查询学生头像链接
     @GetMapping("/selectStuHead")
     @ApiOperation("查询学生头像链接")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true)
+    })
     public String selectStuHead(String sid){
         String url = studentService.selectStuHeadUrl(sid);
 //        截取字符串,去除url中的group信息
@@ -96,6 +107,9 @@ public class PublicController {
      */
     @GetMapping("/getContainerName")
     @ApiOperation("根据容器id获取容器名称")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="cid",value="容器id",dataType="string",required = true)
+    })
     public String getContainerName(String cid){
         return dockerService.selectContainersName(cid);
     }
