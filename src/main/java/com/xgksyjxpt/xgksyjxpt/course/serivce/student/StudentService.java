@@ -39,5 +39,9 @@ public interface StudentService {
     int deleteStuCourseByCid(String cid);
 
     int queryStuCourseByCid(String cid);
+
+    List<String> selectStudentClassName();
+    List<String> selectStudentIdByClassName(String[] classNames);
+    int insertStudentCourseByCourseId(String[] stuIds,String courseId);
 }
 

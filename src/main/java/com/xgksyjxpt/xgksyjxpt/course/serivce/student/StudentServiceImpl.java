@@ -231,6 +231,36 @@ public class StudentServiceImpl implements StudentService {
     }
 
     /**
+     * 查询所有学生班级名称
+     * @return
+     */
+    @Override
+    public List<String> selectStudentClassName() {
+        return studentMapper.selectStudentClassName();
+    }
+
+    /**
+     * 根据班级名查询学号
+     * @param classNames
+     * @return
+     */
+    @Override
+    public List<String> selectStudentIdByClassName(String[] classNames) {
+        return studentMapper.selectStudentIdByClassName(classNames);
+    }
+
+    /**
+     * 添加学生选课记录
+     * @param stuIds
+     * @param courseId
+     * @return
+     */
+    @Override
+    public int insertStudentCourseByCourseId(String[] stuIds, String courseId) {
+        return studentCourseMapper.insertStudentCourseByCourseId(stuIds,courseId);
+    }
+
+    /**
      * 查询学生头像链接
      * @param sid
      * @return

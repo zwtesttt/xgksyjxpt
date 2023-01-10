@@ -9,10 +9,7 @@ import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.apache.catalina.authenticator.SingleSignOnSessionKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -51,8 +48,10 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ApiOperation("登录")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
-            @ApiImplicitParam(name="map",value="id和密码",dataType="map",required = true)
+            @ApiImplicitParam(name="id",value="id",dataType="string",required = true),
+            @ApiImplicitParam(name="passwd",value="密码",dataType="string",required = true)
     })
     public Object login(@RequestBody Map<String,String> map){
         String id=map.get("id");
@@ -158,6 +157,7 @@ public class LoginController {
      */
     @ApiOperation("退出登录")
     @GetMapping("/logout")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     public Object logout(HttpServletRequest request){
         ReturnObject re=new ReturnObject();
         String token=request.getHeader("token");

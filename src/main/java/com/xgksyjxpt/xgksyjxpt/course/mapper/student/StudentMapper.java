@@ -105,4 +105,12 @@ public interface StudentMapper {
      * 批量删除学生
      */
     int deleteStudents(String[] stuIds);
+    /**
+     * 查询学生班级
+     */
+    List<String> selectStudentClassName();
+    /**
+     * 按班级名查询学生学号
+     */
+    List<String> selectStudentIdByClassName(String[] classNames);
 }

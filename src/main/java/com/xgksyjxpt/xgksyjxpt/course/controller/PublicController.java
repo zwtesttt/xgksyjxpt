@@ -8,10 +8,7 @@ import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,6 +60,7 @@ public class PublicController {
      */
     @PostMapping("/createContain")
     @ApiOperation("根据镜像名和学生id创建容器返回容器id")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="imagesName",value="镜像名称",dataType="string",required = true),
             @ApiImplicitParam(name="stuId",value="学生id",dataType="string",required = true),

@@ -65,6 +65,20 @@
     from student_t
     where stu_id=#{id} and delete_time is null
   </select>
+<!--  根据班级名查询学生学号-->
+  <select id="selectStudentIdByClassName" parameterType="string" resultType="string">
+    select stu_id from student_t where class_name in
+    (
+    <foreach collection="array" item="classNames" separator=",">
+      #{classNames}
+    </foreach>
+    ) and delete_time is null
+
+  </select>
+<!--  查询所有学生班级-->
+  <select id="selectStudentClassName" resultType="string">
+    select class_name from student_t where delete_time is null group by class_name
+  </select>
 <!--  返回所有学生信息-->
   <select id="queryAllStudent" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
     select stu_id, name, age, sex,passwd from student_t where delete_time is null

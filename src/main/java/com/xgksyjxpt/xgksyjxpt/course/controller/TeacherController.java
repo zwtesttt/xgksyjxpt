@@ -14,10 +14,7 @@ import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
 import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -79,12 +76,95 @@ public class TeacherController {
         }
         return list;
     }
+    /**
+     * 查询学生班级
+     */
+    @GetMapping("/getStudentClassName")
+    @ApiOperation("查询所有学生班级")
+    public List<String> getStudentClassName(){
+        return studentService.selectStudentClassName();
+    }
+    /**
+     * 添加学生选课
+     */
+    @PostMapping("/setStudentCourse")
+    @ApiOperation("根据班级绑定学生课程")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="courseId",value="课程id",dataType="string",required = true),
+            @ApiImplicitParam(name="classNames",value="班级数组",dataType="array",required = true)}
+    )
+    public Object setStudentCourse(@RequestBody Map<String,Object> map){
+        ReturnObject re=new ReturnObject();
+        try {
+            if (map!=null){
+                String courseId=(String)map.get("courseId");
+                List<String> classNames= (List<String>) map.get("classNames");
+                if (courseId!=null&&classNames!=null&&classNames.size()!=0){
+//                校验课程号
+                    Course course=courseService.selectCourseByCid(courseId);
+                    if (course!=null){
+//                        验证课程状态
+                        if ("已开始".equals(course.getCourse_status())){
+                            //班级名转存数组
+                            int k=0;
+                            String[] classNameList=new String[classNames.size()];
+                            for (String className:classNames
+                            ) {
+                                classNameList[k++]=className;
+                            }
+                            //给学生绑定选课
+                            //查询学号
+                            List<String> stuIds=studentService.selectStudentIdByClassName(classNameList);
+                            String[] stulist=new String[stuIds.size()];
+                            int i=0;
+//        学号转存数组
+                            for (String sid:stuIds
+                            ) {
+                                stulist[i++]=sid;
+                            }
+                            //添加选课
+                            int stu=studentService.insertStudentCourseByCourseId(stulist,courseId);
+                            if (stu!=0){
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                                re.setMessage("选课成功");
+                            }else{
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                re.setMessage("选课失败");
+                            }
+                        }else{
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("课程已结束不允许选课");
+                        }
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("课程不存在");
+                    }
+
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("课程号和班级名不能为空");
+                }
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("课程号和班级名不能为空");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("选课失败");
+        }
+        return re;
+    }
+
 
     /**
      * 更新老师信息
      */
     @PostMapping("/updateTeacher")
     @ApiOperation("更新老师信息")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParam(name="passwd",value="密码(不用填)",dataType="string",required = false)
     public Object updateStudent(Teacher teacher){
         ReturnObject re=new ReturnObject();
@@ -109,6 +189,7 @@ public class TeacherController {
      */
     @PostMapping("/updatePass")
     @ApiOperation("修改老师密码")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="oldPass",value="旧密码",dataType="string",required = true),
             @ApiImplicitParam(name="tid",value="老师id",dataType="string",required = true),
@@ -153,6 +234,7 @@ public class TeacherController {
      */
     @PostMapping("/uploadImage")
     @ApiOperation("上传小节图片")
+    @ApiResponses(@ApiResponse(code = 200,response = String.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="file",value="图片流",dataType="multipartFile",required = true),
             @ApiImplicitParam(name="cid",value="课程id",dataType="string",required = true),
@@ -185,7 +267,8 @@ public class TeacherController {
      * @return
      */
     @PostMapping("/addCourse")
-    @ApiOperation("添加课程")
+    @ApiOperation(value="添加课程")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="file",value="图片流",dataType="file",required = true)
     })
@@ -214,6 +297,11 @@ public class TeacherController {
                         ch.setCourse_link(url);
 //                    添加记录
                         courseService.uploadCourseHead(ch);
+                        //添加成功把课程id返回
+                        Map<String,Object> remap=new HashMap<>();
+                        remap.put("courseId",course.getCid());
+//                        remap.put("")
+                        re.setData(remap);
                         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                         re.setMessage("添加成功");
                     }else {
@@ -240,6 +328,7 @@ public class TeacherController {
      */
     @DeleteMapping("/deleteCourse")
     @ApiOperation("根据课程号删除课程")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParam(name="cid",value="课程号",dataType="string",required = true)
     public Object deleteCourse(String cid){
         ReturnObject re=new ReturnObject();
@@ -277,6 +366,7 @@ public class TeacherController {
      */
     @PostMapping("/addCourseTest")
     @ApiOperation("添加课程实验")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     public Object addCourseTest(CourseTest courseTest){
         ReturnObject re=new ReturnObject();
 

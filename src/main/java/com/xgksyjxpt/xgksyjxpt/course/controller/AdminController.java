@@ -12,10 +12,7 @@ import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.util.DockerUtil;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -72,6 +69,7 @@ public class AdminController {
      */
     @PostMapping("/addAdmin")
     @ApiOperation("添加管理员")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     public Object addAdmin(Admin admin){
         ReturnObject re=new ReturnObject();
         try{
@@ -109,6 +107,7 @@ public class AdminController {
      */
     @PostMapping("updateAdmin")
     @ApiOperation("修改管理员信息")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParam(name="passwd",value="密码(不用填)",dataType="string",required = false)
     public Object updateAdmin(Admin admin){
         ReturnObject re=new ReturnObject();
@@ -137,6 +136,7 @@ public class AdminController {
      */
     @PostMapping("/updateAdminHead")
     @ApiOperation("修改管理员头像")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="file",value="头像文件流",dataType="multipartFile",required = true),
             @ApiImplicitParam(name="rid",value="管理员id",dataType="string",required = true)
@@ -193,6 +193,7 @@ public class AdminController {
      */
     @PostMapping("/updateAdmPass")
     @ApiOperation("修改管理员密码")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="rid",value="管理员id",dataType="string",required = true),
             @ApiImplicitParam(name="oldPass",value="旧密码",dataType="string",required = true),
@@ -236,6 +237,7 @@ public class AdminController {
      */
     @DeleteMapping("/deleteAdmin")
     @ApiOperation("删除管理员")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     public Object deleteAdmin(String rid){
         ReturnObject re=new ReturnObject();
         try {

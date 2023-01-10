@@ -7,10 +7,7 @@ import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +46,7 @@ public class StudentController {
      */
     @PostMapping("/updateStudent")
     @ApiOperation("更新学生信息")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParam(name="passwd",value="密码(不用填)",dataType="string",required = false)
     public Object updateStudent(Student student){
         ReturnObject re=new ReturnObject();
@@ -74,6 +72,7 @@ public class StudentController {
      */
     @PostMapping("/updateStuPass")
     @ApiOperation("修改学生密码")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true),
             @ApiImplicitParam(name="oldPass",value="旧密码",dataType="string",required = true),
@@ -118,6 +117,7 @@ public class StudentController {
      */
     @PostMapping("/updateStuHead")
     @ApiOperation("修改学生头像")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="file",value="头像文件流",dataType="multipartFile",required = true),
             @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true)
@@ -176,6 +176,7 @@ public class StudentController {
      */
     @PostMapping("/upload")
     @ApiOperation("上传学生头像(最大支持5m)")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="file",value="头像文件流",dataType="multipartFile",required = true),
             @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true)
