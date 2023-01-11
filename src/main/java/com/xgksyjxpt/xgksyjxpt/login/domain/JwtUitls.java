@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.login.domain;
 
+import com.xgksyjxpt.xgksyjxpt.course.domain.admin.AdminIdentity;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
@@ -119,6 +120,32 @@ public class JwtUitls {
                     stu=true;
 //                如果id为管理员账号并且访问的是管理员的接口，则返回true
                 } else if (fid.equals("r")&&url.contains("/admin/")) {
+                    stu=true;
+                }
+            }
+        }catch (MalformedJwtException e){
+            e.printStackTrace();
+            stu=false;
+        }
+        return stu;
+    }
+    /**
+     * 验证登录账号是否为超级管理员
+     */
+    public boolean authSuperAdmin(String token){
+        Claims claims=null;
+        boolean stu=false;
+        try {
+            //        解析token
+            claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
+            //判断redis中是否有这个token
+            if (StringUtils.hasText(token) && redisTemplate.hasKey(token)) {
+                //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
+                String id = claims.getId();
+                //截取id第一个字符，判断身份
+                String fid=id.substring(0,1);
+//                如果id为管理员账号并且身份为超级管理员，则返回true
+                if (fid.equals("r")&& AdminIdentity.SUPER_ADMIN.equals(adminService.selectNotDelAdmin(id).getIdentity())) {
                     stu=true;
                 }
             }

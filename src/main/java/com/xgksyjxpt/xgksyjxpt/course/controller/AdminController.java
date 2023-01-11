@@ -5,6 +5,7 @@ import com.github.dockerjava.api.model.Image;
 import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin;
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.AdminHead;
+import com.xgksyjxpt.xgksyjxpt.course.domain.admin.AdminIdentity;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminService;
 import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
@@ -64,44 +65,7 @@ public class AdminController {
         }
         return list;
     }
-    /**
-     * 添加管理员
-     */
-    @PostMapping("/addAdmin")
-    @ApiOperation("添加管理员")
-    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
-    public Object addAdmin(Admin admin){
-        ReturnObject re=new ReturnObject();
-        try{
-            if (admin!=null){
-                //在所有账号内查询是否存在账号
-                if(adminService.selectAdmin(admin.getRid())!=null){
-                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                    re.setMessage("管理员id已存在");
-                }else{
-                    //不存在则开始添加管理员
-                    //密码加密
-                    String enpass=passwordEncoder.encode(admin.getPasswd());
-                    admin.setPasswd(enpass);
-                    int stu = adminService.insertAdmin(admin);
-                    if (stu!=0){
-                        //添加记录成功则响应成功
-                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-                        re.setMessage("添加成功");
-                    }else{
-                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                        re.setMessage("添加失败");
-                    }
-                }
-            }
 
-        }catch(Exception e){
-            e.printStackTrace();
-            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-            re.setMessage("添加失败");
-        }
-        return re;
-    }
     /**
      * 更新管理员信息
      */
@@ -232,41 +196,6 @@ public class AdminController {
         }
         return re;
     }
-    /**
-     * 删除管理员
-     */
-    @DeleteMapping("/deleteAdmin")
-    @ApiOperation("删除管理员")
-    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
-    public Object deleteAdmin(String rid){
-        ReturnObject re=new ReturnObject();
-        try {
-            if (rid!=null){
-                //校验管理员id
-                if (adminService.selectNotDelAdmin(rid)==null){
-                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                    re.setMessage("管理员不存在");
-                }else{
-//                    删除管理员
-                    int stu=adminService.deleteAdmin(rid);
-                    if (stu!=0){
-                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-                        re.setMessage("删除成功");
-                    }else{
-                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                        re.setMessage("删除失败");
-                    }
-                }
-            }else{
-                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("管理员id不能为空");
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-            re.setMessage("删除失败");
-        }
-        return re;
-    }
+
 
 }

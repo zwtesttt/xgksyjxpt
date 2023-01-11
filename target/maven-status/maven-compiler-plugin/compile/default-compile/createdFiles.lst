@@ -15,6 +15,7 @@ com\xgksyjxpt\xgksyjxpt\course\domain\course\ContainerExample$GeneratedCriteria.
 com\xgksyjxpt\xgksyjxpt\config\ComponetImport.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\ContainerServiceImpl.class
 com\xgksyjxpt\xgksyjxpt\course\controller\AdminCourseController.class
+com\xgksyjxpt\xgksyjxpt\course\controller\SuperAdminController.class
 com\xgksyjxpt\xgksyjxpt\course\domain\teacher\TeacherHead.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\teacher\TeacherMapper.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentHeadMapper.class
@@ -66,6 +67,7 @@ com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseSectionImageMapper.class
 com\xgksyjxpt\xgksyjxpt\webssh\ssh\SSHService$1.class
 com\xgksyjxpt\xgksyjxpt\webssh\websocket\MyWebSocketInterceptor.class
 com\xgksyjxpt\xgksyjxpt\util\UuidUtil.class
+com\xgksyjxpt\xgksyjxpt\course\domain\admin\AdminIdentity.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseChapter.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentCourseMapper.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\student\StudentService.class

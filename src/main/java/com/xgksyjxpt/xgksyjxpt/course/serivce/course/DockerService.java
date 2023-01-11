@@ -72,7 +72,7 @@ public class DockerService {
                     .container_startTime(new Date())
                     .passwd(sshpasswd)
                     .test_id(testid)//实验id
-                    .stu_id(stuId)
+                    .sid(stuId)
                     .build();
             try {
                 //添加记录

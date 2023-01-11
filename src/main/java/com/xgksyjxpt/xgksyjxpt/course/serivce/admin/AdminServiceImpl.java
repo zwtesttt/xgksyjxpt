@@ -7,9 +7,12 @@ import com.xgksyjxpt.xgksyjxpt.course.mapper.admin.AdminHeadMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.admin.AdminMapper;
 import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -125,6 +128,15 @@ public class AdminServiceImpl implements AdminService {
         }
         adminHeadMapper.deleteAdminHead(rid);
         return adminMapper.deleteAdmin(rid);
+    }
+
+    /**
+     * 查询所有普通管理员信息
+     * @return
+     */
+    @Override
+    public List<Admin> selectCommAdmin(Integer pageNum,Integer pageSize) {
+        return adminMapper.selectCommonAdmin(pageNum,pageSize);
     }
 
 }

@@ -69,6 +69,25 @@ public class MyFilter implements Filter {
                             re.setCode(TokenStatus.NO_PREMISSIONS_CODE);
                             re.setMessage("未授权");
                         }
+                        //超级管理员接口
+                    }else if(url.contains("/superadmin/")){
+                        if (jwtUitls.authSuperAdmin(token)){
+                            //token验证结果
+                            verify  = jwtUitls.verify(token);
+                            if (verify==TokenStatus.ALLOW_CODE){
+                                //验证成功，放行
+                                filterChain.doFilter(servletRequest,servletResponse);
+                                return;
+                            }else{
+                                re.setCode(TokenStatus.NO_PREMISSIONS_CODE);
+                                re.setMessage("未授权");
+                            }
+                        }else{
+                            //token为空的返回
+                            re.setCode(TokenStatus.NO_PREMISSIONS_CODE);
+                            re.setMessage("未授权");
+                        }
+                        //其他接口
                     }else{
                         //token验证结果
                         verify  = jwtUitls.verify(token);

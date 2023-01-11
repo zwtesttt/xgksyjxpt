@@ -86,7 +86,7 @@ public class StudentServiceImpl implements StudentService {
         for (Student s:students
              ) {
             head=new StudentHead();
-            head.setStu_id(s.getStu_id());
+            head.setSid(s.getSid());
             head.setHead_link(HeadUrl.DEFAULT_STU_HEAD);
             studentHeadMapper.uploadStuHead(head);
         }
@@ -104,7 +104,7 @@ public class StudentServiceImpl implements StudentService {
     public int insertStudentOne(Student student) {
 //        学生设置默认头像
         StudentHead head=new StudentHead();
-        head.setStu_id(student.getStu_id());
+        head.setSid(student.getSid());
         head.setHead_link(HeadUrl.DEFAULT_STU_HEAD);
         studentHeadMapper.uploadStuHead(head);
 

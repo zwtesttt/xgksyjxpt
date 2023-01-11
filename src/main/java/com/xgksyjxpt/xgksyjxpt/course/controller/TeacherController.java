@@ -1,9 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller;
 
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.Course;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseHead;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSectionImage;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.*;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
@@ -15,6 +12,7 @@ import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import io.swagger.annotations.*;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -70,7 +68,7 @@ public class TeacherController {
         for (Student s:ss) {
             //封装学生信息
             Map<String,String> map=new HashMap<>();
-            map.put("stu_id",s.getStu_id());
+            map.put("sid",s.getSid());
             map.put("name",s.getName());
             list.add(map);
         }
@@ -134,7 +132,7 @@ public class TeacherController {
                             }
                         }else{
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                            re.setMessage("课程已结束不允许选课");
+                            re.setMessage("该课程已结束，不允许选课");
                         }
                     }else{
                         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
@@ -157,8 +155,99 @@ public class TeacherController {
         }
         return re;
     }
+    /**
+     * 添加课程章节
+     */
+    @PostMapping("/addCourseChapter")
+    @ApiOperation("添加课程章节")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    public Object addCourseChapter(CourseChapter courseChapter){
+        ReturnObject re=new ReturnObject();
+        try{
+            if (courseChapter!=null){
+                //验证课程号
+                Course course=courseService.selectCourseByCid(courseChapter.getCid());
+                if (course!=null){
+                    int stu=courseService.insertCourseChapter(courseChapter);
+                    if (stu!=0){
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                        re.setMessage("添加成功");
+                    }
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("课程不存在");
+                }
 
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("章节信息不能为空");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("添加失败");
+        }
+        return re;
+    }
+    /**
+     * 删除根据章节号课程章节
+     */
+    @DeleteMapping("/delCourseChapterByChapterId")
+    @ApiOperation("删除根据章节号课程章节")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="cid",value="课程号",dataType="string",required = true),
+            @ApiImplicitParam(name="chapterId",value="章节号",dataType="string",required = true)
+    })
+    public Object delCourseChapterByChapterId(String cid,String chapterId){
+        ReturnObject re=new ReturnObject();
+        try {
+            if (cid!=null && chapterId!=null){
+                int stu=courseService.deleteCourseChapterByCidAndChapterId(cid,chapterId);
+                if (stu!=0){
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                    re.setMessage("删除成功");
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("删除失败");
+                }
 
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("课程号或者章节号不能为空");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("删除失败");
+        }
+        return re;
+    }
+
+    /**
+     * 查询课程章节
+     */
+    @GetMapping("/getCourseChapter")
+    @ApiOperation("查询课程章节")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParam(name="cid",value="课程号",dataType="string",required = true)
+    public Object getCourseChapter(String cid){
+        ReturnObject re=new ReturnObject();
+        if (cid!=null){
+            if (courseService.selectCourseByCid(cid)!=null){
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                re.setMessage("查询成功");
+                re.setData(courseService.selectCourseChapter(cid));
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("课程不存在");
+            }
+        }else{
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("课程号不能为空");
+        }
+        return re;
+    }
     /**
      * 更新老师信息
      */
@@ -233,33 +322,77 @@ public class TeacherController {
      * 上传图片
      */
     @PostMapping("/uploadImage")
-    @ApiOperation("上传小节图片")
+    @ApiOperation("上传图片")
     @ApiResponses(@ApiResponse(code = 200,response = String.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="file",value="图片流",dataType="multipartFile",required = true),
-            @ApiImplicitParam(name="cid",value="课程id",dataType="string",required = true),
-            @ApiImplicitParam(name="chapterId",value="章节id",dataType="string",required = true),
-            @ApiImplicitParam(name="sectionId",value="小节id",dataType="string",required = true)
     })
-    public String uploadImage(MultipartFile file,String cid,Integer chapterId,Integer sectionId){
+    public String uploadImage(MultipartFile file){
         String url=null;
         try{
             //上传文件拿到url
            url=fastdfsUtil.uploadFile(file);
-           //封装对象
-            CourseSectionImage obj=new CourseSectionImage();
-            obj.setChapter_id(chapterId);
-            obj.setCid(cid);
-            obj.setImage_url(url);
-            obj.setSection_id(sectionId);
-            //添加数据库记录
-            courseService.uploadChapterImage(obj);
+            url=url.substring(7);
         }catch (Exception e){
             e.printStackTrace();
         }
         return url;
     }
+    /**
+     * 保存上传图片记录
+     */
+    @PostMapping("/saveSectionImage")
+    @ApiOperation("保存上传图片记录")
+    @ApiResponses(@ApiResponse(code = 200,response = String.class,message = "成功"))
+    public Object uploadCourseSectionImage(@RequestBody Map<String,Object> map) {
+        ReturnObject re=new ReturnObject();
+        try {
+            if (map!=null){
+                CourseSectionImage obj=null;
+                //封装对象
+                //获取章节id
+                Integer chapterId= (Integer) map.get("chapterId");
+                //获取课程id
+                String cid= (String) map.get("cid");
+                //获取小节id
+                Integer sectionId= (Integer) map.get("sectionId");
+                //保存url
+                List<String> urls= (List<String>) map.get("urls");
+                int count=0;
+                if (urls.size()!=0){
+                    for (String url:urls
+                     ) {
+                        obj=new CourseSectionImage();
+                        obj.setChapter_id(chapterId);
+                        obj.setCid(cid);
+                        obj.setImage_url(url);
+                        obj.setSection_id(sectionId);
+                        //添加数据库记录
+                        int st=courseService.uploadChapterImage(obj);
+                        if (st!=0){
+                            count++;
+                        }
+                    }
+                }
+                if (count==urls.size()){
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                    re.setMessage("保存成功");
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("保存失败");
+                }
 
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("保存失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("保存失败");
+        }
+        return re;
+    }
     /**
      * 添加课程
      * @param course 课程信息

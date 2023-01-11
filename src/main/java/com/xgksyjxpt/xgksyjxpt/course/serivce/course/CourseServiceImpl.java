@@ -214,6 +214,26 @@ public class CourseServiceImpl implements CourseService {
     }
 
     /**
+     * 添加课程章节
+     * @param courseChapter
+     * @return
+     */
+    @Override
+    public int insertCourseChapter(CourseChapter courseChapter) {
+        return courseChapterMapper.insertCourseChapter(courseChapter);
+    }
+
+    /**
+     * 查询课程章节
+     * @param cid
+     * @return
+     */
+    @Override
+    public List<CourseChapter> selectCourseChapter(String cid) {
+        return courseChapterMapper.selectCourseChapter(cid);
+    }
+
+    /**
      * 根据课程号和章节号删除小节
      * @param cid
      * @param chapterId

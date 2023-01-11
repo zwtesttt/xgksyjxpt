@@ -140,7 +140,7 @@ public class StudentController {
 //                    上传成功则更新数据库信息
                         StudentHead studentHead=new StudentHead();
                         studentHead.setHead_link(url);
-                        studentHead.setStu_id(sid);
+                        studentHead.setSid(sid);
                         int stu=studentService.updateStuHead(studentHead);
                         if (stu!=0){
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
@@ -210,7 +210,7 @@ public class StudentController {
 //                    上传成功则录入数据库
                         StudentHead studentHead=new StudentHead();
                         studentHead.setHead_link(url);
-                        studentHead.setStu_id(sid);
+                        studentHead.setSid(sid);
                         //上传新头像
                         studentService.uploadStuHead(studentHead);
                         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);

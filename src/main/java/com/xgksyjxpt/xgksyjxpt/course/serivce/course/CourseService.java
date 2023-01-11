@@ -26,6 +26,8 @@ public interface CourseService {
      */
     int deleteCourseChapterByCid(String cid);
     int deleteCourseChapterByCidAndChapterId(String cid,String chapterId);
+    int insertCourseChapter(CourseChapter courseChapter);
+    List<CourseChapter> selectCourseChapter(String cid);
 
     /**
      * 课程小节接口

@@ -3,6 +3,8 @@ package com.xgksyjxpt.xgksyjxpt.course.serivce.admin;
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin;
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.AdminHead;
 
+import java.util.List;
+
 public interface AdminService {
     Admin selectNotDelAdmin(String id);
     Admin selectAdmin(String id);
@@ -14,4 +16,5 @@ public interface AdminService {
     int updateAdminHead(AdminHead adminHead);
     int updateAdminPass(String rid,String pass);
     int deleteAdmin(String rid);
+    List<Admin> selectCommAdmin(Integer pageNum,Integer pageSize);
 }

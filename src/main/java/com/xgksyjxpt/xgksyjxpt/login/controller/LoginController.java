@@ -71,9 +71,9 @@ public class LoginController {
                     //密码匹配
                     if (passwordEncoder.matches(passwd,user.getPasswd())){
                         //封装用户信息
-                        userInfo.put("id",user.getStu_id());
+                        userInfo.put("id",user.getSid());
                         userInfo.put("name",user.getName());
-                        String url=studentService.selectStuHeadUrl(user.getStu_id());
+                        String url=studentService.selectStuHeadUrl(user.getSid());
                         userInfo.put("head_url",url.substring(7));
                         //创建token
                         token= jwtUitls.createToken(id,user.getName());
@@ -120,6 +120,7 @@ public class LoginController {
                         userInfo.put("name",user.getName());
                         String url=adminService.selectAdminHeadUrl(user.getRid());
                         userInfo.put("head_url",url.substring(7));
+                        userInfo.put("identity",user.getIdentity());
                         token= jwtUitls.createToken(id,user.getName());
                         //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
                         redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));

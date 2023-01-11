@@ -30,6 +30,7 @@ E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\TeacherController.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\teacher\Teacher.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\login\domain\TokenStatus.java
+E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\SuperAdminController.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\student\StudentCourse.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\AdminCourseController.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseSectionMapper.java
@@ -39,6 +40,7 @@ E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\login\domain\MyFilte
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\student\StudentServiceImpl.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\config\SwaggerConfig.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\mapper\admin\AdminMapper.java
+E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\admin\AdminIdentity.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\teacher\TeacherHead.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\student\StudentService.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course\Container.java

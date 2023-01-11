@@ -81,10 +81,10 @@
   </select>
 <!--  返回所有学生信息-->
   <select id="queryAllStudent" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
-    select stu_id, name, age, sex,passwd from student_t where delete_time is null
-    <if test="pageNum !=null and passwd!='' and pageSize !=null and pageSize!=''">
-      limit #{pageNum},#{pageSize}
-    </if>
+    select
+    <include refid="Base_Column_List"></include>
+    from student_t where delete_time is null
+    limit #{pageNum},#{pageSize}
   </select>
 <!--  修改学生基本信息-->
   <update id="updateStudent" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
