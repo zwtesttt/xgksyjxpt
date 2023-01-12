@@ -1,6 +1,7 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.course;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.*;
+import io.swagger.models.auth.In;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,16 +26,22 @@ public interface CourseService {
      * 课程章节接口
      */
     int deleteCourseChapterByCid(String cid);
-    int deleteCourseChapterByCidAndChapterId(String cid,String chapterId);
+    int deleteCourseChapterByCidAndChapterId(String cid,Integer chapterId);
     int insertCourseChapter(CourseChapter courseChapter);
     List<CourseChapter> selectCourseChapter(String cid);
+    Integer queryCourseChapterMaxId(String cid);
 
     /**
      * 课程小节接口
      */
-    int deleteCourseSectionByCidAndChapterId(String cid,String chapterId);
+    int deleteCourseSectionByCidAndChapterId(String cid,Integer chapterId);
     int deleteCourseSectionByCid(String cid);
-    int deleteCourseSectionByCidAndChapterIdAndSectionId(String cid,String chapterId,String sectionId);
+    int deleteCourseSectionByCidAndChapterIdAndSectionId(String cid,Integer chapterId,Integer sectionId);
+    int insertCourseSection(CourseSection courseSection);
+    List<CourseSection> selectCourseSectionName(String cid,Integer chapterId);
+    Integer queryCourseSectionMaxId(String cid,Integer chapterId);
+    String queryCourseSectionText(String cid,Integer chapterId,Integer sectionId);
+    int updayeCourseSectionText(String cid,Integer chapterId,Integer sectionId,String text);
 
     /**
      * 课程实验接口
@@ -50,10 +57,10 @@ public interface CourseService {
      */
     int uploadChapterImage(CourseSectionImage courseSectionImage);
     List<String> selectImageUrlByCid(String cid);
-    List<String> selectImageUrlByCidAndChapterId(String cid,String chapterId);
-    int deleteImageByCidAndChapterId(String cid,String chapterId);
-    int deleteImageByCidAndChapterIdAndSectionId(String cid,String chapterId,String sectionId);
-    List<String> selectImageUrlByCidAndChapterIdAndSectionId(String cid,String chapterId,String sectionId);
+    List<String> selectImageUrlByCidAndChapterId(String cid,Integer chapterId);
+    int deleteImageByCidAndChapterId(String cid,Integer chapterId);
+    int deleteImageByCidAndChapterIdAndSectionId(String cid,Integer chapterId,Integer sectionId);
+    List<String> selectImageUrlByCidAndChapterIdAndSectionId(String cid,Integer chapterId,Integer sectionId);
     int deleteImageByCid(String cid);
 
 

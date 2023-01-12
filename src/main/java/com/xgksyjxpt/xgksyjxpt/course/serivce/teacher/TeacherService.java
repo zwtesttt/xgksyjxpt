@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.teacher;
 
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.TeacherHead;
 

@@ -7,6 +7,7 @@ import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -207,7 +208,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     @Transactional
-    public int deleteCourseChapterByCidAndChapterId(String cid, String chapterId) {
+    public int deleteCourseChapterByCidAndChapterId(String cid, Integer chapterId) {
         //删除该章节小的小节
         deleteCourseSectionByCidAndChapterId(cid,chapterId);
         return courseChapterMapper.deleteCourseChapterByCidAndChapterId(cid,chapterId);
@@ -234,6 +235,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     /**
+     * 查找最大的章节id
+     * @param cid
+     * @return
+     */
+    @Override
+    public Integer queryCourseChapterMaxId(String cid) {
+        return courseChapterMapper.queryCourseChapterMaxId(cid);
+    }
+
+    /**
      * 根据课程号和章节号删除小节
      * @param cid
      * @param chapterId
@@ -241,7 +252,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     @Transactional
-    public int deleteCourseSectionByCidAndChapterId(String cid, String chapterId) {
+    public int deleteCourseSectionByCidAndChapterId(String cid, Integer chapterId) {
         //删除该章节下的小节上传的图片
         //保存即将要删除的图片url
         List<String> urls=courseSectionImageMapper.selectImageUrlByCidAndChapterId(cid,chapterId);
@@ -290,7 +301,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     @Transactional
-    public int deleteCourseSectionByCidAndChapterIdAndSectionId(String cid, String chapterId, String sectionId) {
+    public int deleteCourseSectionByCidAndChapterIdAndSectionId(String cid, Integer chapterId, Integer sectionId) {
         //删除该小节下上传的图片
         //保存即将要删除的图片url
         List<String> urls=courseSectionImageMapper.selectImageUrlByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
@@ -304,6 +315,62 @@ public class CourseServiceImpl implements CourseService {
             }
         }
         return courseSectionMapper.deleteCourseSectionByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
+    }
+    /**
+     * 添加课程小节
+     * @param courseSection
+     * @return
+     */
+    @Override
+    public int insertCourseSection(CourseSection courseSection) {
+        return courseSectionMapper.insertCourseSectionByCidAndChapterId(courseSection);
+    }
+
+    /**
+     * 查询章节下的小节标题
+     * @param cid
+     * @param chapterId
+     * @return
+     */
+    @Override
+    public List<CourseSection> selectCourseSectionName(String cid, Integer chapterId) {
+        return courseSectionMapper.selectCourseSectionName(cid,chapterId);
+    }
+
+    /**
+     * 查找章节下最大小节id
+     * @param cid
+     * @param chapterId
+     * @return
+     */
+    @Override
+    public Integer queryCourseSectionMaxId(String cid, Integer chapterId) {
+        return courseSectionMapper.queryCourseSectionMaxId(cid,chapterId);
+    }
+
+    /**
+     * 查询小节文本内容
+     * @param cid
+     * @param chapterId
+     * @param sectionId
+     * @return
+     */
+    @Override
+    public String queryCourseSectionText(String cid, Integer chapterId, Integer sectionId) {
+        return courseSectionMapper.queryCourseSectionText(cid,chapterId,sectionId);
+    }
+
+    /**
+     * 修改小节内容
+     * @param cid
+     * @param chapterId
+     * @param sectionId
+     * @param text
+     * @return
+     */
+    @Override
+    public int updayeCourseSectionText(String cid, Integer chapterId, Integer sectionId, String text) {
+        return courseSectionMapper.updateCourseSectionText(cid,chapterId,sectionId,text);
     }
 
     /**
@@ -433,7 +500,7 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public List<String> selectImageUrlByCidAndChapterId(String cid, String chapterId) {
+    public List<String> selectImageUrlByCidAndChapterId(String cid, Integer chapterId) {
         return courseSectionImageMapper.selectImageUrlByCidAndChapterId(cid,chapterId);
     }
 
@@ -444,7 +511,7 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public int deleteImageByCidAndChapterId(String cid, String chapterId) {
+    public int deleteImageByCidAndChapterId(String cid, Integer chapterId) {
         return courseSectionImageMapper.deleteImageByCidAndChapterId(cid,chapterId);
     }
 
@@ -456,7 +523,7 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public int deleteImageByCidAndChapterIdAndSectionId(String cid, String chapterId, String sectionId) {
+    public int deleteImageByCidAndChapterIdAndSectionId(String cid, Integer chapterId, Integer sectionId) {
         return courseSectionImageMapper.deleteImageByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
     }
 
@@ -468,7 +535,7 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public List<String> selectImageUrlByCidAndChapterIdAndSectionId(String cid, String chapterId, String sectionId) {
+    public List<String> selectImageUrlByCidAndChapterIdAndSectionId(String cid, Integer chapterId, Integer sectionId) {
         return courseSectionImageMapper.selectImageUrlByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
     }
     /**

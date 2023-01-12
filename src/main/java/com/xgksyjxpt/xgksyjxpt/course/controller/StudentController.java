@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller;
 
+import com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
 import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/student")//给该controller类所有接口加上/student的url前缀
@@ -230,6 +234,45 @@ public class StudentController {
             e.printStackTrace();
             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
             re.setMessage("上传头像失败");
+        }
+        return re;
+    }
+    /**
+     * 查询学生个人信息
+     */
+    @GetMapping("/getStudentInfo")
+    @ApiOperation("查询学生个人信息")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true)
+    public Object getAdminInfo(String sid){
+        ReturnObject re=new ReturnObject();
+        if (sid!=null){
+            //验证学生id
+            Student student=studentService.selectNotDelStudent(sid);
+            if (student!=null){
+                //封装
+                Map<String,Object> remap=new HashMap<>();
+                remap.put("sid",student.getSid());
+                //名字
+                remap.put("name",student.getName());
+                //性别
+                remap.put("sex",student.getSex());
+                //年龄
+                remap.put("age",student.getAge());
+                //班级
+                remap.put("className",student.getClass_name());
+                //头像url
+                remap.put("headUrl",studentService.selectStuHeadUrl(sid).substring(7));
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                re.setMessage("查询成功");
+                re.setData(remap);
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("学生不存在");
+            }
+        }else{
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("学生id不能为空");
         }
         return re;
     }

@@ -21,6 +21,7 @@ com\xgksyjxpt\xgksyjxpt\course\mapper\teacher\TeacherMapper.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentHeadMapper.class
 com\xgksyjxpt\xgksyjxpt\domain\ReturnObject.class
 com\xgksyjxpt\xgksyjxpt\course\controller\AdminStudentController.class
+com\xgksyjxpt\xgksyjxpt\course\controller\TeacherCourseController.class
 com\xgksyjxpt\xgksyjxpt\webssh\domain\SSHConnection.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentTestMapper.class
 com\xgksyjxpt\xgksyjxpt\util\GetCellValue.class

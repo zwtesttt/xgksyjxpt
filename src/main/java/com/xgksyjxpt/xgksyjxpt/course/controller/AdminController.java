@@ -67,12 +67,16 @@ public class AdminController {
     }
 
     /**
-     * 更新管理员信息
+     * 修改管理员信息
      */
     @PostMapping("updateAdmin")
     @ApiOperation("修改管理员信息")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
-    @ApiImplicitParam(name="passwd",value="密码(不用填)",dataType="string",required = false)
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="identity",value="身份(不用带)",dataType="string",required = false),
+            @ApiImplicitParam(name="passwd",value="密码(不用带)",dataType="string",required = false)
+    })
     public Object updateAdmin(Admin admin){
         ReturnObject re=new ReturnObject();
         try{
@@ -128,6 +132,8 @@ public class AdminController {
                         int stu=adminService.updateAdminHead(adminHead);
                         if (stu!=0){
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                            //截取url
+                            re.setData(url.substring(7));
                             re.setMessage("修改头像成功");
                         }else{
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
@@ -196,6 +202,40 @@ public class AdminController {
         }
         return re;
     }
-
+    /**
+     * 查询管理员个人信息
+     */
+    @GetMapping("/getAdminInfo")
+    @ApiOperation("查询管理员个人信息")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParam(name="rid",value="管理员id",dataType="string",required = true)
+    public Object getAdminInfo(String rid){
+        ReturnObject re=new ReturnObject();
+        if (rid!=null){
+            //验证管理员id
+            Admin admin=adminService.selectNotDelAdmin(rid);
+            if (admin!=null){
+                //封装
+                Map<String,Object> remap=new HashMap<>();
+                remap.put("rid",admin.getRid());
+                //名字
+                remap.put("name",admin.getName());
+                //账号身份
+                remap.put("identity",admin.getIdentity());
+                //头像url
+                remap.put("headUrl",adminService.selectAdminHeadUrl(rid).substring(7));
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                re.setMessage("查询成功");
+                re.setData(remap);
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("管理员不存在");
+            }
+        }else{
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("管理员id不能为空");
+        }
+        return re;
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.teacher;
 
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.TeacherHead;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.teacher.TeacherHeadMapper;
@@ -193,4 +194,6 @@ public class TeacherServiceImpl implements TeacherService {
 
         return teacherMapper.insertTeachers(teachers);
     }
+
+
 }
