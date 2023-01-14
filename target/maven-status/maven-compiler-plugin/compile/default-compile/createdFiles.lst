@@ -1,13 +1,16 @@
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\DockerService.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseTest.class
 com\xgksyjxpt\xgksyjxpt\login\domain\JwtUitls.class
+com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseSectionService.class
 com\xgksyjxpt\xgksyjxpt\course\domain\student\Student.class
 com\xgksyjxpt\xgksyjxpt\config\DockerConfig.class
+com\xgksyjxpt\xgksyjxpt\course\controller\TeacherCourseSectionController.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseSection.class
 com\xgksyjxpt\xgksyjxpt\login\controller\LoginController.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\ContainerExample$Criterion.class
 com\xgksyjxpt\xgksyjxpt\course\controller\AdminController.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseService.class
+com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseChapterServiceImpl.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseHeadMapper.class
 com\xgksyjxpt\xgksyjxpt\course\domain\student\StudentTest.class
 com\xgksyjxpt\xgksyjxpt\domain\HeadUrl.class
@@ -18,6 +21,7 @@ com\xgksyjxpt\xgksyjxpt\course\controller\AdminCourseController.class
 com\xgksyjxpt\xgksyjxpt\course\controller\SuperAdminController.class
 com\xgksyjxpt\xgksyjxpt\course\domain\teacher\TeacherHead.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\teacher\TeacherMapper.class
+com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseTestService.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentHeadMapper.class
 com\xgksyjxpt\xgksyjxpt\domain\ReturnObject.class
 com\xgksyjxpt\xgksyjxpt\course\controller\AdminStudentController.class
@@ -40,6 +44,7 @@ com\xgksyjxpt\xgksyjxpt\course\domain\course\Container.class
 com\xgksyjxpt\xgksyjxpt\course\domain\admin\Admin.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentMapper.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\teacher\TeacherHeadMapper.class
+com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseSectionServiceImpl.class
 com\xgksyjxpt\xgksyjxpt\webssh\ssh\SSHService.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\teacher\TeacherService.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseMapper.class
@@ -52,6 +57,7 @@ com\xgksyjxpt\xgksyjxpt\config\SwaggerConfig.class
 com\xgksyjxpt\xgksyjxpt\login\domain\MyFilter.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseSectionMapper.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseHead.class
+com\xgksyjxpt\xgksyjxpt\course\controller\TeacherCourseChapterController.class
 com\xgksyjxpt\xgksyjxpt\course\controller\PublicController.class
 com\xgksyjxpt\xgksyjxpt\webssh\domain\WebSSHData$WebSSHDataBuilder.class
 com\xgksyjxpt\xgksyjxpt\course\controller\StudentController.class
@@ -65,9 +71,11 @@ com\xgksyjxpt\xgksyjxpt\util\PasswordUtils.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\student\StudentServiceImpl.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\admin\AdminServiceImpl.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseSectionImageMapper.class
+com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseChapterService.class
 com\xgksyjxpt\xgksyjxpt\webssh\ssh\SSHService$1.class
 com\xgksyjxpt\xgksyjxpt\webssh\websocket\MyWebSocketInterceptor.class
 com\xgksyjxpt\xgksyjxpt\util\UuidUtil.class
+com\xgksyjxpt\xgksyjxpt\course\controller\TeacherCourseTestController.class
 com\xgksyjxpt\xgksyjxpt\course\domain\admin\AdminIdentity.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseChapter.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentCourseMapper.class
@@ -80,6 +88,7 @@ com\xgksyjxpt\xgksyjxpt\course\controller\TeacherController.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\admin\AdminService.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\Container$ContainerBuilder.class
 com\xgksyjxpt\xgksyjxpt\util\DateUtil.class
+com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseTestServiceImpl.class
 com\xgksyjxpt\xgksyjxpt\webssh\domain\WebSSHData.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\ContainerMapper.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseServiceImpl.class

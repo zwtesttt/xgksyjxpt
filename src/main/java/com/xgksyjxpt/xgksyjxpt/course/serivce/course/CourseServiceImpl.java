@@ -22,34 +22,24 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
     @Autowired
-    private CourseSectionImageMapper courseSectionImageMapper;
-
-    @Autowired
     private CourseMapper courseMapper;
 
     @Autowired
     private CourseHeadMapper courseHeadMapper;
 
     @Autowired
-    private CourseChapterMapper courseChapterMapper;
-
-    @Autowired
-    private CourseSectionMapper courseSectionMapper;
-
-    @Autowired
-    private CourseTestMapper courseTestMapper;
-
-    @Autowired
     private StudentService studentService;
 
     @Autowired
-    private ContainerService containerService;
+    private CourseChapterService courseChapterService;
 
+    @Autowired
+    private CourseSectionService courseSectionService;
+
+    @Autowired
+    private CourseTestService courseTestService;
     @Autowired
     private FastdfsUtil fastdfsUtil;
-
-    @Autowired
-    private DockerService dockerService;
 
     @Autowired
     private CourseTestImagesMapper courseTestImagesMapper;
@@ -107,9 +97,9 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     public int deleteCourse(String cid) {
         //删除课程章节
-        deleteCourseChapterByCid(cid);
+        courseChapterService.deleteCourseChapterByCid(cid);
         //删除课程实验
-        deleteCourseTestByCid(cid);
+        courseTestService.deleteCourseTestByCid(cid);
         //保存课程封面url
         String headurl=selectCourseHeadUrlByCid(cid);
         //删除课程封面记录
@@ -118,6 +108,9 @@ public class CourseServiceImpl implements CourseService {
         studentService.deleteStuCourseByCid(cid);
         //       开始删除服务器中的封面
         fastdfsUtil.deleteFile(headurl);
+        //删除课程定时任务
+        courseMapper.deleteCourseEvent("event"+cid+"start");
+        courseMapper.deleteCourseEvent("event"+cid+"end");
         return courseMapper.deleteCourse(cid);
     }
 
@@ -152,9 +145,9 @@ public class CourseServiceImpl implements CourseService {
         for (String cid:cids
              ) {
             //删除课程章节
-            deleteCourseChapterByCid(cid);
+            courseChapterService.deleteCourseChapterByCid(cid);
             //删除课程实验
-            deleteCourseTestByCid(cid);
+            courseTestService.deleteCourseTestByCid(cid);
             //保存课程封面url
             String headurl=selectCourseHeadUrlByCid(cid);
             //删除课程封面记录
@@ -163,6 +156,9 @@ public class CourseServiceImpl implements CourseService {
             studentService.deleteStuCourseByCid(cid);
             //       开始删除服务器中的封面
             fastdfsUtil.deleteFile(headurl);
+            //删除课程定时任务
+            courseMapper.deleteCourseEvent("event"+cid+"start");
+            courseMapper.deleteCourseEvent("event"+cid+"end");
         }
         return courseMapper.deleteCoursesByCids(cids);
     }
@@ -186,259 +182,25 @@ public class CourseServiceImpl implements CourseService {
     public int createEvent(String date, String cid,String eventName,String courseStatus) {
         return courseMapper.createEvent(date,cid,eventName,courseStatus);
     }
+    /**
+     * 根据老师id查询课程信息
+     */
+    @Override
+    public List<Course> selectCourseByTid(String tid,Integer pageNum,Integer pageSize) {
+        return courseMapper.selectCourseByTid(tid,pageNum,pageSize);
+    }
 
     /**
-     * 删除课程章节
-     * @param cid
+     * 修改课程信息
+     * @param course
      * @return
      */
     @Override
     @Transactional
-    public int deleteCourseChapterByCid(String cid) {
-        //删除该课程下的小节
-        deleteCourseSectionByCid(cid);
-        return courseChapterMapper.deleteCourseChapterByCid(cid);
-    }
-
-    /**
-     * 根据课程号和章节号删除章节
-     * @param cid
-     * @param chapterId
-     * @return
-     */
-    @Override
-    @Transactional
-    public int deleteCourseChapterByCidAndChapterId(String cid, Integer chapterId) {
-        //删除该章节小的小节
-        deleteCourseSectionByCidAndChapterId(cid,chapterId);
-        return courseChapterMapper.deleteCourseChapterByCidAndChapterId(cid,chapterId);
-    }
-
-    /**
-     * 添加课程章节
-     * @param courseChapter
-     * @return
-     */
-    @Override
-    public int insertCourseChapter(CourseChapter courseChapter) {
-        return courseChapterMapper.insertCourseChapter(courseChapter);
-    }
-
-    /**
-     * 查询课程章节
-     * @param cid
-     * @return
-     */
-    @Override
-    public List<CourseChapter> selectCourseChapter(String cid) {
-        return courseChapterMapper.selectCourseChapter(cid);
-    }
-
-    /**
-     * 查找最大的章节id
-     * @param cid
-     * @return
-     */
-    @Override
-    public Integer queryCourseChapterMaxId(String cid) {
-        return courseChapterMapper.queryCourseChapterMaxId(cid);
-    }
-
-    /**
-     * 根据课程号和章节号删除小节
-     * @param cid
-     * @param chapterId
-     * @return
-     */
-    @Override
-    @Transactional
-    public int deleteCourseSectionByCidAndChapterId(String cid, Integer chapterId) {
-        //删除该章节下的小节上传的图片
-        //保存即将要删除的图片url
-        List<String> urls=courseSectionImageMapper.selectImageUrlByCidAndChapterId(cid,chapterId);
-        //开始删除记录
-        courseSectionImageMapper.deleteImageByCidAndChapterId(cid,chapterId);
-        //删除数据库中的图片
-        if (urls.size()!=0){
-            for (String s:urls
-            ) {
-                fastdfsUtil.deleteFile(s);
-            }
-        }
-
-        return courseSectionMapper.deleteCourseSectionByCidAndChapterId(cid,chapterId);
-    }
-
-    /**
-     * 根据课程号删除小节
-     * @param cid
-     * @return
-     */
-    @Override
-    @Transactional
-    public int deleteCourseSectionByCid(String cid) {
-        //删除该课程下的小节上传的图片
-        //保存即将要删除的图片url
-        List<String> urls=courseSectionImageMapper.selectImageUrlByCid(cid);
-        //开始删除记录
-        courseSectionImageMapper.deleteImageByCid(cid);
-        //删除数据库中的图片
-        if (urls.size()!=0){
-            for (String s:urls
-            ) {
-                fastdfsUtil.deleteFile(s);
-            }
-        }
-        return courseSectionMapper.deleteCourseSectionByCid(cid);
-    }
-
-    /**
-     * 根据课程号、章节号、小节号删除小节
-     * @param cid
-     * @param chapterId
-     * @param sectionId
-     * @return
-     */
-    @Override
-    @Transactional
-    public int deleteCourseSectionByCidAndChapterIdAndSectionId(String cid, Integer chapterId, Integer sectionId) {
-        //删除该小节下上传的图片
-        //保存即将要删除的图片url
-        List<String> urls=courseSectionImageMapper.selectImageUrlByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
-        //开始删除记录
-        courseSectionImageMapper.deleteImageByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
-        //删除数据库中的图片
-        if (urls.size()!=0){
-            for (String s:urls
-            ) {
-                fastdfsUtil.deleteFile(s);
-            }
-        }
-        return courseSectionMapper.deleteCourseSectionByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
-    }
-    /**
-     * 添加课程小节
-     * @param courseSection
-     * @return
-     */
-    @Override
-    public int insertCourseSection(CourseSection courseSection) {
-        return courseSectionMapper.insertCourseSectionByCidAndChapterId(courseSection);
-    }
-
-    /**
-     * 查询章节下的小节标题
-     * @param cid
-     * @param chapterId
-     * @return
-     */
-    @Override
-    public List<CourseSection> selectCourseSectionName(String cid, Integer chapterId) {
-        return courseSectionMapper.selectCourseSectionName(cid,chapterId);
-    }
-
-    /**
-     * 查找章节下最大小节id
-     * @param cid
-     * @param chapterId
-     * @return
-     */
-    @Override
-    public Integer queryCourseSectionMaxId(String cid, Integer chapterId) {
-        return courseSectionMapper.queryCourseSectionMaxId(cid,chapterId);
-    }
-
-    /**
-     * 查询小节文本内容
-     * @param cid
-     * @param chapterId
-     * @param sectionId
-     * @return
-     */
-    @Override
-    public String queryCourseSectionText(String cid, Integer chapterId, Integer sectionId) {
-        return courseSectionMapper.queryCourseSectionText(cid,chapterId,sectionId);
-    }
-
-    /**
-     * 修改小节内容
-     * @param cid
-     * @param chapterId
-     * @param sectionId
-     * @param text
-     * @return
-     */
-    @Override
-    public int updayeCourseSectionText(String cid, Integer chapterId, Integer sectionId, String text) {
-        return courseSectionMapper.updateCourseSectionText(cid,chapterId,sectionId,text);
-    }
-
-    /**
-     * 根据课程号删除课程实验
-     * @param cid
-     * @return
-     */
-    @Override
-    @Transactional
-    public int deleteCourseTestByCid(String cid) {
-        //保存将被删除的课程的所有实验id
-        List<String> testids=selectCourseTestIdByCid(cid);
-        //保存将要删除的容器id
-        if (testids.size()!=0){
-            for (String s:testids
-            ) {
-                List<String> containerIds=containerService.selectContainerIdByTestId(s);
-                //删除运行容器记录
-                if (containerIds.size()!=0){
-                    int stu=containerService.deleteContainerByTestId(s);
-                    if (stu==containerIds.size()){
-                        //删除该实验下的容器
-                        dockerService.removeContainers(containerIds);
-                    }
-                }
-                //删除实验记录
-                studentService.deleteStuTestByTestId(s);
-            }
-        }
-        return courseTestMapper.deleteCourseTestByCid(cid);
-    }
-
-    /**
-     * 根据课程号查询实验id
-     * @param cid
-     * @return
-     */
-    @Override
-    public List<String> selectCourseTestIdByCid(String cid) {
-        return courseTestMapper.selectCourseTestIdByCid(cid);
-    }
-
-    /**
-     * 查询所有实验
-     * @return
-     */
-    @Override
-    public List<CourseTest> queryAllCourseTest() {
-        return courseTestMapper.queryAllCourseTest();
-    }
-
-    /**
-     * 根据课程号查询课程实验
-     * @param cid
-     * @return
-     */
-    @Override
-    public List<CourseTest> queryCourseTestByCid(String cid,Integer pageNum,Integer pageSize) {
-        return courseTestMapper.queryAllCourseTestByCid(cid,pageNum,pageSize);
-    }
-
-    /**
-     * 添加课程实验
-     * @param courseTest
-     * @return
-     */
-    @Override
-    public int insertCourseTest(CourseTest courseTest) {
+    public int updateCourseInfo(Course course) {
+        //删除之前创建的定时任务
+        courseMapper.deleteCourseEvent("event"+course.getCid()+"start");
+        courseMapper.deleteCourseEvent("event"+course.getCid()+"end");
         //设置实验状态
         //比较课程开始时间和当前时间
         //现在时间
@@ -447,97 +209,32 @@ public class CourseServiceImpl implements CourseService {
         Date end=null;
         //开始时间
         try {
-            start=DateUtil.getDate(courseTest.getTest_start_time());
+            start= DateUtil.getDate(course.getCourse_start());
             //结束时间
-            end=DateUtil.getDate(courseTest.getTest_end_time());
+            end=DateUtil.getDate(course.getCourse_end());
         }catch (Exception e){
             e.printStackTrace();
         }
         //结束时间在当前时间之后则添加定时任务
         if(end.compareTo(nowdate)>0){
-            //实验开始时间在当前时间之后
             if (start.compareTo(nowdate)>0){
                 //创建数据库定时事件
-                courseTestMapper.createCourseTestEvent(courseTest.getTest_start_time(),courseTest.getTest_id(),"courseevent"+courseTest.getTest_id()+"start",CourseStatus.COURSE_START);
-                courseTest.setTest_status(CourseStatus.COURSE_NOT_START);
+                createEvent(course.getCourse_start(),course.getCid(),"event"+course.getCid()+"start",CourseStatus.COURSE_START);
+                course.setCourse_status(CourseStatus.COURSE_NOT_START);
                 //开课时间在当前时间之前或者等于当前时间
             }else{
-                courseTest.setTest_status(CourseStatus.COURSE_START);
+                course.setCourse_status(CourseStatus.COURSE_START);
             }
             //创建数据库定时事件
-            courseTestMapper.createCourseTestEvent(courseTest.getTest_end_time(),courseTest.getTest_id(),"courseevent"+courseTest.getTest_id()+"end",CourseStatus.COURSE_END);
+            createEvent(course.getCourse_end(),course.getCid(),"event"+course.getCid()+"end",CourseStatus.COURSE_END);
             //结束时间在当前之间之前或者相等则把课程状态设置成已结束
         }else{
-            courseTest.setTest_status(CourseStatus.COURSE_END);
+            course.setCourse_status(CourseStatus.COURSE_END);
         }
-        return courseTestMapper.insertCourseTest(courseTest);
+        return courseMapper.updateCourseInfo(course);
     }
 
-    /**
-     * 根据cid删除图片
-     * @param cid
-     * @return
-     */
-    @Override
-    public int deleteImageByCid(String cid) {
-        return courseSectionImageMapper.deleteImageByCid(cid);
-    }
 
-    /**
-     * 根据课程号查询图片url
-     * @param cid
-     * @return
-     */
-    @Override
-    public List<String> selectImageUrlByCid(String cid) {
-        return courseSectionImageMapper.selectImageUrlByCid(cid);
-    }
-
-    /**
-     * 根据课程号和章节号查询图片url
-     * @param cid
-     * @param chapterId
-     * @return
-     */
-    @Override
-    public List<String> selectImageUrlByCidAndChapterId(String cid, Integer chapterId) {
-        return courseSectionImageMapper.selectImageUrlByCidAndChapterId(cid,chapterId);
-    }
-
-    /**
-     * 根据课程号和章节号删除图片记录
-     * @param cid
-     * @param chapterId
-     * @return
-     */
-    @Override
-    public int deleteImageByCidAndChapterId(String cid, Integer chapterId) {
-        return courseSectionImageMapper.deleteImageByCidAndChapterId(cid,chapterId);
-    }
-
-    /**
-     * 根据课程号和章节号、小节号删除图片记录
-     * @param cid
-     * @param chapterId
-     * @param sectionId
-     * @return
-     */
-    @Override
-    public int deleteImageByCidAndChapterIdAndSectionId(String cid, Integer chapterId, Integer sectionId) {
-        return courseSectionImageMapper.deleteImageByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
-    }
-
-    /**
-     * 根据课程号和章节号、小节号查询图片url
-     * @param cid
-     * @param chapterId
-     * @param sectionId
-     * @return
-     */
-    @Override
-    public List<String> selectImageUrlByCidAndChapterIdAndSectionId(String cid, Integer chapterId, Integer sectionId) {
-        return courseSectionImageMapper.selectImageUrlByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
-    }
     /**
      * 添加课程封面记录
      * @param courseHead
@@ -569,6 +266,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     /**
+     * 修改课程封面
+     * @param courseHead
+     * @return
+     */
+    @Override
+    public int updateCourseHead(CourseHead courseHead) {
+        return courseHeadMapper.updateCourseHead(courseHead);
+    }
+
+    /**
      * 查询所有可用镜像名
      * @return
      */
@@ -597,13 +304,5 @@ public class CourseServiceImpl implements CourseService {
         return courseTestImagesMapper.deleteCourseTestImages(imagesNames);
     }
 
-    /**
-     * 添加上传图片记录
-     * @param courseSectionImage
-     * @return
-     */
-    @Override
-    public int uploadChapterImage(CourseSectionImage courseSectionImage) {
-        return courseSectionImageMapper.uploadchapterImage(courseSectionImage);
-    }
+
 }

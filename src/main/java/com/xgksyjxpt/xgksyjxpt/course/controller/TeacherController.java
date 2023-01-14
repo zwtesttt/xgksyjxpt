@@ -1,43 +1,23 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller;
 
-import com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.*;
-import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
+
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
-import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
-import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
-import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
-import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
-import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import io.swagger.annotations.*;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/teacher")
-@Api(tags = "老师接口")
+@Api(tags = "老师通用接口")
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
-    @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private CourseService courseService;
-
-    @Autowired
-    private FastdfsUtil fastdfsUtil;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

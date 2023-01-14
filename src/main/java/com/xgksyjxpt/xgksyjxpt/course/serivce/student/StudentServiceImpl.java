@@ -2,6 +2,7 @@ package com.xgksyjxpt.xgksyjxpt.course.serivce.student;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
+import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentCourseMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentHeadMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentMapper;
@@ -257,7 +258,37 @@ public class StudentServiceImpl implements StudentService {
      */
     @Override
     public int insertStudentCourseByCourseId(String[] stuIds, String courseId) {
-        return studentCourseMapper.insertStudentCourseByCourseId(stuIds,courseId);
+        return studentCourseMapper.insertStudentCourseByCid(stuIds,courseId);
+    }
+
+    /**
+     * 批量添加学生实验
+     * @param studentTests
+     * @return
+     */
+    @Override
+    public int insertStudentTest(StudentTest[] studentTests) {
+        return studentTestMapper.insertStudentTest(studentTests);
+    }
+
+    /**
+     * 查询选课的学号
+     * @param cid
+     * @return
+     */
+    @Override
+    public List<String> selectStudentCourseSidByCid(String cid) {
+        return studentCourseMapper.selectStudentCourseSidByCId(cid);
+    }
+
+    /**
+     * 根据课程号查询选课班级名
+     * @param cid
+     * @return
+     */
+    @Override
+    public List<String> selectStudentCourseClassNameByCid(String cid) {
+        return studentCourseMapper.selectStudentCourseClassNameByCid(cid);
     }
 
     /**

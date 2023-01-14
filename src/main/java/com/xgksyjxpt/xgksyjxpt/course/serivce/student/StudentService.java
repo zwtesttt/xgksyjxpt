@@ -2,6 +2,7 @@ package com.xgksyjxpt.xgksyjxpt.course.serivce.student;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
+import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
 
 import java.util.List;
 
@@ -43,5 +44,10 @@ public interface StudentService {
     List<String> selectStudentClassName();
     List<String> selectStudentIdByClassName(String[] classNames);
     int insertStudentCourseByCourseId(String[] stuIds,String courseId);
+
+    int insertStudentTest(StudentTest[] studentTests);
+
+    List<String> selectStudentCourseSidByCid(String cid);
+    List<String> selectStudentCourseClassNameByCid(String cid);
 }
 
