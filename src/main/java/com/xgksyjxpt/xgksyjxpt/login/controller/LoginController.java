@@ -95,10 +95,10 @@ public class LoginController {
                     if(passwordEncoder.matches(passwd,user.getPasswd())){
                         //封装用户信息
                         userInfo.put("id",user.getTid());
-                        userInfo.put("name",user.getTname());
+                        userInfo.put("name",user.getName());
                         String url= teacherService.selectTeaHeadUrl(user.getTid());
                         userInfo.put("head_url",url.substring(7));
-                        token= jwtUitls.createToken(id,user.getTname());
+                        token= jwtUitls.createToken(id,user.getName());
                         //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
                         redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
                     }else{

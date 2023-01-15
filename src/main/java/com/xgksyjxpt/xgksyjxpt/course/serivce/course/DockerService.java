@@ -23,6 +23,9 @@ public class DockerService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+//    @Autowired
+//    private DockerConfig dockerConfig;
+
     private static DockerClient dockerClient= DockerUtil.queryDockerClient(DockerConfig.DOCKER_API_URL);
 
     /**
@@ -42,8 +45,8 @@ public class DockerService {
      */
     public String createQueryId(String imagesName,String stuId,String networkName,String testid) throws Exception {
 
-        String id=DockerUtil.getContainersId(dockerClient,imagesName+"-"+stuId);
-//        先判断本地是不是已经存在该名称的容器,不存在才创建
+        String id=DockerUtil.getContainersId(dockerClient,imagesName+"-"+stuId+"-"+testid);
+//        先判断本地是不是已经存在该名称的容器,不存在才运行新容器
         if(id==null){
             HostConfig hostConfig=new HostConfig().withNetworkMode(networkName).withPrivileged(true);
             List<Image> imageList=DockerUtil.imageList(dockerClient);
@@ -61,7 +64,7 @@ public class DockerService {
                     //判断本地是否有该镜像
                     if (localName.equals(imagesName)){
                         //运行容器
-                        id=DockerUtil.runContainers(dockerClient,im.getRepoTags()[0],imagesName+"-"+stuId,hostConfig,sshpasswd);
+                        id=DockerUtil.runContainers(dockerClient,im.getRepoTags()[0],imagesName+"-"+stuId+"-"+testid,hostConfig,sshpasswd);
                         break;
                     }
                 }

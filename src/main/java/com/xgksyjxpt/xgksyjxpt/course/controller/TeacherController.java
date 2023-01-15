@@ -54,7 +54,7 @@ public class TeacherController {
                 Map<String,Object> remap=new HashMap<>();
                 remap.put("tid",teacher.getTid());
                 //名字
-                remap.put("name",teacher.getTname());
+                remap.put("name",teacher.getName());
                 //年龄
                 remap.put("age",teacher.getAge());
                 //性别

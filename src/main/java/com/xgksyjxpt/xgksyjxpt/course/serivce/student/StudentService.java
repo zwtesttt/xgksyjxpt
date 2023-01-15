@@ -3,8 +3,10 @@ package com.xgksyjxpt.xgksyjxpt.course.serivce.student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentService {
     Student selectStudent(String id);
@@ -49,5 +51,9 @@ public interface StudentService {
 
     List<String> selectStudentCourseSidByCid(String cid);
     List<String> selectStudentCourseClassNameByCid(String cid);
+    List<Map<String,Object>> selectStudentCourseInfo(String sid,Integer pageNum,Integer pageSize);
+    List<Map<String,Object>> selectStudentTestInfo(String sid,String cid, Integer pageNum,Integer pageSize);
+    StudentTest selectStudentTestBySidAndTestId(String sid,String testId);
+
 }
 

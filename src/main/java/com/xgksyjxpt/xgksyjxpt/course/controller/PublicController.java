@@ -1,6 +1,9 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller;
 
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseStatus;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.ContainerService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseTestService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.DockerService;
 import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
@@ -22,18 +25,11 @@ import javax.annotation.Resource;
 @Api(tags = "公用接口")
 public class PublicController {
 
-
-    //注入Containerservice对象
-    @Autowired
-    private ContainerService containerService;
-
-
-    //注入dockerservice对象
     @Autowired
     private DockerService dockerService;
 
-    @Resource
-    private FastdfsUtil fastdfsUtil;
+    @Autowired
+    private CourseTestService courseTestService;
 
     @Autowired
     private StudentService studentService;
@@ -63,21 +59,52 @@ public class PublicController {
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="imagesName",value="镜像名称",dataType="string",required = true),
-            @ApiImplicitParam(name="stuId",value="学生id",dataType="string",required = true),
+            @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true),
             @ApiImplicitParam(name="testId",value="实验id",dataType="string",required = true)
     })
-    public Object createContain(String imagesName,String stuId,String testId){
+    public Object createContain(String imagesName,String sid,String testId){
         ReturnObject re=new ReturnObject();
         try {
-            String id= dockerService.createQueryId(imagesName,stuId,DockerConfig.DOCKER_NETWORK_NAME,testId);
-            if (id!=null){
-                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-                re.setMessage("运行成功");
-                re.setData(id);
+            if (imagesName!=null&&sid!=null&&testId!=null){
+                //验证学号
+                if (studentService.selectStudent(sid)!=null){
+                    CourseTest courseTest=courseTestService.selectCourseTestByTestId(testId);
+                    if (courseTest!=null){
+                        if (studentService.selectStudentTestBySidAndTestId(sid,testId)!=null){
+                            if (CourseStatus.COURSE_START.equals(courseTest.getTest_status())){
+                                String id= dockerService.createQueryId(imagesName,sid,DockerConfig.DOCKER_NETWORK_NAME,testId);
+                                if (id!=null){
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                                    re.setMessage("运行成功");
+                                    re.setData(id);
+                                }else{
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                    re.setMessage("运行容器失败");
+                                }
+                                }else if (CourseStatus.COURSE_END.equals(courseTest.getTest_status())) {
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                    re.setMessage("实验已结束");
+                                } else if (CourseStatus.COURSE_NOT_START.equals(courseTest.getTest_status())) {
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                    re.setMessage("实验未开始");
+                                }
+                        }else{
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("该学生没有该实验");
+                        }
+                    }else {
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("实验不存在");
+                    }
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("学号不存在");
+                }
             }else{
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("运行容器失败");
+                re.setMessage("镜像名、学号、实验id不能为空");
             }
+
         }catch (Exception e){
             e.printStackTrace();
             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);

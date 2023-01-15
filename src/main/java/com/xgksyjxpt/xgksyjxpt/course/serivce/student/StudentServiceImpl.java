@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -289,6 +290,38 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<String> selectStudentCourseClassNameByCid(String cid) {
         return studentCourseMapper.selectStudentCourseClassNameByCid(cid);
+    }
+
+    /**
+     * 查询学生选课信息
+     * @param sid
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> selectStudentCourseInfo(String sid,Integer pageNum,Integer pageSize) {
+        return studentCourseMapper.selectStudentCourseInfoBySId(sid,pageNum,pageSize);
+    }
+
+    /**
+     * 根据学号和课程号查询实验
+     * @param sid
+     * @param cid
+     * @return
+     */
+    @Override
+    public List<Map<String, Object>> selectStudentTestInfo(String sid, String cid, Integer pageNum,Integer pageSize) {
+        return studentTestMapper.selectStudentTestInfo(sid,cid,pageNum,pageSize);
+    }
+
+    /**
+     * 根据学号和实验id查询实验
+     * @param sid
+     * @param testId
+     * @return
+     */
+    @Override
+    public StudentTest selectStudentTestBySidAndTestId(String sid, String testId) {
+        return studentTestMapper.selectStudentTestBySidAndTestId(sid,testId);
     }
 
     /**

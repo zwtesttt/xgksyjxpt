@@ -34,6 +34,9 @@ public class AdminController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+//    @Autowired
+//    private DockerConfig dockerConfig;
+
     /**
      * 访问管理员首页
      */
