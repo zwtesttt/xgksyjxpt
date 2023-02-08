@@ -51,6 +51,25 @@
     values (#{sid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
       #{sex,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR})
   </insert>
+<!--  查询学生总数-->
+  <select id="queryStudentCount" resultType="int" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
+    select count(*) from student_t where delete_time is null
+    <if test="sid !=null and sid!=''">
+      and sid like '%' #{sid} '%'
+    </if>
+    <if test="name !=null and name!=''">
+      and name like '%' #{name} '%'
+    </if>
+    <if test="age !=null and age!=''">
+      and age=#{age}
+    </if>
+    <if test="sex !=null and sex!=''">
+      and sex like '%' #{sex} '%'
+    </if>
+    <if test="class_name !=null and class_name!=''">
+      and class_name like '%' #{class_name} '%'
+    </if>
+</select>
 <!--  查询学生账号信息-->
   <select id="selectStudent" parameterType="string" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
     select
@@ -84,6 +103,21 @@
     select
     <include refid="Base_Column_List"></include>
     from student_t where delete_time is null
+    <if test="student.sid !=null and student.sid!=''">
+      and sid like '%' #{student.sid} '%'
+    </if>
+    <if test="student.name !=null and student.name!=''">
+      and name like '%' #{student.name} '%'
+    </if>
+    <if test="student.age !=null and student.age!=''">
+      and age=#{student.age}
+    </if>
+    <if test="student.sex !=null and student.sex!=''">
+      and sex like '%' #{student.sex} '%'
+    </if>
+    <if test="student.class_name !=null and student.class_name!=''">
+      and class_name like '%' #{student.class_name} '%'
+    </if>
     limit #{pageNum},#{pageSize}
   </select>
 <!--  修改学生基本信息-->
@@ -92,7 +126,7 @@
     <if test="passwd !=null and passwd!=''">
       ,passwd = #{passwd}
     </if>
-    where sid=#{sid}
+    where sid=#{sid} and delete_time is null
   </update>
 <!--  批量添加学生-->
   <insert id="insertStudent" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
@@ -107,11 +141,11 @@
   </insert>
 <!--  修改学生密码-->
   <update id="updateStuPass" parameterType="string">
-    update student_t set passwd=#{passwd} where sid=#{sid}
+    update student_t set passwd=#{passwd} where sid=#{sid} and delete_time is null
   </update>
 <!--  查询学生密码-->
   <select id="selectStuPass" parameterType="string" resultType="string">
-    select passwd from student_t where sid=#{sid}
+    select passwd from student_t where sid=#{sid} and delete_time is null
   </select>
 <!--  批量删除学生-->
   <update id="deleteStudents" parameterType="string">

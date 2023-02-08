@@ -15,6 +15,7 @@ public interface AdminService {
 
     int updateAdminHead(AdminHead adminHead);
     int updateAdminPass(String rid,String pass);
-    int deleteAdmin(String rid);
-    List<Admin> selectCommAdmin(Integer pageNum,Integer pageSize);
+    int deleteAdmins(String[] rids);
+    List<Admin> selectCommAdmin(Admin admin,Integer pageNum,Integer pageSize);
+    int queryAdmincCount(Admin admin);
 }

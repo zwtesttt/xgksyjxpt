@@ -18,10 +18,11 @@ public interface CourseService {
     Course selectCourseByCid(String cid);
     List<String> selectCourseIdByTid(String tid);
     int deleteCourses(String[] cids);
-    List<Course> queryAllCourse(Integer pageNum,Integer pageSize);
+    List<Course> queryAllCourse(Course course,Integer pageNum,Integer pageSize);
     int createEvent(String date,String cid,String eventName,String courseStatus);
     List<Course> selectCourseByTid(String tid,Integer pageNum,Integer pageSize);
     int updateCourseInfo(Course course);
+    int queryCourseCount(Course course);
 
     /**
      * 课程封面接口

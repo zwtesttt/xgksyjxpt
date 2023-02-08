@@ -74,9 +74,9 @@ public interface AdminMapper {
      */
     int updateAdminPass(@Param("rid") String rid,@Param("pass") String pass);
     /**
-     * 删除管理员
+     * 批量删除管理员
      */
-    int deleteAdmin(String rid);
+    int deleteAdmins(String[] rids);
     /**
      * 根据管理员id查询管理员账号信息
      */
@@ -84,6 +84,9 @@ public interface AdminMapper {
     /**
      * 查询所有普通管理员账号信息
      */
-    List<Admin> selectCommonAdmin(@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
-
+    List<Admin> selectCommonAdmin(@Param("admin") Admin admin,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+    /**
+     * 查询普通管理员账号总数
+     */
+    int queryAdminCount(Admin admin);
 }

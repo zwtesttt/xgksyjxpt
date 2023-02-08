@@ -89,8 +89,8 @@ public class TeacherServiceImpl implements TeacherService {
 
     //查询所有老师信息
     @Override
-    public List<Teacher> queryAllTeacher(Integer start_flg,Integer pageflg) {
-        return teacherMapper.queryAllTeacher(start_flg,pageflg);
+    public List<Teacher> queryAllTeacher(Teacher teacher,Integer pageNum,Integer pageSize) {
+        return teacherMapper.queryAllTeacher(teacher,pageNum,pageSize);
     }
 
     /**
@@ -194,6 +194,15 @@ public class TeacherServiceImpl implements TeacherService {
         }
 
         return teacherMapper.insertTeachers(teachers);
+    }
+
+    /**
+     * 查询老师总数
+     * @return
+     */
+    @Override
+    public int queryTeacherCount(Teacher teacher) {
+        return teacherMapper.queryTeacherCount(teacher);
     }
 
 

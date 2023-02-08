@@ -305,7 +305,7 @@ public class StudentController {
         ReturnObject re=new ReturnObject();
         if (sid!=null&&pageNum!=null&&pageSize!=null){
             //验证学号
-            if (studentService.selectStudent(sid)!=null){
+            if (studentService.selectNotDelStudent(sid)!=null){
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                 re.setMessage("查询成功");
                 //查询选课信息，并设置到响应对象里
@@ -423,7 +423,7 @@ public class StudentController {
     public Object getStudentStartTest(String sid, String cid, Integer pageNum,Integer pageSize){
         ReturnObject re=new ReturnObject();
         if (sid!=null&&cid!=null&&pageNum!=null&&pageSize!=null){
-            if (studentService.selectStudent(sid)!=null){
+            if (studentService.selectNotDelStudent(sid)!=null){
                 if (courseService.selectCourseByCid(cid)!=null){
                     List<Map<String,Object>> slist=studentService.selectStudentTestInfo(sid,cid,(pageNum-1)*pageSize,pageSize);
                     re.setData(slist);

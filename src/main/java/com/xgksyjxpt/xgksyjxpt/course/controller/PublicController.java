@@ -67,7 +67,7 @@ public class PublicController {
         try {
             if (imagesName!=null&&sid!=null&&testId!=null){
                 //验证学号
-                if (studentService.selectStudent(sid)!=null){
+                if (studentService.selectNotDelStudent(sid)!=null){
                     CourseTest courseTest=courseTestService.selectCourseTestByTestId(testId);
                     if (courseTest!=null){
                         if (studentService.selectStudentTestBySidAndTestId(sid,testId)!=null){

@@ -61,8 +61,8 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public List<Student> queryStudents(Integer pageNum,Integer pageSize) {
-        return studentMapper.queryAllStudent(pageNum,pageSize);
+    public List<Student> queryStudents(Student student,Integer pageNum,Integer pageSize) {
+        return studentMapper.queryAllStudent(student,pageNum,pageSize);
     }
 
     /**
@@ -322,6 +322,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentTest selectStudentTestBySidAndTestId(String sid, String testId) {
         return studentTestMapper.selectStudentTestBySidAndTestId(sid,testId);
+    }
+
+    /**
+     * 查询学生总数
+     * @return
+     */
+    @Override
+    public int queryStudentCount(Student student) {
+        return studentMapper.queryStudentCount(student);
     }
 
     /**

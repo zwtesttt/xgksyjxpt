@@ -18,7 +18,7 @@ public interface TeacherService {
     int updateTeaPasswd(String tid,String passwd);
     String selectTeaPaawd(String tid);
 
-    List<Teacher> queryAllTeacher(Integer start_flg,Integer pageflg);
+    List<Teacher> queryAllTeacher(Teacher teacher,Integer start_flg,Integer pageflg);
 
     int uploadTeaHead(TeacherHead teacherHead);
     int deleteTeaHeadByTid(String tid);
@@ -29,5 +29,5 @@ public interface TeacherService {
     int insertTeacher(Teacher teacher);
 
     int insertTeachers(Teacher[] teachers);
-
+    int queryTeacherCount(Teacher teacher);
 }

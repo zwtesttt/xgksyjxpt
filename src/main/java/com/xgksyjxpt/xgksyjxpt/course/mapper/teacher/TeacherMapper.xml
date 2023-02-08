@@ -21,6 +21,22 @@
     -->
     tid, name, age, sex, passwd,delete_time
   </sql>
+<!--  查询老师总数-->
+  <select id="queryTeacherCount" resultType="int" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher">
+    select count(*) from teacher_t where delete_time is null
+    <if test="tid !=null and tid!=''">
+      and tid like '%' #{tid} '%'
+    </if>
+    <if test="name !=null and name!=''">
+      and name like '%' #{name} '%'
+    </if>
+    <if test="age !=null and age!=''">
+      and age like '%' #{age} '%'
+    </if>
+    <if test="sex !=null and sex!=''">
+      and sex like '%' #{sex} '%'
+    </if>
+  </select>
 <!--  添加老师-->
   <insert id="insertTeacher" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher">
     insert into teacher_t(tid, name, age, sex, passwd) values(#{tid},#{name},#{age},#{sex},#{passwd})
@@ -73,6 +89,18 @@
     <include refid="Base_Column_List" />
     from teacher_t
     where delete_time is null
+    <if test="teacher.tid !=null and teacher.tid!=''">
+      and tid like '%' #{teacher.tid} '%'
+    </if>
+    <if test="teacher.name !=null and teacher.name!=''">
+      and name like '%' #{teacher.name} '%'
+    </if>
+    <if test="teacher.age !=null and teacher.age!=''">
+      and age like '%' #{teacher.age} '%'
+    </if>
+    <if test="teacher.sex !=null and teacher.sex!=''">
+      and sex like '%' #{teacher.sex} '%'
+    </if>
     limit #{pageNum},#{pageSize}
   </select>
 <!--  查询老师密码-->

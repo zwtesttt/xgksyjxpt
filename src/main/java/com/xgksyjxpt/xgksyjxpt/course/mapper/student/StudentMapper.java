@@ -69,7 +69,7 @@ public interface StudentMapper {
      * 查询所有学生
      * @return
      */
-    List<Student> queryAllStudent(@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+    List<Student> queryAllStudent(@Param("student") Student student,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
 
     /**
      * 修改学生基本信息
@@ -113,4 +113,8 @@ public interface StudentMapper {
      * 按班级名查询学生学号
      */
     List<String> selectStudentIdByClassName(String[] classNames);
+    /**
+     * 查询学生总数
+     */
+    int queryStudentCount(Student student);
 }

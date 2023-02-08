@@ -168,8 +168,8 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public List<Course> queryAllCourse(Integer pageNum,Integer pageSize) {
-        return courseMapper.queryAllCourse(pageNum,pageSize);
+    public List<Course> queryAllCourse(Course course,Integer pageNum,Integer pageSize) {
+        return courseMapper.queryAllCourse(course,pageNum,pageSize);
     }
 
     /**
@@ -232,6 +232,16 @@ public class CourseServiceImpl implements CourseService {
             course.setCourse_status(CourseStatus.COURSE_END);
         }
         return courseMapper.updateCourseInfo(course);
+    }
+
+    /**
+     * 查询所有课程总数
+     * @param course
+     * @return
+     */
+    @Override
+    public int queryCourseCount(Course course) {
+        return courseMapper.queryTeacherCount(course);
     }
 
 

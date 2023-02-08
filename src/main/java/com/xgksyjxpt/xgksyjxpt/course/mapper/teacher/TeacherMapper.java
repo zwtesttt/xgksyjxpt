@@ -66,7 +66,7 @@ public interface TeacherMapper {
     //查询老师密码
     String selectTeaPasswd(String tid);
     //查询所有老师信息
-    List<Teacher> queryAllTeacher(@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+    List<Teacher> queryAllTeacher(@Param("teacher") Teacher teacher,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
     /**
      * 批量删除老师
      */
@@ -79,5 +79,8 @@ public interface TeacherMapper {
      * 批量添加老师
      */
     int insertTeachers(Teacher[] teachers);
-
+    /**
+     * 查询老师总数
+     */
+    int queryTeacherCount(Teacher teacher);
 }

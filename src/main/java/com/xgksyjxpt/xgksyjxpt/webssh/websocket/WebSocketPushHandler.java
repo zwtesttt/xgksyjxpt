@@ -40,9 +40,6 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
     @Autowired
     private ContainerService containerService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
 
 
     /**

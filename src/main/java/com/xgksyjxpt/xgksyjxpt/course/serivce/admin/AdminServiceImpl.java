@@ -114,20 +114,24 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 删除管理员
-     * @param rid
+     * @param rids
      * @return
      */
     @Override
     @Transactional
-    public int deleteAdmin(String rid) {
-        //删除头像
-        String url=adminHeadMapper.selectAdminHeadUrl(rid);
+    public int deleteAdmins(String[] rids) {
+        for (String rid:rids
+             ) {
+            //查询头像url
+            String url=adminHeadMapper.selectAdminHeadUrl(rid);
 //        排除默认头像
-        if (!HeadUrl.DEFAULT_ADM_HEAD.equals(url)){
-            fastdfsUtil.deleteFile(url);
+            if (!HeadUrl.DEFAULT_ADM_HEAD.equals(url)){
+                fastdfsUtil.deleteFile(url);
+            }
+            //删除头像
+            adminHeadMapper.deleteAdminHead(rid);
         }
-        adminHeadMapper.deleteAdminHead(rid);
-        return adminMapper.deleteAdmin(rid);
+        return adminMapper.deleteAdmins(rids);
     }
 
     /**
@@ -135,8 +139,17 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public List<Admin> selectCommAdmin(Integer pageNum,Integer pageSize) {
-        return adminMapper.selectCommonAdmin(pageNum,pageSize);
+    public List<Admin> selectCommAdmin(Admin admin,Integer pageNum,Integer pageSize) {
+        return adminMapper.selectCommonAdmin(admin,pageNum,pageSize);
+    }
+
+    /**
+     * 查询普通管理员总数
+     * @return
+     */
+    @Override
+    public int queryAdmincCount(Admin admin) {
+        return adminMapper.queryAdminCount(admin);
     }
 
 }

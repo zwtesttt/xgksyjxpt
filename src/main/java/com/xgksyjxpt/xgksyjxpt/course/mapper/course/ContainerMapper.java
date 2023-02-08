@@ -131,6 +131,10 @@ public interface ContainerMapper {
     /**
      * 根据实验id查询容器信息
      */
-    List<Container> selectContainerByTestId(@Param("testId")String testId,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+    List<Container> selectContainerByTestId(@Param("container") Container container,@Param("testId")String testId,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+    /**
+     * 根据实验id查询容器总数
+     */
+    int queryContainerCountByTestId(@Param("container") Container container,@Param("testId") String testId);
 
 }

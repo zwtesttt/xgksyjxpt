@@ -11,7 +11,7 @@ import java.util.Map;
 public interface StudentService {
     Student selectStudent(String id);
     Student selectNotDelStudent(String id);
-    List<Student> queryStudents(Integer pageNum,Integer pageSize);
+    List<Student> queryStudents(Student student,Integer pageNum,Integer pageSize);
 
     int updateStudent(Student student);
 
@@ -54,6 +54,7 @@ public interface StudentService {
     List<Map<String,Object>> selectStudentCourseInfo(String sid,Integer pageNum,Integer pageSize);
     List<Map<String,Object>> selectStudentTestInfo(String sid,String cid, Integer pageNum,Integer pageSize);
     StudentTest selectStudentTestBySidAndTestId(String sid,String testId);
+    int queryStudentCount(Student student);
 
 }
 

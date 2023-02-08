@@ -39,6 +39,16 @@
     delete from admin_t
     where rid = #{rid,jdbcType=VARCHAR}
   </delete>
+<!--  查询普通管理员总数-->
+  <select id="queryAdminCount" resultType="int" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin">
+    select count(*) from admin_t where delete_time is null
+    <if test="rid !=null and rid!=''">
+      and rid like '%' #{rid} '%'
+    </if>
+    <if test="name !=null and name!=''">
+      and name like '%' #{name} '%'
+    </if>
+  </select>
 <!--  查询正常账号信息-->
   <select id="selectNotDelAdmin" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin" parameterType="string">
     select rid, passwd,name,identity from admin_t where rid=#{id} and delete_time is null
@@ -59,13 +69,23 @@
   <update id="updateAdminPass" parameterType="string">
     update admin_t set passwd=#{pass} where rid=#{rid} and delete_time is null
   </update>
-<!--  删除管理员-->
+<!--  批量删除管理员-->
   <update id="deleteAdmin" parameterType="string">
-    update admin_t set delete_time=now() where rid=#{rid} and delete_time is null
+    update admin_t set delete_time=now() where rid in(
+      <foreach collection="array" item="rids" separator=",">
+        #{rids}
+      </foreach>
+      ) and delete_time is null and identity='admin'
   </update>
 <!--  查询所有普通管理员信息-->
-  <select id="selectCommonAdmin" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin" parameterType="int">
+  <select id="selectCommonAdmin" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin">
     select rid,name,passwd,identity from admin_t where identity='admin' and delete_time is null
+    <if test="admin.rid !=null and admin.rid!=''">
+      and rid like '%' #{admin.rid} '%'
+    </if>
+    <if test="admin.name !=null and admin.name!=''">
+      and name like '%' #{admin.name} '%'
+    </if>
     limit #{pageNum},#{pageSize}
   </select>
   <insert id="insert" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin" >

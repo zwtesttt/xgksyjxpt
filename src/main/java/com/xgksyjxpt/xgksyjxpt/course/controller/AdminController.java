@@ -179,7 +179,7 @@ public class AdminController {
             //对新密码加密
             String newpasswd=passwordEncoder.encode(newPass);
             //查询旧密码
-            String pass= adminService.selectAdmin(rid).getPasswd();
+            String pass= adminService.selectNotDelAdmin(rid).getPasswd();
             if(passwordEncoder.matches(oldPass,pass)){
                 try {
                     //开始修改密码
