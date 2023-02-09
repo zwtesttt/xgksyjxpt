@@ -12,8 +12,8 @@ public interface ContainerService {
 
     List<String> selectStuContainerId(String stuId);
 
-    int deleteContainerByTestId(String testId);
-    List<String> selectContainerIdByTestId(String testId);
+    int deleteContainerByTestIds(String[] testId);
+    List<String> selectContainerIdByTestIds(String[] testId);
 
     List<Container> selectContainerByTestId(Container container,String testId,Integer pageNum,Integer pageSize);
     int queryContainerCountByTestId(Container container,String testId);

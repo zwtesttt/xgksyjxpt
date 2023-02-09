@@ -122,11 +122,11 @@ public interface ContainerMapper {
     /**
      * 根据实验id删除实验记录
      */
-    int deleteContainerByTestId(String testId);
+    int deleteContainerByTestIds(String[] testId);
     /**
      * 根据实验id查询容器id
      */
-    List<String> selectContainerIdByTestId(String testId);
+    List<String> selectContainerIdByTestIds(String[] testId);
 
     /**
      * 根据实验id查询容器信息

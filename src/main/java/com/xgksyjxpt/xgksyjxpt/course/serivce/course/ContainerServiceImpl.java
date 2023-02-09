@@ -55,13 +55,13 @@ public class ContainerServiceImpl implements ContainerService {
      * @return
      */
     @Override
-    public int deleteContainerByTestId(String testId) {
-        return containerMapper.deleteContainerByTestId(testId);
+    public int deleteContainerByTestIds(String[] testId) {
+        return containerMapper.deleteContainerByTestIds(testId);
     }
 
     @Override
-    public List<String> selectContainerIdByTestId(String testId) {
-        return containerMapper.selectContainerIdByTestId(testId);
+    public List<String> selectContainerIdByTestIds(String[] testId) {
+        return containerMapper.selectContainerIdByTestIds(testId);
     }
 
     /**

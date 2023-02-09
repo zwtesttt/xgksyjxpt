@@ -28,7 +28,7 @@ public interface StudentService {
     int deleteStuCourse(String[] stuIds);
 
     int deleteStuTest(String[] stuIds);
-    int deleteStuTestByTestId(String testId);
+    int deleteStuTestByTestIds(String[] testId);
     int deleteStuTestByCid(String cid);
 
     int deleteStuHead(String[] stuIds);

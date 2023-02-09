@@ -127,13 +127,21 @@
   <select id="selectStuContainerId" parameterType="string" resultType="string">
     select container_id from runcontainer where sid=#{stuId} and delete_time is null
   </select>
-<!--  根据实验id删除容器记录-->
-  <update id="deleteContainerByTestId" parameterType="string">
-    update runcontainer set delete_time=NOW() where test_id=#{testId}
+<!--  根据实验id批量删除容器记录-->
+  <update id="deleteContainerByTestIds" parameterType="string">
+    update runcontainer set delete_time=NOW() where test_id in (
+        <foreach collection="array" item="testId" separator=",">
+          #{testId}
+        </foreach>
+        ) and delete_time is null
   </update>
 <!--  根据实验id查询容器id-->
-  <select id="selectContainerIdByTestId" parameterType="string" resultType="string">
-    select container_id from runcontainer where test_id=#{testId} and delete_time is null
+  <select id="selectContainerIdByTestIds" parameterType="string" resultType="string">
+    select container_id from runcontainer where test_id in (
+        <foreach collection="array" item="testId" separator=",">
+          #{testId}
+        </foreach>
+        ) and delete_time is null
   </select>
   <!--  根据实验id查询容器信息-->
   <select id="selectContainerByTestId" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.course.Container">

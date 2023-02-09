@@ -178,8 +178,8 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public int deleteStuTestByTestId(String testId) {
-        return studentTestMapper.deleteStuTestByTestId(testId);
+    public int deleteStuTestByTestIds(String[] testId) {
+        return studentTestMapper.deleteStuTestByTestIds(testId);
     }
 
     /**
