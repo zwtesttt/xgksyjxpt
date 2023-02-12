@@ -56,5 +56,7 @@ public interface StudentService {
     StudentTest selectStudentTestBySidAndTestId(String sid,String testId);
     int queryStudentCount(Student student);
 
+    List<String> selectIdentitySid(String identity);
+
 }
 

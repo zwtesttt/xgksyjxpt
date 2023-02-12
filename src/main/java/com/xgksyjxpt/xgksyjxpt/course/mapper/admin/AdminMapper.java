@@ -89,4 +89,8 @@ public interface AdminMapper {
      * 查询普通管理员账号总数
      */
     int queryAdminCount(Admin admin);
+    /**
+     * 查询普通管理员的id
+     */
+    List<String> selectAdminRid();
 }

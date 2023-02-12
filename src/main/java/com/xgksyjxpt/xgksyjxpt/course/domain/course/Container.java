@@ -2,12 +2,19 @@ package com.xgksyjxpt.xgksyjxpt.course.domain.course;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * @Builder @Data 使用该注解后无参构造丢失
+ */
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(value = "运行容器类")
 public class Container {
     /**
@@ -16,7 +23,7 @@ public class Container {
      *
      * @mbggenerated Sat Nov 26 23:51:19 CST 2022
      */
-    @ApiModelProperty(value = "id",dataType = "String",hidden = true)
+    @ApiModelProperty(value = "id",dataType = "String",hidden = false)
     private String id;
 
     /**

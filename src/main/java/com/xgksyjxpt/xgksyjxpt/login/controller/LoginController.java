@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.login.controller;
 
+import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.IdentityPermissionsService;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin;
@@ -16,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.util.HashMap;
@@ -40,6 +42,8 @@ public class LoginController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Resource
+    private IdentityPermissionsService identityPermissionsService;
 
     /**
      * 登录
@@ -56,16 +60,15 @@ public class LoginController {
     public Object login(@RequestBody Map<String,String> map){
         String id=map.get("id");
         String passwd=map.get("passwd");
+        String role=map.get("role");
         Map<String,Object> remap=new HashMap<>();
         Map<String,Object> userInfo=new HashMap<>();
         ReturnObject re=new ReturnObject();
         if(id!=null && !"".equals(id) && passwd!=null && !"".equals(passwd)){
             //        过期时间,单位为秒
             int es=60*5;
-            //截取id第一个字符，判断身份，s表示学生，t表示教师，r表示管理员登录
             String token=null;
-            String fid=id.substring(0,1);
-            if (fid.equals("s")){
+            if ("student".equals(role) || "tutor".equals(role)){
                 Student user= studentService.selectNotDelStudent(id);
                 if (user!=null){
                     //密码匹配
@@ -77,8 +80,11 @@ public class LoginController {
                         userInfo.put("head_url",url.substring(7));
                         //创建token
                         token= jwtUitls.createToken(id,user.getName());
+                        userInfo.put("identity",user.getIdentity());
+                        userInfo.put("identityPermissions",identityPermissionsService.selectIdentityPermissions(user.getIdentity()));
                         //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
                         redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
+
                     }else{
                         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                         re.setMessage("密码错误");
@@ -89,7 +95,7 @@ public class LoginController {
                     re.setMessage("该用户不存在");
                     return re;
                 }
-            } else if (fid.equals("t")) {
+            } else if ("teacher".equals(role)) {
                 Teacher user=teacherService.selectNotDelTeacher(id);
                 if (user!=null){
                     if(passwordEncoder.matches(passwd,user.getPasswd())){
@@ -98,6 +104,8 @@ public class LoginController {
                         userInfo.put("name",user.getName());
                         String url= teacherService.selectTeaHeadUrl(user.getTid());
                         userInfo.put("head_url",url.substring(7));
+                        userInfo.put("identity",user.getIdentity());
+                        userInfo.put("identityPermissions",identityPermissionsService.selectIdentityPermissions(user.getIdentity()));
                         token= jwtUitls.createToken(id,user.getName());
                         //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
                         redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
@@ -111,7 +119,7 @@ public class LoginController {
                     re.setMessage("该用户不存在");
                     return re;
                 }
-            } else if (fid.equals("r")) {
+            } else if ("admin".equals(role) || "superadmin".equals(role)) {
                 Admin user=adminService.selectNotDelAdmin(id);
                 if (user!=null){
                     if(passwordEncoder.matches(passwd,user.getPasswd())){
@@ -122,6 +130,7 @@ public class LoginController {
                         userInfo.put("head_url",url.substring(7));
                         userInfo.put("identity",user.getIdentity());
                         token= jwtUitls.createToken(id,user.getName());
+                        userInfo.put("identityPermissions",identityPermissionsService.selectIdentityPermissions(user.getIdentity()));
                         //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
                         redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
                     }else{

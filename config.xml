@@ -40,7 +40,7 @@
 
 <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
-<table tableName="admin_head_t" domainObjectName="AdminHead"
+<table tableName="permissions_t" domainObjectName="Permissions"
        enableCountByExample="false"
        enableUpdateByExample="false"
        enableDeleteByExample="false"

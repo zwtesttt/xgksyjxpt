@@ -334,6 +334,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     /**
+     * 查询指定身份id
+     * @param identity
+     * @return
+     */
+    @Override
+    public List<String> selectIdentitySid(String identity) {
+        return studentMapper.selectIdentitySid(identity);
+    }
+
+    /**
      * 查询学生头像链接
      * @param sid
      * @return

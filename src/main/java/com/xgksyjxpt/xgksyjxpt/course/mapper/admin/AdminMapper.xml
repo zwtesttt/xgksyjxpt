@@ -88,6 +88,10 @@
     </if>
     limit #{pageNum},#{pageSize}
   </select>
+<!--  查询普通管理员id-->
+  <select id="selectAdminRid" resultType="string">
+    select rid from admin_t where identity='admin' and delete_time is null
+  </select>
   <insert id="insert" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin" >
     <!--
       WARNING - @mbggenerated

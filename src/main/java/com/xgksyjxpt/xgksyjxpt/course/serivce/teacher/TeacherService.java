@@ -30,4 +30,5 @@ public interface TeacherService {
 
     int insertTeachers(Teacher[] teachers);
     int queryTeacherCount(Teacher teacher);
+    List<String> selectTeacherTid();
 }

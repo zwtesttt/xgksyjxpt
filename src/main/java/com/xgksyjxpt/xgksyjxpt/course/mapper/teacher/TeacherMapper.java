@@ -83,4 +83,8 @@ public interface TeacherMapper {
      * 查询老师总数
      */
     int queryTeacherCount(Teacher teacher);
+    /**
+     * 查询角色为老师的id
+     */
+    List<String> selectTeacherTid();
 }

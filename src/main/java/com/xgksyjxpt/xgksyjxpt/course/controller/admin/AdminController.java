@@ -1,4 +1,4 @@
-package com.xgksyjxpt.xgksyjxpt.course.controller;
+package com.xgksyjxpt.xgksyjxpt.course.controller.admin;
 
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.model.Image;
@@ -34,9 +34,6 @@ public class AdminController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    private DockerConfig dockerConfig;
-
     /**
      * 访问管理员首页
      */
@@ -48,26 +45,7 @@ public class AdminController {
         re.setMessage("请求成功");
         return re;
     }
-    /**
-     * 查询宿主机当前所有镜像名
-     */
-    @GetMapping("/queryImages")
-    @ApiOperation("查询宿主机当前所有镜像名")
-    public List<String> queryImages(){
-        List<String> list=new ArrayList<>();
-        //实例化dockerclient对象
-        DockerClient dockerClient=DockerUtil.queryDockerClient(DockerConfig.DOCKER_API_URL);
-//        查询所有
-        List<Image> ll=DockerUtil.imageList(dockerClient);
-        //遍历镜像
-        for (Image im:ll) {
-            //跳过none的镜像,使用split切割字符串
-            if(!im.getRepoTags()[0].split(":")[0].equals("<none>")){
-                list.add(im.getRepoTags()[0].split(":")[0]);
-            }
-        }
-        return list;
-    }
+
 
     /**
      * 修改管理员信息

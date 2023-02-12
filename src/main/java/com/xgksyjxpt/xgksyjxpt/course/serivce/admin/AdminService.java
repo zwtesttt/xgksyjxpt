@@ -18,4 +18,5 @@ public interface AdminService {
     int deleteAdmins(String[] rids);
     List<Admin> selectCommAdmin(Admin admin,Integer pageNum,Integer pageSize);
     int queryAdmincCount(Admin admin);
+    List<String> selectAdminRid();
 }

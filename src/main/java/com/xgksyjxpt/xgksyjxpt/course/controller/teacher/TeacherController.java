@@ -1,4 +1,4 @@
-package com.xgksyjxpt.xgksyjxpt.course.controller;
+package com.xgksyjxpt.xgksyjxpt.course.controller.teacher;
 
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;

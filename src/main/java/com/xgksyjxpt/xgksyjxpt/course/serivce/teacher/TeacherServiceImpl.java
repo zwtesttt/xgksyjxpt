@@ -205,5 +205,14 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.queryTeacherCount(teacher);
     }
 
+    /**
+     * 查询角色为teacher的id
+     * @return
+     */
+    @Override
+    public List<String> selectTeacherTid() {
+        return teacherMapper.selectTeacherTid();
+    }
+
 
 }

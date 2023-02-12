@@ -117,4 +117,8 @@ public interface StudentMapper {
      * 查询学生总数
      */
     int queryStudentCount(Student student);
+    /**
+     * 查询指定身份的id
+     */
+    List<String> selectIdentitySid(String identity);
 }

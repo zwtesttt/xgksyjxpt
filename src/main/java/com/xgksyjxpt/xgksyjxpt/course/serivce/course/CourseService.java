@@ -37,9 +37,10 @@ public interface CourseService {
     /**
      * 课程实验镜像接口
      */
-    List<CourseTestImages> selectAllImagesName();
+    List<CourseTestImages> selectAllImagesName(String imageName,Integer pageNum,Integer pageSize);
     int insertCourseTestImages(CourseTestImages courseTestImages);
     int deleteCourseTestImages(String[] imagesNames);
+    int queryImageCount(String imageName);
 
 
 }

@@ -115,18 +115,6 @@ public class PublicController {
 
 
 
-    //查询学生头像链接
-    @GetMapping("/selectStuHead")
-    @ApiOperation("查询学生头像链接")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true)
-    })
-    public String selectStuHead(String sid){
-        String url = studentService.selectStuHeadUrl(sid);
-//        截取字符串,去除url中的group信息
-        String[] str=url.split("/",2);
-        return str[1];
-    }
     /**
      * 根据容器id获取容器名称
      */

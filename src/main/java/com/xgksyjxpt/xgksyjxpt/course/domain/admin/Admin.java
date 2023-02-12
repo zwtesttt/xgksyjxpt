@@ -18,7 +18,7 @@ public class Admin {
     @ApiModelProperty(value = "管理员名称",dataType = "String",required = true)
     private String name;
 
-    @ApiModelProperty(value = "管理员身份",dataType = "String",required = true)
+    @ApiModelProperty(value = "身份",dataType = "String",required = true)
     private String identity;
 
     public String getIdentity() {

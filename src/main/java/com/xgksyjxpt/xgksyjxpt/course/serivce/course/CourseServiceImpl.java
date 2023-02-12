@@ -198,23 +198,56 @@ public class CourseServiceImpl implements CourseService {
     @Override
     @Transactional
     public int updateCourseInfo(Course course) {
+        return courseMapper.updateCourseInfo(updateCourseStatus(course));
+    }
+    /**
+     * 更新课程状态
+     */
+    public Course updateCourseStatus(Course course){
+        //现在时间
+        Date nowdate=new Date();
+        Date start=null;
+        Date end=null;
+        //同时修改开始和结束时间
+        if (course.getCourse_start()!=null && course.getCourse_end()!=null){
+            //开始时间
+            try {
+                start= DateUtil.getDate(course.getCourse_start());
+                //结束时间
+                end=DateUtil.getDate(course.getCourse_end());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            //不需要修改全部时间的情况,使用旧的时间
+        }else{
+            Course course1=courseMapper.selectCourseByCid(course.getCid());
+            if (course.getCourse_start()==null&&course.getCourse_end()!=null){
+                //开始时间
+                try {
+                    start= DateUtil.getDate(course1.getCourse_start());
+                    //结束时间
+                    end=DateUtil.getDate(course.getCourse_end());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            } else if (course.getCourse_start()!=null&&course.getCourse_end()==null) {
+                try {
+                    start= DateUtil.getDate(course.getCourse_start());
+                    //结束时间
+                    end=DateUtil.getDate(course1.getCourse_end());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                //不需要修改时间的话直接退出
+            }else{
+                return course;
+            }
+        }
         //删除之前创建的定时任务
         courseMapper.deleteCourseEvent("event"+course.getCid()+"start");
         courseMapper.deleteCourseEvent("event"+course.getCid()+"end");
         //设置实验状态
         //比较课程开始时间和当前时间
-        //现在时间
-        Date nowdate=new Date();
-        Date start=null;
-        Date end=null;
-        //开始时间
-        try {
-            start= DateUtil.getDate(course.getCourse_start());
-            //结束时间
-            end=DateUtil.getDate(course.getCourse_end());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
         //结束时间在当前时间之后则添加定时任务
         if(end.compareTo(nowdate)>0){
             if (start.compareTo(nowdate)>0){
@@ -231,7 +264,7 @@ public class CourseServiceImpl implements CourseService {
         }else{
             course.setCourse_status(CourseStatus.COURSE_END);
         }
-        return courseMapper.updateCourseInfo(course);
+        return course;
     }
 
     /**
@@ -243,7 +276,6 @@ public class CourseServiceImpl implements CourseService {
     public int queryCourseCount(Course course) {
         return courseMapper.queryTeacherCount(course);
     }
-
 
     /**
      * 添加课程封面记录
@@ -290,8 +322,8 @@ public class CourseServiceImpl implements CourseService {
      * @return
      */
     @Override
-    public List<CourseTestImages> selectAllImagesName() {
-        return courseTestImagesMapper.selectAllImagesName();
+    public List<CourseTestImages> selectAllImagesName(String imageName,Integer pageNum,Integer pageSize) {
+        return courseTestImagesMapper.selectAllImagesName(imageName,pageNum,pageSize);
     }
 
     /**
@@ -312,6 +344,16 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public int deleteCourseTestImages(String[] imagesNames) {
         return courseTestImagesMapper.deleteCourseTestImages(imagesNames);
+    }
+
+    /**
+     * 查询镜像总条数
+     * @param imageName
+     * @return
+     */
+    @Override
+    public int queryImageCount(String imageName) {
+        return courseTestImagesMapper.queryImageCount(imageName);
     }
 
 

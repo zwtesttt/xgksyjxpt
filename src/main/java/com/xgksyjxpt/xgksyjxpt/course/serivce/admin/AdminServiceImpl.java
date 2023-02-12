@@ -109,7 +109,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public int updateAdminPass(String rid, String pass) {
-        return adminMapper.updateAdminPass(pass,rid);
+        return adminMapper.updateAdminPass(rid,pass);
     }
 
     /**
@@ -150,6 +150,15 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int queryAdmincCount(Admin admin) {
         return adminMapper.queryAdminCount(admin);
+    }
+
+    /**
+     * 查询管理员id
+     * @return
+     */
+    @Override
+    public List<String> selectAdminRid() {
+        return adminMapper.selectAdminRid();
     }
 
 }
