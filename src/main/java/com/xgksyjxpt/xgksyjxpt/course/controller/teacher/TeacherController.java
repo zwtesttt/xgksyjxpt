@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/teacher")
-@Api(tags = "老师通用接口")
+@Api(tags = "老师业务")
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;

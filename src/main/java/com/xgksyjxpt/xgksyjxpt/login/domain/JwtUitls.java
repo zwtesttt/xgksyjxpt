@@ -2,6 +2,7 @@ package com.xgksyjxpt.xgksyjxpt.login.domain;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.AdminIdentity;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.IdentityPermissionsService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
 import io.jsonwebtoken.*;
@@ -10,8 +11,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -21,11 +24,14 @@ public class JwtUitls {
     @Autowired
     private AdminService adminService;
 
-    @Autowired
+    @Resource
     private TeacherService teacherService;
 
     @Autowired
     private StudentService studentService;
+
+    @Resource
+    private IdentityPermissionsService identityPermissionsService;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -37,10 +43,10 @@ public class JwtUitls {
     /**
      * 生成token
      * @param id    用户id
-     * @param userName  用户名
+     * @param identity  用户名
      * @return
      */
-    public String createToken(String id,String userName){
+    public String createToken(String id,String identity){
         Map<String,Object> header = new HashMap();
         header.put("typ","JWT");
         header.put("alg","HS256");
@@ -49,9 +55,10 @@ public class JwtUitls {
         //setSubject:用户名
         //setIssuedAt:token创建时间
         //signWith:加密方式
+        //把用户身份存进token里
         JwtBuilder builder = Jwts.builder().setHeader(header)
                 .setId(id)
-                .setSubject(userName)
+                .setSubject(identity)
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS256,KEY);
         return builder.compact();
@@ -77,18 +84,18 @@ public class JwtUitls {
             //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
             String id = claims.getId();
             //截取id第一个字符，判断身份
-            String fid=id.substring(0,1);
+            String identity=claims.getSubject();
             Object user=null;
-            if (fid.equals("s")){
+            if (identity.equals("student")){
                 user= studentService.selectNotDelStudent(id);
-            } else if (fid.equals("t")) {
+            } else if (identity.equals("teacher")) {
                 user=teacherService.selectNotDelTeacher(id);
-            } else if (fid.equals("r")) {
+            } else if (identity.equals("admin")||identity.equals("superadmin")) {
                 user=adminService.selectNotDelAdmin(id);
             }
             if(user != null){
 //                刷新token的时间为5分钟
-                redisTemplate.expire(token,60*5,TimeUnit.SECONDS);
+                redisTemplate.expire(token,60*60*24,TimeUnit.SECONDS);
                 re=TokenStatus.ALLOW_CODE;
             }else{
                 re=TokenStatus.NO_USER_CODE;
@@ -110,42 +117,30 @@ public class JwtUitls {
             if (StringUtils.hasText(token) && redisTemplate.hasKey(token)) {
                 //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
                 String id = claims.getId();
-                //截取id第一个字符，判断身份
-                String fid=id.substring(0,1);
-//            如果id为学生学号并且访问的是学生的接口，则返回true
-                if (fid.equals("s")&&url.contains("/student/")){
+                //判断身份
+                String identity=claims.getSubject();
+                //查询当前角色的权限
+                List<String> identityList=identityPermissionsService.selectIdentityPermissions(identity);
+//            如果角色为teacher并且访问的是学生的接口，则返回true
+                if (identityList.contains("学生业务")&&url.contains("/student/")){
                     stu=true;
-//                如果id为教师号并且访问的是老师的接口，则返回true
-                } else if (fid.equals("t")&&url.contains("/teacher/")) {
+//                如果角色为teacher并且访问的是老师的接口，则返回true
+                } else if (identityList.contains("老师业务")&&url.contains("/teacher/")) {
                     stu=true;
-//                如果id为管理员账号并且访问的是管理员的接口，则返回true
-                } else if (fid.equals("r")&&url.contains("/admin/")) {
+//                如果角色为管理员并且访问的是管理员的接口，则返回true
+                } else if (adminService.selectNotDelAdmin(id)!=null&&url.contains("/admin/")) {
                     stu=true;
-                }
-            }
-        }catch (MalformedJwtException e){
-            e.printStackTrace();
-            stu=false;
-        }
-        return stu;
-    }
-    /**
-     * 验证登录账号是否为超级管理员
-     */
-    public boolean authSuperAdmin(String token){
-        Claims claims=null;
-        boolean stu=false;
-        try {
-            //        解析token
-            claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
-            //判断redis中是否有这个token
-            if (StringUtils.hasText(token) && redisTemplate.hasKey(token)) {
-                //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
-                String id = claims.getId();
-                //截取id第一个字符，判断身份
-                String fid=id.substring(0,1);
-//                如果id为管理员账号并且身份为超级管理员，则返回true
-                if (fid.equals("r")&& AdminIdentity.SUPER_ADMIN.equals(adminService.selectNotDelAdmin(id).getIdentity())) {
+                } else if (identityList.contains("服务器管理")&&url.contains("/serverManage/")) {
+                    stu=true;
+                }else if (identityList.contains("课程管理")&&url.contains("/courseManage/")) {
+                    stu=true;
+                }else if (identityList.contains("老师管理")&&url.contains("/teacherManage/")) {
+                    stu=true;
+                }else if (identityList.contains("学生管理")&&url.contains("/studentManage/")) {
+                    stu=true;
+                }else if (identityList.contains("角色管理")&&url.contains("/identityManage/")) {
+                    stu=true;
+                }else if (identityList.contains("管理员管理")&&url.contains("/adminManage/")) {
                     stu=true;
                 }
             }

@@ -1,17 +1,12 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller.admin;
 
-import com.github.dockerjava.api.DockerClient;
-import com.github.dockerjava.api.model.Image;
-import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
+
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin;
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.AdminHead;
-import com.xgksyjxpt.xgksyjxpt.course.domain.admin.AdminIdentity;
-import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminService;
 import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
-import com.xgksyjxpt.xgksyjxpt.util.DockerUtil;
 import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +18,13 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/admin")
-@Api(tags = "管理员通用接口")
+@Api(tags = "管理员通用")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
     @Autowired
     private FastdfsUtil fastdfsUtil;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 

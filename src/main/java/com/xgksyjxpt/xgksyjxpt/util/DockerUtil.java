@@ -52,7 +52,6 @@ public class DockerUtil {
 //        运行容器
         dockerClient.startContainerCmd(container1.getId()).exec();
 //        启动时运行ssh
-        //修改密码
         execC(dockerClient,container1.getId(),"/usr/sbin/sshd");
         //启动时设置root密码
         execC(dockerClient,container1.getId(),"/bin/sh","-c","echo root:"+sshpasswd+"|chpasswd");

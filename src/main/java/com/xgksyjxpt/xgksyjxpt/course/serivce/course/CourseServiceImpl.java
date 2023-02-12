@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,27 +22,23 @@ import java.util.List;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    @Autowired
+    @Resource
     private CourseMapper courseMapper;
 
-    @Autowired
+    @Resource
     private CourseHeadMapper courseHeadMapper;
 
-    @Autowired
+    @Resource
     private StudentService studentService;
 
-    @Autowired
+    @Resource
     private CourseChapterService courseChapterService;
-
-    @Autowired
-    private CourseSectionService courseSectionService;
-
-    @Autowired
+    @Resource
     private CourseTestService courseTestService;
-    @Autowired
+    @Resource
     private FastdfsUtil fastdfsUtil;
 
-    @Autowired
+    @Resource
     private CourseTestImagesMapper courseTestImagesMapper;
 
     /**

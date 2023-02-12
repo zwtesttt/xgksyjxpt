@@ -23,7 +23,7 @@ public class MyFilter implements Filter {
     @Autowired
     private JwtUitls jwtUitls;
     //白名单请求
-    private static final List<String> ALLOW_URI= Arrays.asList("/xgksyjxpt/login","/xgksyjxpt/swagger-ui.html");
+    private static final List<String> ALLOW_URI= Arrays.asList("/xgksyjxpt/login");
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -46,7 +46,10 @@ public class MyFilter implements Filter {
                 //判断token是否为空
                 if(StringUtils.isNotBlank(token)){
 //                    判断请求中是否带有角色前缀，没有前缀说明是公共接口
-                    if(url.contains("/student/")||url.contains("/teacher/")||url.contains("/admin/")){
+                    if(url.contains("/student/")||url.contains("/teacher/")||url.contains("/admin/")
+                            ||url.contains("/adminManage/")||url.contains("/serverManage/")||url.contains("/identityManage/")
+                            ||url.contains("/courseManage/")||url.contains("/studentManage/")||url.contains("/teacherManage/")
+                    ){
                         //判断权限
                         if (jwtUitls.authPerm(token,url)) {
                             //token验证结果
@@ -69,26 +72,8 @@ public class MyFilter implements Filter {
                             re.setCode(TokenStatus.NO_PREMISSIONS_CODE);
                             re.setMessage("未授权");
                         }
-                        //超级管理员接口
-                    }else if(url.contains("/superadmin/")){
-                        if (jwtUitls.authSuperAdmin(token)){
-                            //token验证结果
-                            verify  = jwtUitls.verify(token);
-                            if (verify==TokenStatus.ALLOW_CODE){
-                                //验证成功，放行
-                                filterChain.doFilter(servletRequest,servletResponse);
-                                return;
-                            }else{
-                                re.setCode(TokenStatus.NO_PREMISSIONS_CODE);
-                                re.setMessage("未授权");
-                            }
-                        }else{
-                            //token为空的返回
-                            re.setCode(TokenStatus.NO_PREMISSIONS_CODE);
-                            re.setMessage("未授权");
-                        }
                         //其他接口
-                    }else{
+                    } else{
                         //token验证结果
                         verify  = jwtUitls.verify(token);
                         if(verify != TokenStatus.ALLOW_CODE){

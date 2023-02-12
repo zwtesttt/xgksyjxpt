@@ -7,26 +7,29 @@ import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.Container;
 import com.xgksyjxpt.xgksyjxpt.util.DockerUtil;
 import com.xgksyjxpt.xgksyjxpt.util.PasswordUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class DockerService {
 
-    @Autowired
+    @Resource
     private ContainerService containerService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    @Value(value = "${docker.api.url}")
+    private String url;
 
-//    @Autowired
-//    private DockerConfig dockerConfig;
-
-    private static DockerClient dockerClient= DockerUtil.queryDockerClient(DockerConfig.DOCKER_API_URL);
+    /**
+     * 返回DockerClient
+     * @return
+     */
+    public DockerClient getDockerClient(){
+        return DockerUtil.queryDockerClient(url);
+    }
 
     /**
      * 查询容器ip
@@ -35,7 +38,7 @@ public class DockerService {
      * @return
      */
     public String getIp(String id,String networkName){
-        String ip=DockerUtil.getContainersIp(dockerClient,id,networkName);
+        String ip=DockerUtil.getContainersIp(getDockerClient(),id,networkName);
         return ip;
     }
 
@@ -45,18 +48,16 @@ public class DockerService {
      */
     public String createQueryId(String imagesName,String stuId,String networkName,String testid) throws Exception {
 
-        String id=DockerUtil.getContainersId(dockerClient,imagesName+"-"+stuId+"-"+testid);
+        String id=DockerUtil.getContainersId(getDockerClient(),imagesName+"-"+stuId+"-"+testid);
 //        先判断本地是不是已经存在该名称的容器,不存在才运行新容器
         if(id==null){
             HostConfig hostConfig=new HostConfig().withNetworkMode(networkName).withPrivileged(true);
-            List<Image> imageList=DockerUtil.imageList(dockerClient);
+            List<Image> imageList=DockerUtil.imageList(getDockerClient());
             //存放本地镜像名
             String localName=null;
 
             //生成随机8位密码
             String sshpasswd=PasswordUtils.getLowerLetterNumber(8);
-//            //对密码进行加密
-//            String bash64pa= passwordEncoder.encode(sshpasswd);
             for (Image im :imageList) {
                 //不处理none镜像
                 if(!im.getRepoTags()[0].split(":")[0].equals("<none>")){
@@ -64,7 +65,7 @@ public class DockerService {
                     //判断本地是否有该镜像
                     if (localName.equals(imagesName)){
                         //运行容器
-                        id=DockerUtil.runContainers(dockerClient,im.getRepoTags()[0],imagesName+"-"+stuId+"-"+testid,hostConfig,sshpasswd);
+                        id=DockerUtil.runContainers(getDockerClient(),im.getRepoTags()[0],imagesName+"-"+stuId+"-"+testid,hostConfig,sshpasswd);
                         break;
                     }
                 }
@@ -83,12 +84,12 @@ public class DockerService {
                 //添加记录是否成功
                 if (stu==0){
                     //插入记录失败删除容器
-                    DockerUtil.removeContainer(dockerClient,id);
+                    DockerUtil.removeContainer(getDockerClient(),id);
                     id=null;
                 }
             }catch (Exception e){
 //                发生异常删除容器
-                DockerUtil.removeContainer(dockerClient,id);
+                DockerUtil.removeContainer(getDockerClient(),id);
                 id=null;
                 e.printStackTrace();
             }
@@ -103,7 +104,7 @@ public class DockerService {
 
         for (String s:cids
              ) {
-            DockerUtil.removeContainer(dockerClient,s);
+            DockerUtil.removeContainer(getDockerClient(),s);
             stu++;
         }
         return stu;
@@ -112,7 +113,7 @@ public class DockerService {
      * 查询容器名称
      */
     public String selectContainersName(String cid){
-        return DockerUtil.getContainersName(dockerClient,cid);
+        return DockerUtil.getContainersName(getDockerClient(),cid);
     }
 
 }

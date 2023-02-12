@@ -29,7 +29,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/student")//给该controller类所有接口加上/student的url前缀
-@Api(tags = "学生接口")
+@Api(tags = "学生业务")
 public class StudentController {
     @Autowired
     private StudentService studentService;

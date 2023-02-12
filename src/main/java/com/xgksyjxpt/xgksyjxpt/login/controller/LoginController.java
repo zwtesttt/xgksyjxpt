@@ -65,8 +65,8 @@ public class LoginController {
         Map<String,Object> userInfo=new HashMap<>();
         ReturnObject re=new ReturnObject();
         if(id!=null && !"".equals(id) && passwd!=null && !"".equals(passwd)){
-            //        过期时间,单位为秒
-            int es=60*5;
+            //过期时间,单位为秒
+            int es=60*60*24;
             String token=null;
             if ("student".equals(role) || "tutor".equals(role)){
                 Student user= studentService.selectNotDelStudent(id);
@@ -119,7 +119,7 @@ public class LoginController {
                     re.setMessage("该用户不存在");
                     return re;
                 }
-            } else if ("admin".equals(role) || "superadmin".equals(role)) {
+            } else if ("admin".equals(role)) {
                 Admin user=adminService.selectNotDelAdmin(id);
                 if (user!=null){
                     if(passwordEncoder.matches(passwd,user.getPasswd())){
@@ -129,9 +129,9 @@ public class LoginController {
                         String url=adminService.selectAdminHeadUrl(user.getRid());
                         userInfo.put("head_url",url.substring(7));
                         userInfo.put("identity",user.getIdentity());
-                        token= jwtUitls.createToken(id,user.getName());
+                        token= jwtUitls.createToken(id,user.getIdentity());
                         userInfo.put("identityPermissions",identityPermissionsService.selectIdentityPermissions(user.getIdentity()));
-                        //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
+                        //登录成功后将token作为key,用户信息作为value保存到redis,一天过期
                         redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
                     }else{
                         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);

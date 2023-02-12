@@ -1,7 +1,5 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.teacher;
 
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.Course;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.TeacherHead;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.teacher.TeacherHeadMapper;
@@ -12,17 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
-    @Autowired
+    @Resource
     private TeacherMapper teacherMapper;
 
-    @Autowired
+    @Resource
     private TeacherHeadMapper teacherHeadMapper;
 
-    @Autowired
+    @Resource
     private CourseService courseService;
 
     /**
