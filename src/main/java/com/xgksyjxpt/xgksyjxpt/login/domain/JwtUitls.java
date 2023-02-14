@@ -86,15 +86,15 @@ public class JwtUitls {
             //截取id第一个字符，判断身份
             String identity=claims.getSubject();
             Object user=null;
-            if (identity.equals("student")){
-                user= studentService.selectNotDelStudent(id);
-            } else if (identity.equals("teacher")) {
+            if (identity.equals("teacher")) {
                 user=teacherService.selectNotDelTeacher(id);
             } else if (identity.equals("admin")||identity.equals("superadmin")) {
                 user=adminService.selectNotDelAdmin(id);
+            }else{
+                user= studentService.selectNotDelStudent(id);
             }
             if(user != null){
-//                刷新token的时间为5分钟
+//                刷新token的时间为一天
                 redisTemplate.expire(token,60*60*24,TimeUnit.SECONDS);
                 re=TokenStatus.ALLOW_CODE;
             }else{
