@@ -1,7 +1,9 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.admin;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.Admin;
 import com.xgksyjxpt.xgksyjxpt.course.domain.admin.AdminHead;
+import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.admin.AdminHeadMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.admin.AdminMapper;
@@ -131,7 +133,11 @@ public class AdminServiceImpl implements AdminService {
             //删除头像
             adminHeadMapper.deleteAdminHead(rid);
         }
-        return adminMapper.deleteAdmins(rids);
+        //删除管理员
+        QueryWrapper<Admin> wrapper = new QueryWrapper<>();
+        wrapper.in("rid",rids);
+        return adminMapper.delete(wrapper);
+//        return adminMapper.deleteAdmins(rids);
     }
 
     /**

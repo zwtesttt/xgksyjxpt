@@ -69,9 +69,9 @@
   </select>
 <!--  批量添加老师(弃用)-->
   <insert id="addTeachers" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher">
-    insert into teacher_t values
+    insert into teacher_t(tid, name, age, sex, passwd,identity) values
     <foreach collection="array" item="teachers" separator=",">
-      (#{teachers.tid},#{teachers.name},#{teachers.age},#{teachers.sex},#{teachers.passwd})
+      (#{teachers.tid},#{teachers.name},#{teachers.age},#{teachers.sex},#{teachers.passwd},#{teachers.identity})
     </foreach>
   </insert>
 <!--  修改老师信息-->

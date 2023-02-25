@@ -70,7 +70,7 @@
     update admin_t set passwd=#{pass} where rid=#{rid} and delete_time is null
   </update>
 <!--  批量删除管理员-->
-  <update id="deleteAdmin" parameterType="string">
+  <update id="deleteAdmins" parameterType="string">
     update admin_t set delete_time=now() where rid in(
       <foreach collection="array" item="rids" separator=",">
         #{rids}

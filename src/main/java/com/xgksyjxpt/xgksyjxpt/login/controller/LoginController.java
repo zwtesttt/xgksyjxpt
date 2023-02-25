@@ -10,11 +10,13 @@ import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
+import com.xgksyjxpt.xgksyjxpt.login.domain.User;
 import io.swagger.annotations.*;
 import org.apache.catalina.authenticator.SingleSignOnSessionKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -47,7 +49,7 @@ public class LoginController {
 
     /**
      * 登录
-     * @param map
+     * @param
      * @return
      */
     @PostMapping("/login")
@@ -55,15 +57,23 @@ public class LoginController {
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="id",value="id",dataType="string",required = true),
-            @ApiImplicitParam(name="passwd",value="密码",dataType="string",required = true)
+            @ApiImplicitParam(name="passwd",value="密码",dataType="string",required = true),
+            @ApiImplicitParam(name="role",value="角色",dataType="string",required = true),
+            @ApiImplicitParam(name="loginUser",value="实体类（不用管）",required = false)
     })
-    public Object login(@RequestBody Map<String,String> map){
-        String id=map.get("id");
-        String passwd=map.get("passwd");
-        String role=map.get("role");
+    public Object login(@RequestBody User loginUser){
+        ReturnObject re=new ReturnObject();
+        if (loginUser==null){
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("登陆信息不能为空");
+            return re;
+        }
+        String id= loginUser.getId();
+        String passwd=loginUser.getPasswd();
+        String role=loginUser.getRole();
         Map<String,Object> remap=new HashMap<>();
         Map<String,Object> userInfo=new HashMap<>();
-        ReturnObject re=new ReturnObject();
+
         if(id!=null && !"".equals(id) && passwd!=null && !"".equals(passwd)){
             //过期时间,单位为秒
             int es=60*60*24;

@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.student;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
@@ -9,10 +10,12 @@ import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentTestMapper;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.ContainerService;
 import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -151,7 +154,10 @@ public class StudentServiceImpl implements StudentService {
         //删除学生选课记录
         studentCourseMapper.deleteStuCourse(stuIds);
         //删除学生表记录
-        return studentMapper.deleteStudents(stuIds);
+        QueryWrapper<Student> wrapper = new QueryWrapper<>();
+        wrapper.in("sid",stuIds);
+        return studentMapper.delete(wrapper);
+//        return studentMapper.deleteStudents(stuIds);
     }
 
     /**

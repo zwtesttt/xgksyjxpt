@@ -1,5 +1,7 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.teacher;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.TeacherHead;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.teacher.TeacherHeadMapper;
@@ -144,7 +146,11 @@ public class TeacherServiceImpl implements TeacherService {
         }
         //删除数据库中老师头像记录
         deleteTeaHeadByTids(tids);
-        return teacherMapper.deleteTeacherByTids(tids);
+        //删除老师记录
+        QueryWrapper<Teacher> wrapper = new QueryWrapper<>();
+        wrapper.in("tid",tids);
+        return teacherMapper.delete(wrapper);
+//        return teacherMapper.deleteTeacherByTids(tids);
     }
 
     /**
