@@ -9,6 +9,7 @@ import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
 import org.springframework.stereotype.Component;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -139,5 +140,12 @@ public class DockerUtil {
         //获取容器详细信息
         InspectContainerResponse info =dockerClient.inspectContainerCmd(containersId).exec();
         return info.getName().substring(1);
+    }
+    /**
+     * 打包镜像
+     */
+    public static void installImage(DockerClient dockerClient, InputStream in){
+        LoadImageCmd load = dockerClient.loadImageCmd(in);
+        load.exec();
     }
 }

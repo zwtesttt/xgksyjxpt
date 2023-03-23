@@ -48,7 +48,7 @@ public class MyFilter implements Filter {
 //                    判断请求中是否带有角色前缀，没有前缀说明是公共接口
                     if(url.contains("/student/")||url.contains("/teacher/")||url.contains("/admin/")
                             ||url.contains("/adminManage/")||url.contains("/serverManage/")||url.contains("/identityManage/")
-                            ||url.contains("/courseManage/")||url.contains("/studentManage/")||url.contains("/teacherManage/")
+                            ||url.contains("/courseManage/")||url.contains("/studentManage/")||url.contains("/teacherManage/")||url.contains("/classManage")
                     ){
                         //判断权限
                         if (jwtUitls.authPerm(token,url)) {

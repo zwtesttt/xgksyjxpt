@@ -27,7 +27,6 @@ public class Admin {
     private String identity;
 
     @TableLogic(value = "null",delval = "now()")
-    @ApiModelProperty(hidden = true)
     private Date delete_time;
 
     public Date getDelete_time() {

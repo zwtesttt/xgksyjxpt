@@ -142,6 +142,8 @@ public class JwtUitls {
                     stu=true;
                 }else if (identityList.contains("管理员管理")&&url.contains("/adminManage/")) {
                     stu=true;
+                }else if (identityList.contains("班级管理")&&url.contains("/classManage/")) {
+                    stu=true;
                 }
             }
         }catch (MalformedJwtException e){

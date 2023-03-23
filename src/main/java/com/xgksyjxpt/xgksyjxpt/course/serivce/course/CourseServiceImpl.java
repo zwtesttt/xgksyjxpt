@@ -57,9 +57,9 @@ public class CourseServiceImpl implements CourseService {
         Date end=null;
         //开始时间
         try {
-            start=DateUtil.getDate(course.getCourse_start());
+            start=DateUtil.getDate(course.getCourseStart());
             //结束时间
-            end=DateUtil.getDate(course.getCourse_end());
+            end=DateUtil.getDate(course.getCourseEnd());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -68,14 +68,14 @@ public class CourseServiceImpl implements CourseService {
             //开课时间在当前时间之后
             if (start.compareTo(nowdate)>0){
                 //创建数据库定时事件
-                createEvent(course.getCourse_start(),course.getCid(),"event"+course.getCid()+"start",CourseStatus.COURSE_START);
+                createEvent(course.getCourseStart(),course.getCid(),"event"+course.getCid()+"start",CourseStatus.COURSE_START);
                 course.setCourse_status(CourseStatus.COURSE_NOT_START);
                 //开课时间在当前时间之前或者等于当前时间
             }else{
                 course.setCourse_status(CourseStatus.COURSE_START);
             }
             //创建数据库定时事件
-            createEvent(course.getCourse_end(),course.getCid(),"event"+course.getCid()+"end",CourseStatus.COURSE_END);
+            createEvent(course.getCourseEnd(),course.getCid(),"event"+course.getCid()+"end",CourseStatus.COURSE_END);
             //结束时间在当前之间之前或者相等则把课程状态设置成已结束
         }else{
             course.setCourse_status(CourseStatus.COURSE_END);
@@ -206,32 +206,32 @@ public class CourseServiceImpl implements CourseService {
         Date start=null;
         Date end=null;
         //同时修改开始和结束时间
-        if (course.getCourse_start()!=null && course.getCourse_end()!=null){
+        if (course.getCourseStart()!=null && course.getCourseEnd()!=null){
             //开始时间
             try {
-                start= DateUtil.getDate(course.getCourse_start());
+                start= DateUtil.getDate(course.getCourseStart());
                 //结束时间
-                end=DateUtil.getDate(course.getCourse_end());
+                end=DateUtil.getDate(course.getCourseEnd());
             }catch (Exception e){
                 e.printStackTrace();
             }
             //不需要修改全部时间的情况,使用旧的时间
         }else{
             Course course1=courseMapper.selectCourseByCid(course.getCid());
-            if (course.getCourse_start()==null&&course.getCourse_end()!=null){
+            if (course.getCourseStart()==null&&course.getCourseEnd()!=null){
                 //开始时间
                 try {
-                    start= DateUtil.getDate(course1.getCourse_start());
+                    start= DateUtil.getDate(course1.getCourseStart());
                     //结束时间
-                    end=DateUtil.getDate(course.getCourse_end());
+                    end=DateUtil.getDate(course.getCourseEnd());
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-            } else if (course.getCourse_start()!=null&&course.getCourse_end()==null) {
+            } else if (course.getCourseStart()!=null&&course.getCourseEnd()==null) {
                 try {
-                    start= DateUtil.getDate(course.getCourse_start());
+                    start= DateUtil.getDate(course.getCourseStart());
                     //结束时间
-                    end=DateUtil.getDate(course1.getCourse_end());
+                    end=DateUtil.getDate(course1.getCourseEnd());
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -249,14 +249,14 @@ public class CourseServiceImpl implements CourseService {
         if(end.compareTo(nowdate)>0){
             if (start.compareTo(nowdate)>0){
                 //创建数据库定时事件
-                createEvent(course.getCourse_start(),course.getCid(),"event"+course.getCid()+"start",CourseStatus.COURSE_START);
+                createEvent(course.getCourseStart(),course.getCid(),"event"+course.getCid()+"start",CourseStatus.COURSE_START);
                 course.setCourse_status(CourseStatus.COURSE_NOT_START);
                 //开课时间在当前时间之前或者等于当前时间
             }else{
                 course.setCourse_status(CourseStatus.COURSE_START);
             }
             //创建数据库定时事件
-            createEvent(course.getCourse_end(),course.getCid(),"event"+course.getCid()+"end",CourseStatus.COURSE_END);
+            createEvent(course.getCourseEnd(),course.getCid(),"event"+course.getCid()+"end",CourseStatus.COURSE_END);
             //结束时间在当前之间之前或者相等则把课程状态设置成已结束
         }else{
             course.setCourse_status(CourseStatus.COURSE_END);
