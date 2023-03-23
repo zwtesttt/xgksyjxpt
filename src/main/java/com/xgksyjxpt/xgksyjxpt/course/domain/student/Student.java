@@ -78,14 +78,14 @@ public class Student {
     @ApiModelProperty(value = "学生密码",dataType = "String",required = true)
     private String passwd;
     @ApiModelProperty(value = "学生班级",dataType = "String",required = true)
-    private String class_name;
+    private String className;
 
     public String getClass_name() {
-        return class_name;
+        return className;
     }
 
-    public void setClass_name(String class_name) {
-        this.class_name = class_name;
+    public void setClass_name(String className) {
+        this.className = className;
     }
 
 

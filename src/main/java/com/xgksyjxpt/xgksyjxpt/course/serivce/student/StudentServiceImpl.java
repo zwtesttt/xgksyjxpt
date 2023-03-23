@@ -2,6 +2,7 @@ package com.xgksyjxpt.xgksyjxpt.course.serivce.student;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
+import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentCourse;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentCourseMapper;
@@ -347,6 +348,18 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<String> selectIdentitySid(String identity) {
         return studentMapper.selectIdentitySid(identity);
+    }
+
+    /**
+     * 查询指定学生总选课数
+     * @param sid
+     * @return
+     */
+    @Override
+    public int queryStudentCourseCountBySid(String sid) {
+        QueryWrapper<StudentCourse> wrapper=new QueryWrapper<>();
+        wrapper.eq("sid",sid);
+        return Math.toIntExact(studentCourseMapper.selectCount(wrapper));
     }
 
     /**

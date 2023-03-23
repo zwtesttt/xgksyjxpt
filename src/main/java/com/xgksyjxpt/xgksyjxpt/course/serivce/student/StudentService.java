@@ -57,6 +57,7 @@ public interface StudentService {
     int queryStudentCount(Student student);
 
     List<String> selectIdentitySid(String identity);
+    int queryStudentCourseCountBySid(String sid);
 
 }
 
