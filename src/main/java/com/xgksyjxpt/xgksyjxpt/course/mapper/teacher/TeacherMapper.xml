@@ -50,11 +50,11 @@
   </insert>
 <!--  查询老师信息-->
   <select id="selectTeacher" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher" parameterType="string">
-    select tid, name, age, sex, passwd from teacher_t where tid=#{id}
+    select tid, name, age, sex, passwd,identity from teacher_t where tid=#{id}
   </select>
   <!--  查询正常老师信息-->
   <select id="selectNotDelTeacher" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher" parameterType="string">
-    select tid, name, age, sex, passwd from teacher_t where tid=#{id} and delete_time is null
+    select tid, name, age, sex, passwd,identity from teacher_t where tid=#{id} and delete_time is null
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     <!--

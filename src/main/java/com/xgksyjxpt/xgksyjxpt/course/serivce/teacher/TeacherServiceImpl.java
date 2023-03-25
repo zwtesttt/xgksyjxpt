@@ -169,6 +169,7 @@ public class TeacherServiceImpl implements TeacherService {
      * @return
      */
     @Override
+    @Transactional
     public int insertTeacher(Teacher teacher) {
         //添加默认头像
         TeacherHead head=new TeacherHead();

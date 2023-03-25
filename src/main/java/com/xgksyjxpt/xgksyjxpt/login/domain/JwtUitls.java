@@ -1,6 +1,5 @@
 package com.xgksyjxpt.xgksyjxpt.login.domain;
 
-import com.xgksyjxpt.xgksyjxpt.course.domain.admin.AdminIdentity;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.IdentityPermissionsService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;

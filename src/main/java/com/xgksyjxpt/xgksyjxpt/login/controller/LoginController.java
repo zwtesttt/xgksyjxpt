@@ -82,6 +82,8 @@ public class LoginController {
                 Student user= studentService.selectNotDelStudent(id);
                 if (user!=null){
                     //密码匹配
+
+
                     if (passwordEncoder.matches(passwd,user.getPasswd())){
                         //封装用户信息
                         userInfo.put("id",user.getSid());

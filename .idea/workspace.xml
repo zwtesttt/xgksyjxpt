@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/student/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/student/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/teacher/TeacherMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/teacher/TeacherMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/teacher/TeacherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/teacher/TeacherServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/JwtUitls.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/JwtUitls.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +77,7 @@
     &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;8b4b94b399c2e8a3ee2d2a35a3e835e3&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -246,7 +246,15 @@
       <workItem from="1679373737246" duration="1647000" />
       <workItem from="1679402263091" duration="2558000" />
       <workItem from="1679492313493" duration="3979000" />
-      <workItem from="1679558699702" duration="7707000" />
+      <workItem from="1679558699702" duration="8836000" />
+      <workItem from="1679643465081" duration="2587000" />
+      <workItem from="1679659923239" duration="25000" />
+      <workItem from="1679665479154" duration="1051000" />
+      <workItem from="1679670210798" duration="315000" />
+      <workItem from="1679718234841" duration="2323000" />
+      <workItem from="1679728191752" duration="184000" />
+      <workItem from="1679730133046" duration="13000" />
+      <workItem from="1679751020449" duration="3335000" />
     </task>
     <task id="LOCAL-00001" summary="修复webssh输入后响应问题">
       <created>1669120575079</created>
@@ -451,7 +459,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679561420532</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="添加班级管理CRUD接口">
+      <created>1679577580588</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1679577580588</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -461,7 +476,6 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="添加接口：查询镜像列表，根据镜像名+学生id创建容器，" />
     <MESSAGE value="测试提交" />
     <MESSAGE value="创建容器后生成随机密码并加密,根据容器id查询加密密码进行解密后连接" />
     <MESSAGE value="登录校验" />
@@ -486,7 +500,8 @@
     <MESSAGE value="调整接口校验" />
     <MESSAGE value="接入Mybatis-plus,修改接口“批量删除管理员、老师、学生接口”逻辑" />
     <MESSAGE value="添加班级管理模块，修改多个接口逻辑" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加班级管理模块，修改多个接口逻辑" />
+    <MESSAGE value="添加班级管理CRUD接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加班级管理CRUD接口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
