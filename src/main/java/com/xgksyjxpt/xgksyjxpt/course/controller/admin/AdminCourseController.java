@@ -37,8 +37,13 @@ public class AdminCourseController {
         ReturnObject re=new ReturnObject();
         Map<String,Object> remap=new HashMap<>();
         List<Map<String,Object>> relist=new ArrayList<>();
+        List<Course> clist=null;
         //获取所有课程信息
-        List<Course> clist=courseService.queryAllCourse(course,(pageNum-1)*pageSize,pageSize);
+        if(course==null){
+            clist=courseService.queryAllCourse(null,(pageNum-1)*pageSize,pageSize);
+        }else{
+            clist=courseService.queryAllCourse(course,(pageNum-1)*pageSize,pageSize);
+        }
         for (Course c:clist
         ) {
             //封装课程信息对象

@@ -303,16 +303,15 @@ public class TeacherCourseController {
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="tid",value="教师号",dataType="string",required = true),
-            @ApiImplicitParam(name="pageNum",value="页数",dataType="string",required = true),
-            @ApiImplicitParam(name="pageSize",value="每页数据条数",dataType="string",required = true)
+            @ApiImplicitParam(name="courseName",value="筛选课程名",dataType="string",required = true)
     })
-    public Object getTeacherCourse(String tid,Integer pageNum,Integer pageSize){
+    public Object getTeacherCourse(String tid,String courseName){
         ReturnObject re=new ReturnObject();
-        if (tid!=null&&pageNum!=null&&pageSize!=null){
+        if (tid!=null){
 //            校验教师号
             if (teacherService.selectNotDelTeacher(tid) != null) {
                 //查询该老师创建的课程
-                List<Course> clist=courseService.selectCourseByTid(tid,(pageNum-1)*pageSize,pageSize);
+                List<Course> clist=courseService.selectCourseByTid(tid,courseName);
                 if (clist.size()!=0){
                     List<Map<String,Object>> relist=new ArrayList<>();
                     Map<String,Object> map=null;
@@ -341,7 +340,7 @@ public class TeacherCourseController {
             }
         }else{
             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-            re.setMessage("教师号、分页参数不能为空");
+            re.setMessage("教师号不能为空");
         }
         return re;
     }

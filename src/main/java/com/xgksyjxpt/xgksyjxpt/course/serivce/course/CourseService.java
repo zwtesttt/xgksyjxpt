@@ -20,7 +20,7 @@ public interface CourseService {
     int deleteCourses(String[] cids);
     List<Course> queryAllCourse(Course course,Integer pageNum,Integer pageSize);
     int createEvent(String date,String cid,String eventName,String courseStatus);
-    List<Course> selectCourseByTid(String tid,Integer pageNum,Integer pageSize);
+    List<Course> selectCourseByTid(String tid,String courseName);
     int updateCourseInfo(Course course);
     int queryCourseCount(Course course);
 

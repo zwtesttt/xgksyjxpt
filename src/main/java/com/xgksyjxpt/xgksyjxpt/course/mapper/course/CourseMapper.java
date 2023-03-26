@@ -88,7 +88,7 @@ public interface CourseMapper {
     /**
      * 根据老师id查询课程信息
      */
-    List<Course> selectCourseByTid(@Param("tid") String tid,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+    List<Course> selectCourseByTid(@Param("tid") String tid,@Param("courseName") String courseName);
     /**
      * 修改课程信息
      */

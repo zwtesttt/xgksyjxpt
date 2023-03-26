@@ -183,8 +183,8 @@ public class CourseServiceImpl implements CourseService {
      * 根据老师id查询课程信息
      */
     @Override
-    public List<Course> selectCourseByTid(String tid,Integer pageNum,Integer pageSize) {
-        return courseMapper.selectCourseByTid(tid,pageNum,pageSize);
+    public List<Course> selectCourseByTid(String tid,String courseName) {
+        return courseMapper.selectCourseByTid(tid,courseName);
     }
 
     /**
