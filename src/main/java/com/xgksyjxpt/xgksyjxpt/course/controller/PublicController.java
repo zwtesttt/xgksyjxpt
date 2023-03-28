@@ -7,6 +7,7 @@ import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseTestService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.DockerService;
 import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 
@@ -33,6 +34,8 @@ public class PublicController {
 
     @Autowired
     private StudentService studentService;
+    @Resource
+    private TeacherService teacherService;
 
 
 
@@ -55,28 +58,28 @@ public class PublicController {
      * 根据镜像名和学生id创建容器返回容器id
      */
     @PostMapping("/createContain")
-    @ApiOperation("根据镜像名和学生id创建容器返回容器id")
+    @ApiOperation("根据镜像名和id创建容器返回容器id")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="imagesName",value="镜像名称",dataType="string",required = true),
-            @ApiImplicitParam(name="sid",value="学生id",dataType="string",required = true),
+            @ApiImplicitParam(name="id",value="id",dataType="string",required = true),
             @ApiImplicitParam(name="testId",value="实验id",dataType="string",required = true)
     })
-    public Object createContain(String imagesName,String sid,String testId){
+    public Object createContain(String imagesName,String id,String testId){
         ReturnObject re=new ReturnObject();
         try {
-            if (imagesName!=null&&sid!=null&&testId!=null){
+            if (imagesName!=null&&id!=null&&testId!=null){
                 //验证学号
-                if (studentService.selectNotDelStudent(sid)!=null){
+                if (studentService.selectNotDelStudent(id)!=null||teacherService.selectNotDelTeacher(id)!=null){
                     CourseTest courseTest=courseTestService.selectCourseTestByTestId(testId);
                     if (courseTest!=null){
-                        if (studentService.selectStudentTestBySidAndTestId(sid,testId)!=null){
+                        if (studentService.selectStudentTestBySidAndTestId(id,testId)!=null){
                             if (CourseStatus.COURSE_START.equals(courseTest.getTest_status())){
-                                String id= dockerService.createQueryId(imagesName,sid,DockerConfig.DOCKER_NETWORK_NAME,testId);
-                                if (id!=null){
+                                String conId= dockerService.createQueryId(imagesName,id,DockerConfig.DOCKER_NETWORK_NAME,testId);
+                                if (conId!=null){
                                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                                     re.setMessage("运行成功");
-                                    re.setData(id);
+                                    re.setData(conId);
                                 }else{
                                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                                     re.setMessage("运行容器失败");
@@ -90,7 +93,7 @@ public class PublicController {
                                 }
                         }else{
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                            re.setMessage("该学生没有该实验");
+                            re.setMessage("找不到该实验");
                         }
                     }else {
                         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
@@ -102,7 +105,7 @@ public class PublicController {
                 }
             }else{
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("镜像名、学号、实验id不能为空");
+                re.setMessage("镜像名、账号、实验id不能为空");
             }
 
         }catch (Exception e){

@@ -418,7 +418,7 @@ public class TeacherCourseController {
                 }
             }else{
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("课程号或头像不能为空");
+                re.setMessage("课程号或封面不能为空");
             }
         }catch (Exception e){
             e.printStackTrace();
