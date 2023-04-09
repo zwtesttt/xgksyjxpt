@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller.student;
 
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseChapter;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseChapterService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseSectionService;
@@ -86,7 +87,29 @@ public class StudentCourseController {
             if (courseService.selectCourseByCid(cid)!=null){
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                 re.setMessage("查询成功");
-                re.setData(courseChapterService.selectCourseChapter(cid));
+                List<Map<String,Object>> relist=new ArrayList<>();
+                //查询章节列表
+                List<CourseChapter> chapterList= courseChapterService.selectCourseChapter(cid);
+                for (CourseChapter cc:chapterList
+                ) {
+                    Map<String,Object> remap=new HashMap<>();
+                    List<Map<String,Object>> cslist=new ArrayList<>();
+                    //查询章节下的小节
+                    List<CourseSection> sections=courseSectionService.selectCourseSectionName(cid,cc.getChapter_id());
+                    for (CourseSection sc:sections
+                         ) {
+                        Map<String,Object> csmap=new HashMap<>();
+                        csmap.put("sectionId",sc.getSection_id());
+                        csmap.put("sectionName",sc.getSection_name());
+                        cslist.add(csmap);
+                    }
+                    remap.put("cid",cid);
+                    remap.put("chapterId",cc.getChapter_id());
+                    remap.put("chapterName",cc.getChapter_name());
+                    remap.put("sectionList",cslist);
+                    relist.add(remap);
+                }
+                re.setData(relist);
             }else{
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                 re.setMessage("课程不存在");

@@ -57,7 +57,7 @@
     select image_url from course_section_image_t where cid=#{cid} and chapter_id=#{chapterId} and delete_time is null
   </select>
 <!--  根据课程号和章节号和小节号查询图片-->
-  <select id="selectImageUrlByCidAndChapterIdAndSectionId">
+  <select id="selectImageUrlByCidAndChapterIdAndSectionId" resultType="string">
     select image_url from course_section_image_t where cid=#{cid} and chapter_id=#{chapterId} and section_id=#{sectionId} and delete_time is null
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

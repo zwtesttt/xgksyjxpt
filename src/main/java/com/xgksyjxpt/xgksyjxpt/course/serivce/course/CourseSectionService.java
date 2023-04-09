@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.course;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSectionImage;
 
@@ -17,6 +18,7 @@ public interface CourseSectionService {
     Integer queryCourseSectionMaxId(String cid,Integer chapterId);
     String queryCourseSectionText(String cid,Integer chapterId,Integer sectionId);
     int updayeCourseSectionText(String cid,Integer chapterId,Integer sectionId,String text);
+    CourseSection selectCourseSectionByCidAndChapterIdAndSectionId(String cid,Integer chapterId,Integer sectionId);
 
 
     /**

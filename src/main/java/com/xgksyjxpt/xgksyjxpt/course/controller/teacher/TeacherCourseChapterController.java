@@ -2,13 +2,22 @@ package com.xgksyjxpt.xgksyjxpt.course.controller.teacher;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.Course;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseChapter;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSectionImage;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseChapterService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseSectionService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/teacher")
@@ -20,6 +29,9 @@ public class TeacherCourseChapterController {
 
     @Autowired
     private CourseService courseService;
+
+    @Resource
+    private CourseSectionService courseSectionService;
     /**
      * 添加章节
      */
@@ -117,7 +129,29 @@ public class TeacherCourseChapterController {
             if (courseService.selectCourseByCid(cid)!=null){
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                 re.setMessage("查询成功");
-                re.setData(courseChapterService.selectCourseChapter(cid));
+                List<Map<String,Object>> relist=new ArrayList<>();
+                //查询章节列表
+                List<CourseChapter> chapterList= courseChapterService.selectCourseChapter(cid);
+                for (CourseChapter cc:chapterList
+                ) {
+                    Map<String,Object> remap=new HashMap<>();
+                    List<Map<String,Object>> cslist=new ArrayList<>();
+                    //查询章节下的小节
+                    List<CourseSection> sections=courseSectionService.selectCourseSectionName(cid,cc.getChapter_id());
+                    for (CourseSection sc:sections
+                    ) {
+                        Map<String,Object> csmap=new HashMap<>();
+                        csmap.put("sectionId",sc.getSection_id());
+                        csmap.put("sectionName",sc.getSection_name());
+                        cslist.add(csmap);
+                    }
+                    remap.put("cid",cid);
+                    remap.put("chapterId",cc.getChapter_id());
+                    remap.put("chapterName",cc.getChapter_name());
+                    remap.put("sectionList",cslist);
+                    relist.add(remap);
+                }
+                re.setData(relist);
             }else{
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                 re.setMessage("课程不存在");

@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller.teacher;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSectionImage;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseSectionService;
@@ -272,16 +273,22 @@ public class TeacherCourseSectionController {
         ReturnObject re=new ReturnObject();
         try {
             if (cid!=null && chapterId!=null&&sectionId!=null){
-//                删除小节
-                int stu=courseSectionService.deleteCourseSectionByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
-                if (stu!=0){
-                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-                    re.setMessage("删除成功");
+//                确认存在小节
+                if(courseSectionService.selectCourseSectionByCidAndChapterIdAndSectionId(cid,chapterId,sectionId)!=null){
+                    //                删除小节
+                    int stu=courseSectionService.deleteCourseSectionByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
+                    if (stu!=0){
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                        re.setMessage("删除成功");
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("删除失败");
+                    }
+
                 }else{
                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                    re.setMessage("删除失败");
+                    re.setMessage("该小节不存在");
                 }
-
             }else{
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                 re.setMessage("课程号、章节id、小节id不能为空");
@@ -291,6 +298,24 @@ public class TeacherCourseSectionController {
             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
             re.setMessage("删除失败");
         }
+        return re;
+    }
+
+    /**
+     * 修改小节标题
+     */
+    @DeleteMapping("/modifyCourseSectionName")
+    @ApiOperation("修改小节标题")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="cid",value="课程id",dataType="string",required = true),
+            @ApiImplicitParam(name="chapterId",value="章节id",dataType="int",required = true),
+            @ApiImplicitParam(name="sectionId",value="小节id",dataType="int",required = true),
+            @ApiImplicitParam(name="newSectionName",value="新的小节标题",dataType="string",required = true)
+    })
+    public Object modifyCourseSectionName(String cid,Integer chapterId,Integer sectionId,String newSectionName){
+        ReturnObject re=new ReturnObject();
+
         return re;
     }
 }

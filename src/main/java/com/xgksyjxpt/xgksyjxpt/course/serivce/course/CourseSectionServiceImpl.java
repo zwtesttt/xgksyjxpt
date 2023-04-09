@@ -1,5 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.course;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSectionImage;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.course.CourseSectionImageMapper;
@@ -150,6 +151,20 @@ public class CourseSectionServiceImpl implements CourseSectionService {
     @Override
     public int updayeCourseSectionText(String cid, Integer chapterId, Integer sectionId, String text) {
         return courseSectionMapper.updateCourseSectionText(cid,chapterId,sectionId,text);
+    }
+
+    /**
+     * 查询小节
+     * @param cid
+     * @param chapterId
+     * @param sectionId
+     * @return
+     */
+    @Override
+    public CourseSection selectCourseSectionByCidAndChapterIdAndSectionId(String cid, Integer chapterId, Integer sectionId) {
+        QueryWrapper<CourseSection> wq=new QueryWrapper<>();
+        wq.eq("cid",cid).eq("chapter_id",chapterId).eq("section_id",sectionId);
+        return courseSectionMapper.selectOne(wq);
     }
 
     /**
