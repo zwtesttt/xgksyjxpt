@@ -19,6 +19,7 @@ public interface CourseSectionService {
     String queryCourseSectionText(String cid,Integer chapterId,Integer sectionId);
     int updayeCourseSectionText(String cid,Integer chapterId,Integer sectionId,String text);
     CourseSection selectCourseSectionByCidAndChapterIdAndSectionId(String cid,Integer chapterId,Integer sectionId);
+    int updateCourseSectionNameByCidAndChapterIdAndSectionId(String cid,Integer chapterId,Integer sectionId,String newName);
 
 
     /**

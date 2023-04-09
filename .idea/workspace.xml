@@ -4,30 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="创建容器接口修改接收参数">
+    <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="修改学生、老师查询章节接口，修复无法删除小节">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/student/StudentCourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/student/StudentCourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseChapterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseChapterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseSectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseSectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseChapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseChapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseSection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/admin/AdminHead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/admin/AdminHead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/Container.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/Container.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseHead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseHead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseSectionImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseSectionImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseTestImages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseTestImages.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionImageMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionImageMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/student/StudentHead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/student/StudentHead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/student/StudentTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/student/StudentTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/teacher/TeacherHead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/teacher/TeacherHead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseTestMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseTestMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/PublicController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/PublicController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/student/StudentCourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/student/StudentCourseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseChapterController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseChapterController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/DockerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/DockerService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseSectionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseSectionController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseChapter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseChapter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseSection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseSection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseTestImages.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseTestImages.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionImageMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionImageMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/admin/AdminHead.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/admin/AdminHead.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/Container$ContainerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/Container$ContainerBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/Container.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/Container.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseHead.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseHead.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseSectionImage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseSectionImage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/CourseTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/student/StudentHead.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/student/StudentHead.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/student/StudentTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/student/StudentTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/teacher/TeacherHead.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/teacher/TeacherHead.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseTestMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseTestMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/course/DockerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/course/DockerService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
@@ -294,7 +302,7 @@
       <workItem from="1681018529913" duration="936000" />
       <workItem from="1681044043058" duration="1729000" />
       <workItem from="1681045808195" duration="89000" />
-      <workItem from="1681045912999" duration="645000" />
+      <workItem from="1681045912999" duration="7056000" />
     </task>
     <task id="LOCAL-00001" summary="修复webssh输入后响应问题">
       <created>1669120575079</created>
@@ -534,7 +542,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680009599386</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="修改学生、老师查询章节接口，修复无法删除小节">
+      <created>1681046611231</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1681046611232</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -543,8 +558,18 @@
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="自动续约token,根据容器名创建容器时如果已经存在相同名称的容器则返回容器id" />
     <MESSAGE value="查询所有学生信息" />
     <MESSAGE value="增加登录验证鉴定权限，添加学生" />
     <MESSAGE value="新增多个接口" />
@@ -569,7 +594,8 @@
     <MESSAGE value="修复接口" />
     <MESSAGE value="修复管理员查询所有课程接口" />
     <MESSAGE value="创建容器接口修改接收参数" />
-    <option name="LAST_COMMIT_MESSAGE" value="创建容器接口修改接收参数" />
+    <MESSAGE value="修改学生、老师查询章节接口，修复无法删除小节" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改学生、老师查询章节接口，修复无法删除小节" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,8 +1,10 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller.teacher;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.Course;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminClassService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseTestService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
@@ -14,6 +16,7 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +33,9 @@ public class TeacherCourseTestController {
     private CourseService courseService;
     @Autowired
     private StudentService studentService;
+
+    @Resource
+    private AdminClassService adminClassService;
     /**
      * 添加课程实验
      * 因为要提交复杂的表单数据，所以选择json
@@ -58,62 +64,71 @@ public class TeacherCourseTestController {
                 courseTest.setTest_end_time((String) map.get("testEndTime"));
                 //描述
                 courseTest.setTest_description((String) map.get("testDescription"));
+                courseTest.setChapterId((Integer) map.get("chapterId"));
                 //保存班级名
                 List<String> classList= (List<String>) map.get("classList");
                 String[] classNames=new String[classList.size()];
                 int c=0;
                 for (String s:classList
                      ) {
-                    classNames[c++]=s;
-                }
-//                验证课程是否存在
-                Course t = courseService.selectCourseByCid(courseTest.getCid());
-                if (t == null) {
-                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                    re.setMessage("课程不存在");
-                } else {
-                    //判断课程状态
-                    if ("已结束".equals(t.getCourse_status())){
-                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                        re.setMessage("该课程已结束");
-//                        实验结束时间不能超过课程结束时间
-                    }else if(DateUtil.getDate(courseTest.getTest_end_time()).compareTo(DateUtil.getDate(t.getCourseEnd()))>0){
-                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                        re.setMessage("实验结束时间不能超过课程结束时间");
-                        //实验开始时间不能实验结束时间
-                    }else if(DateUtil.getDate(courseTest.getTest_end_time()).compareTo(DateUtil.getDate(courseTest.getTest_start_time()))<0){
-                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                        re.setMessage("实验开始时间不能超过实验结束时间");
-                    }else{
-                        //添加课程实验记录
-                        int stu = courseTestService.insertCourseTest(courseTest);
-                        if (stu != 0) {
-//                            给指定班级学生添加实验
-                            List<String> sids=studentService.selectStudentIdByClassName(classNames);
-                            StudentTest[] sts=new StudentTest[sids.size()];
-                            int i=0;
-                            //获取学号
-                            for (String sid:sids
-                                 ) {
-                                //封装学生实验对象
-                                StudentTest st=new StudentTest();
-                                st.setTest_id(courseTest.getTest_id());
-                                st.setSid(sid);
-                                st.setCid(courseTest.getCid());
-                                sts[i++]=st;
-                            }
-                            //开始添加学生实验
-                            int add=studentService.insertStudentTest(sts);
-                            if (add==sts.length){
-                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-                                re.setMessage("添加成功");
-                            }
-                        } else {
-                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                            re.setMessage("添加失败");
-                        }
+                    if (adminClassService.selectClassNameByClassName(s)!=null){
+                        classNames[c++]=s;
                     }
                 }
+                if (c==classList.size()){
+                    //                验证课程是否存在
+                    Course t = courseService.selectCourseByCid(courseTest.getCid());
+                    if (t == null) {
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("课程不存在");
+                    } else {
+                        //判断课程状态
+                        if ("已结束".equals(t.getCourse_status())){
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("该课程已结束");
+//                        实验结束时间不能超过课程结束时间
+                        }else if(DateUtil.getDate(courseTest.getTest_end_time()).compareTo(DateUtil.getDate(t.getCourseEnd()))>0){
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("实验结束时间不能超过课程结束时间");
+                            //实验开始时间不能实验结束时间
+                        }else if(DateUtil.getDate(courseTest.getTest_end_time()).compareTo(DateUtil.getDate(courseTest.getTest_start_time()))<0){
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("实验开始时间不能超过实验结束时间");
+                        }else{
+                            //添加课程实验记录
+                            int stu = courseTestService.insertCourseTest(courseTest);
+                            if (stu != 0) {
+//                            给指定班级学生添加实验
+                                List<String> sids=studentService.selectStudentIdByClassName(classNames);
+                                StudentTest[] sts=new StudentTest[sids.size()];
+                                int i=0;
+                                //获取学号
+                                for (String sid:sids
+                                ) {
+                                    //封装学生实验对象
+                                    StudentTest st=new StudentTest();
+                                    st.setTest_id(courseTest.getTest_id());
+                                    st.setSid(sid);
+                                    st.setCid(courseTest.getCid());
+                                    sts[i++]=st;
+                                }
+                                //开始添加学生实验
+                                int add=studentService.insertStudentTest(sts);
+                                if (add==sts.length){
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                                    re.setMessage("添加成功");
+                                }
+                            } else {
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                re.setMessage("添加失败");
+                            }
+                        }
+                    }
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("班级名错误，请重试");
+                }
+
             } else {
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                 re.setMessage("实验信息不能为空");
@@ -191,22 +206,23 @@ public class TeacherCourseTestController {
         return re;
     }
     /**
-     * 根据课程号查询实验列表
+     * 查询实验列表
      */
     @GetMapping("/queryCourseTest")
-    @ApiOperation("根据课程号查询实验列表")
+    @ApiOperation("查询实验列表")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="cid",value="课程id",dataType="string",required = true),
             @ApiImplicitParam(name="pageNum",value="页数",dataType="int",required = true),
             @ApiImplicitParam(name="pageSize",value="每页数据条数",dataType="int",required = true)
     })
-    public Object queryCourseTest(String cid,Integer pageNum,Integer pageSize){
+    public Object queryCourseTest(CourseTest courseTest, Integer pageNum, Integer pageSize){
         ReturnObject re =new ReturnObject();
+        Map<String,Object> remap=new HashMap<>();
         List<Map<String,Object>> relist=new ArrayList<>();
-        if (cid!=null){
+        if (courseTest.getCid()!=null){
             //查询实验
-            List<CourseTest> list=courseTestService.queryCourseTestByCid(null,cid,(pageNum-1)*pageSize,pageSize);
+            List<CourseTest> list=courseTestService.queryCourseTestByCid(courseTest,courseTest.getCid(),(pageNum-1)*pageSize,pageSize);
             for (CourseTest ct:list
             ) {
                 //封装实验信息对象
@@ -228,9 +244,11 @@ public class TeacherCourseTestController {
                 relist.add(map);
             }
         }
+        remap.put("testList",relist);
+        remap.put("total",courseTestService.queryCourseTestCountByCid(courseTest,courseTest.getCid()));
         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
         re.setMessage("查询成功");
-        re.setData(relist);
+        re.setData(remap);
         return re;
     }
     /**

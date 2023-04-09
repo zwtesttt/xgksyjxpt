@@ -208,9 +208,19 @@ public class TeacherCourseSectionController {
     public Object getCourseSectionText(String cid,Integer chapterId,Integer sectionId){
         ReturnObject re=new ReturnObject();
         if (cid!=null&&chapterId!=null&&sectionId!=null){
-            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-            re.setMessage("查询成功");
-            re.setData(courseSectionService.queryCourseSectionText(cid,chapterId,sectionId));
+
+            Map<String,Object> remap=new HashMap<>();
+            CourseSection cs=courseSectionService.selectCourseSectionByCidAndChapterIdAndSectionId(cid,chapterId,sectionId);
+            if (cs!=null){
+                remap.put("sectionText",cs.getSection_text());
+                remap.put("sectionName",cs.getSection_name());
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                re.setMessage("查询成功");
+                re.setData(remap);
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("小节不存在");
+            }
         }else{
             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
             re.setMessage("课程号和章节id、小节id不能为空");
@@ -304,7 +314,7 @@ public class TeacherCourseSectionController {
     /**
      * 修改小节标题
      */
-    @DeleteMapping("/modifyCourseSectionName")
+    @PostMapping("/modifyCourseSectionName")
     @ApiOperation("修改小节标题")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
@@ -315,7 +325,33 @@ public class TeacherCourseSectionController {
     })
     public Object modifyCourseSectionName(String cid,Integer chapterId,Integer sectionId,String newSectionName){
         ReturnObject re=new ReturnObject();
+        try {
+            if (cid!=null && chapterId!=null&&sectionId!=null&&newSectionName!=null){
+//                确认存在小节
+                if(courseSectionService.selectCourseSectionByCidAndChapterIdAndSectionId(cid,chapterId,sectionId)!=null){
+                    //修改小节标题
+                    int stu=courseSectionService.updateCourseSectionNameByCidAndChapterIdAndSectionId(cid,chapterId,sectionId,newSectionName);
+                    if (stu!=0){
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                        re.setMessage("修改成功");
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("修改失败");
+                    }
 
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("该小节不存在");
+                }
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("课程号、章节id、小节id、新标题不能为空");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("修改失败");
+        }
         return re;
     }
 }

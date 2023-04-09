@@ -72,10 +72,10 @@ public class DockerService {
             }
             //保存到数据库中
             Container container= Container.builder()
-                    .container_id(id)
-                    .container_startTime(new Date())
+                    .containerId(id)
+                    .containerStartTime(new Date())
                     .passwd(sshpasswd)
-                    .test_id(testid)//实验id
+                    .testId(testid)//实验id
                     .sid(stuId)
                     .build();
             try {

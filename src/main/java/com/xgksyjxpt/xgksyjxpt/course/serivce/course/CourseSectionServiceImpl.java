@@ -168,6 +168,23 @@ public class CourseSectionServiceImpl implements CourseSectionService {
     }
 
     /**
+     * 修改小节标题
+     * @param cid
+     * @param chapterId
+     * @param sectionId
+     * @param newName
+     * @return
+     */
+    @Override
+    public int updateCourseSectionNameByCidAndChapterIdAndSectionId(String cid, Integer chapterId, Integer sectionId, String newName) {
+        QueryWrapper<CourseSection> wq=new QueryWrapper<>();
+        wq.eq("cid",cid).eq("chapter_id",chapterId).eq("section_id",sectionId);
+        CourseSection cs=new CourseSection();
+        cs.setSection_name(newName);
+        return courseSectionMapper.update(cs,wq);
+    }
+
+    /**
      * 根据cid删除图片
      * @param cid
      * @return

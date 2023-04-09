@@ -22,7 +22,7 @@ public class StudentHead {
      * @mbggenerated Tue Dec 13 21:48:52 CST 2022
      */
     @ApiModelProperty(value = "学生头像url",dataType = "String",required = true)
-    private String head_link;
+    private String headLink;
 
 
 
@@ -59,7 +59,7 @@ public class StudentHead {
      * @mbggenerated Tue Dec 13 21:48:52 CST 2022
      */
     public String getHead_link() {
-        return head_link;
+        return headLink;
     }
 
     /**
@@ -71,6 +71,6 @@ public class StudentHead {
      * @mbggenerated Tue Dec 13 21:48:52 CST 2022
      */
     public void setHead_link(String head_link) {
-        this.head_link = head_link;
+        this.headLink = head_link;
     }
 }
