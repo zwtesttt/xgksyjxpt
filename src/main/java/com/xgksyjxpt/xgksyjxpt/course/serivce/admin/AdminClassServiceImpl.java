@@ -25,6 +25,7 @@ public class AdminClassServiceImpl implements AdminClassService {
         //实例化
         ClassName class1=new ClassName();
         class1.setClassName(className);
+
         return adminClassMapper.insert(class1);
     }
 
@@ -61,8 +62,11 @@ public class AdminClassServiceImpl implements AdminClassService {
     public int deleteClassName(String className) {
         //查询该班级学生学号
         List<String> list= studentService.selectStudentIdByClassName(new String[]{className});
-        //删除学生
-        studentService.deleteStudents(list.toArray(new String[list.size()]));
+        if (list.size()!=0){
+            //删除学生
+            studentService.deleteStudents(list.toArray(new String[list.size()]));
+        }
+
         return adminClassMapper.deleteById(adminClassMapper.selectOne(new QueryWrapper<ClassName>().eq("class_name",className)));
     }
 

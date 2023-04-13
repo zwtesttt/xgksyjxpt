@@ -58,7 +58,7 @@ public class PublicController {
      * 根据镜像名和学生id创建容器返回容器id
      */
     @PostMapping("/createContain")
-    @ApiOperation("根据镜像名和id创建容器返回容器id")
+    @ApiOperation("根据镜像名和账号创建容器返回容器id")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="imagesName",value="镜像名称",dataType="string",required = true),

@@ -1,5 +1,7 @@
 package com.xgksyjxpt.xgksyjxpt.course.domain.admin;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -10,6 +12,7 @@ import java.util.Date;
 @ApiModel(description  = "班级类")
 @TableName("class_t")
 public class ClassName {
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     public Long getId() {

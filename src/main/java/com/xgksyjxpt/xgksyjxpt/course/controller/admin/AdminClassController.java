@@ -121,7 +121,6 @@ public class AdminClassController {
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="className",value="班级名称",dataType="string",required = true),
-            @ApiImplicitParam(name="newClassName",value="新班级名称",dataType="string",required = true)
     })
     @DeleteMapping("/delClass")
     public Object delClass(String className){

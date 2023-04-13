@@ -11,6 +11,7 @@ import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentTestMapper;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.ContainerService;
 import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
+import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,30 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private ContainerService containerService;
 
+    /**
+     * 修改学生选课
+     * @param cid
+     * @return
+     */
+    @Override
+    @Transactional
+    public int updateStudentCourseByCid(String cid,String[]newClassArray) {
+        int re;
+        //删除学生选课
+        deleteStuCourseByCid(cid);
+        //给学生绑定选课
+        //查询学号
+        List<String> stuIds=studentMapper.selectStudentIdByClassName(newClassArray);
+        String[] stulist=stuIds.toArray(new String[stuIds.size()]);
+        //添加选课
+        int stu=studentCourseMapper.insertStudentCourseByCid(stulist,cid);
+        if (stu!=0){
+            re=1;
+        }else{
+            re=0;
+        }
+        return re;
+    }
 
     /**
      * 根据学号查询学生信息

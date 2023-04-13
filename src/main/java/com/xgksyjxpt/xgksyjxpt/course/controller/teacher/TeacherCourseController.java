@@ -1,10 +1,12 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller.teacher;
 
+import com.xgksyjxpt.xgksyjxpt.course.domain.admin.ClassName;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.*;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentCourse;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentCourseJson;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminClassService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseChapterService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseSectionService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
@@ -18,15 +20,14 @@ import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import io.swagger.annotations.*;
 import io.swagger.models.auth.In;
+import org.apache.poi.util.ArrayUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.annotation.Resource;
+import java.util.*;
 
 @RestController
 @RequestMapping("/teacher")
@@ -42,6 +43,8 @@ public class TeacherCourseController {
 
     @Autowired
     private FastdfsUtil fastdfsUtil;
+    @Resource
+    private AdminClassService adminClassService;
 
     /**
      * 添加课程
@@ -212,43 +215,44 @@ public class TeacherCourseController {
                 if (courseId!=null&&classNames!=null&&classNames.size()!=0){
 //                校验课程号
                     Course course=courseService.selectCourseByCid(courseId);
-                    System.out.println(course.getCourse_status());
-                    if (course!=null){
+                    int count=0;
+                    for (String className:classNames
+                         ) {
+                        if(adminClassService.selectClassNameByClassName(className)!=null){
+                            count++;
+                        }
+                    }
+                    if (count==classNames.size()){
+                        if (course!=null){
 //                        验证课程状态
-                        if ("已开始".equals(course.getCourse_status())){
-                            //班级名转存数组
-                            int k=0;
-                            String[] classNameList=new String[classNames.size()];
-                            for (String className:classNames
-                            ) {
-                                classNameList[k++]=className;
-                            }
-                            //给学生绑定选课
-                            //查询学号
-                            List<String> stuIds=studentService.selectStudentIdByClassName(classNameList);
-                            String[] stulist=new String[stuIds.size()];
-                            int i=0;
-//        学号转存数组
-                            for (String sid:stuIds
-                            ) {
-                                stulist[i++]=sid;
-                            }
-                            //添加选课
-                            int stu=studentService.insertStudentCourseByCourseId(stulist,courseId);
-                            if (stu!=0){
-                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-                                re.setMessage("选课成功");
+                            if ("已开始".equals(course.getCourse_status())){
+                                //班级名转存数组
+                                String[] classNameList=classNames.toArray(new String[classNames.size()]);
+                                //给学生绑定选课
+                                //查询学号
+                                List<String> stuIds=studentService.selectStudentIdByClassName(classNameList);
+                                String[] stulist=stuIds.toArray(new String[classNames.size()]);
+                                //添加选课
+                                int stu=studentService.insertStudentCourseByCourseId(stulist,courseId);
+                                if (stu!=0){
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                                    re.setMessage("选课成功");
+                                }else{
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                    re.setMessage("选课失败");
+                                }
                             }else{
                                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                                re.setMessage("选课失败");
+                                re.setMessage("该课程已结束，不允许选课");
                             }
                         }else{
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                            re.setMessage("该课程已结束，不允许选课");
+                            re.setMessage("课程不存在");
                         }
+
                     }else{
                         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                        re.setMessage("课程不存在");
+                        re.setMessage("部分或全部班级不存在");
                     }
 
                 }else{
@@ -264,6 +268,76 @@ public class TeacherCourseController {
             e.printStackTrace();
             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
             re.setMessage("选课失败");
+        }
+        return re;
+    }
+    /**
+     * 修改课程绑定班级
+     */
+    @PostMapping("/updateStudentCourseByClassName")
+    @ApiOperation("修改课程绑定班级")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="cid",value="课程号",dataType="string",required = true),
+            @ApiImplicitParam(name="className",value="班级列表",dataType="list",required = true),
+            @ApiImplicitParam(name="StudentCourseJson",value="实体类（不用管）",dataType="json",required = false)
+    })
+    public Object updateStudentCourseByClassName(@RequestBody StudentCourseJson studentCourseJson){
+        ReturnObject re=new ReturnObject();
+        try {
+            if (studentCourseJson!=null){
+                String courseId=studentCourseJson.getCid();
+                List<String> classNames=studentCourseJson.getClassName();
+                if (courseId!=null&&classNames!=null&&classNames.size()!=0){
+//                校验课程号
+                    Course course=courseService.selectCourseByCid(courseId);
+                    int count=0;
+                    for (String className:classNames
+                    ) {
+                        if(adminClassService.selectClassNameByClassName(className)!=null){
+                            count++;
+                        }
+                    }
+                    if (count==classNames.size()){
+                        if (course!=null){
+    //                        验证课程状态
+                            if ("已开始".equals(course.getCourse_status())){
+                                String[] classNameArray=classNames.toArray(new String[classNames.size()]);
+                                //修改选课
+                                int stu=studentService.updateStudentCourseByCid(courseId,classNameArray);
+                                if (stu!=0){
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                                    re.setMessage("修改选课成功");
+                                }else{
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                    re.setMessage("修改选课失败");
+                                }
+                            }else{
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                re.setMessage("该课程已结束，不允许修改选课");
+                            }
+                        }else{
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("课程不存在");
+                        }
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("部分或全部班级不存在");
+                    }
+
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("课程号和班级名不能为空");
+                }
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("课程号和班级名不能为空");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("修改选课失败");
         }
         return re;
     }
@@ -369,6 +443,7 @@ public class TeacherCourseController {
                     map.put("courseStatus",course.getCourse_status());
                     map.put("teacherName",teacherService.selectNotDelTeacher(course.getTid()).getName());
                     map.put("tid",course.getTid());
+                    map.put("classList",studentService.selectStudentCourseClassNameByCid(cid));
                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                     re.setMessage("查询成功");
                     re.setData(map);

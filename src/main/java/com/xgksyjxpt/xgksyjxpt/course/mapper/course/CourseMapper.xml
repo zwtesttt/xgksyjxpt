@@ -126,13 +126,13 @@
   <update id="updateCourseInfo" parameterType="string">
     update course_t set
         cname=#{cname}
-        ,course_start=#{course_start}
-        ,course_end=#{course_end}
+        ,course_start=#{courseStart}
+        ,course_end=#{courseEnd}
         ,xuefen=#{xuefen}
         <if test="description != '' and description != null">
           ,description=#{description}
         </if>
-        ,course_status=#{course_status}
+        ,course_status=#{courseStatus}
     where cid=#{cid} and delete_time is null
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >

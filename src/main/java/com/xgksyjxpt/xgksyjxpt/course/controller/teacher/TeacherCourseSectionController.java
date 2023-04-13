@@ -231,21 +231,23 @@ public class TeacherCourseSectionController {
      * 修改小节文本内容
      */
     @PostMapping("/updateCourseSectionText")
-    @ApiOperation("修改小节文本内容")
+    @ApiOperation("修改小节文本内容和标题")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
             @ApiImplicitParam(name="cid",value="课程id",dataType="string",required = true),
             @ApiImplicitParam(name="chapterId",value="章节id",dataType="int",required = true),
             @ApiImplicitParam(name="sectionId",value="小节id",dataType="int",required = true),
-            @ApiImplicitParam(name="text",value="修改后的文本",dataType="string",required = true)
+            @ApiImplicitParam(name="text",value="修改后的文本",dataType="string",required = true),
+            @ApiImplicitParam(name="sectionName",value="新标题",dataType="string",required = true)
+
     })
-    public Object updateCourseSectionText(String cid,Integer chapterId,Integer sectionId,String text){
+    public Object updateCourseSectionText(String cid,Integer chapterId,Integer sectionId,String text,String sectionName){
         ReturnObject re=new ReturnObject();
         try{
-            if (cid!=null&&chapterId!=null&&sectionId!=null){
+            if (cid!=null&&chapterId!=null&&sectionId!=null&&sectionName!=null){
                 if (text!=null){
 //                    修改小节内容
-                    int stu=courseSectionService.updayeCourseSectionText(cid,chapterId,sectionId,text);
+                    int stu=courseSectionService.updayeCourseSectionText(cid,chapterId,sectionId,text,sectionName);
                     if (stu!=0){
                         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                         re.setMessage("修改成功");
@@ -259,7 +261,7 @@ public class TeacherCourseSectionController {
                 }
             }else{
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("课程号和章节id、小节id不能为空");
+                re.setMessage("课程号和章节id、小节id、标题不能为空");
             }
         }catch (Exception e){
             e.printStackTrace();

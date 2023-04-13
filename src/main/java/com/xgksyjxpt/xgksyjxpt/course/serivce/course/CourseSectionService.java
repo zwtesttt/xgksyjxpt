@@ -17,7 +17,7 @@ public interface CourseSectionService {
     List<CourseSection> selectCourseSectionName(String cid, Integer chapterId);
     Integer queryCourseSectionMaxId(String cid,Integer chapterId);
     String queryCourseSectionText(String cid,Integer chapterId,Integer sectionId);
-    int updayeCourseSectionText(String cid,Integer chapterId,Integer sectionId,String text);
+    int updayeCourseSectionText(String cid,Integer chapterId,Integer sectionId,String text,String sectionName);
     CourseSection selectCourseSectionByCidAndChapterIdAndSectionId(String cid,Integer chapterId,Integer sectionId);
     int updateCourseSectionNameByCidAndChapterIdAndSectionId(String cid,Integer chapterId,Integer sectionId,String newName);
 

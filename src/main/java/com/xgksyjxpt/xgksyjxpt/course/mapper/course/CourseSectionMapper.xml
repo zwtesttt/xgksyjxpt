@@ -52,7 +52,7 @@
   </select>
 <!--  修改小节内容-->
   <update id="updateCourseSectionText" >
-    update course_section_t set section_text=#{text} where cid=#{cid} and chapter_id=#{chapterId} and delete_time is null and section_id=#{sectionId}
+    update course_section_t set section_text=#{text},section_name=#{sectionName} where cid=#{cid} and chapter_id=#{chapterId} and delete_time is null and section_id=#{sectionId}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     <!--

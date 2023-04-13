@@ -85,6 +85,6 @@ public interface CourseSectionMapper extends BaseMapper<CourseSection> {
     /**
      * 修改小节内容
      */
-    int updateCourseSectionText(@Param("cid") String cid,@Param("chapterId") Integer chapterId,@Param("sectionId")Integer sectionId,@Param("text") String text);
+    int updateCourseSectionText(@Param("cid") String cid,@Param("chapterId") Integer chapterId,@Param("sectionId")Integer sectionId,@Param("text") String text,@Param("sectionName") String sectionName);
 
 }

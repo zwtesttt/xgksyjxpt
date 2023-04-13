@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface StudentService {
+    int updateStudentCourseByCid(String cid,String[]newClassArray);
     Student selectStudent(String id);
     Student selectNotDelStudent(String id);
     List<Student> queryStudents(Student student,Integer pageNum,Integer pageSize);

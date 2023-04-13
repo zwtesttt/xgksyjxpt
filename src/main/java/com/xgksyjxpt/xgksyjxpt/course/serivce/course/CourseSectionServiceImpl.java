@@ -149,8 +149,8 @@ public class CourseSectionServiceImpl implements CourseSectionService {
      * @return
      */
     @Override
-    public int updayeCourseSectionText(String cid, Integer chapterId, Integer sectionId, String text) {
-        return courseSectionMapper.updateCourseSectionText(cid,chapterId,sectionId,text);
+    public int updayeCourseSectionText(String cid, Integer chapterId, Integer sectionId, String text,String sectionName) {
+        return courseSectionMapper.updateCourseSectionText(cid,chapterId,sectionId,text,sectionName);
     }
 
     /**
