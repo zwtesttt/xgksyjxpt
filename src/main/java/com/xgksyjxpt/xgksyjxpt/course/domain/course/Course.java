@@ -13,7 +13,7 @@ public class Course {
      * @mbggenerated Sat Dec 17 21:33:47 CST 2022
      */
 
-    @ApiModelProperty(value = "课程id" ,dataType = "String",hidden = true)
+    @ApiModelProperty(value = "课程id" ,dataType = "String",required = true)
     private String cid;
 
     /**

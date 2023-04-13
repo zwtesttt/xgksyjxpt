@@ -89,7 +89,7 @@ public class TeacherCourseTestController {
 //                        实验结束时间不能超过课程结束时间
                         }else if(DateUtil.getDate(courseTest.getTest_end_time()).compareTo(DateUtil.getDate(t.getCourseEnd()))>0){
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                            re.setMessage("实验结束时间不能超过课程结束时间");
+                            re.setMessage("实验结束时间不能超过课程结束时间(课程结束时间："+t.getCourseEnd()+")");
                             //实验开始时间不能实验结束时间
                         }else if(DateUtil.getDate(courseTest.getTest_end_time()).compareTo(DateUtil.getDate(courseTest.getTest_start_time()))<0){
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);

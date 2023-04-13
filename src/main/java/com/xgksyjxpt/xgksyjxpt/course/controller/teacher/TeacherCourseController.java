@@ -470,7 +470,7 @@ public class TeacherCourseController {
     public Object modifyCourseHead(String cid,MultipartFile file){
         ReturnObject re=new ReturnObject();
         try {
-            if (cid!=null&&file.isEmpty()){
+            if (cid!=null&&!file.isEmpty()){
 //            验证课程号
                 if (courseService.selectCourseByCid(cid)!=null){
                     //保存原来封面url

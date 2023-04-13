@@ -4,114 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="查询实验添加筛选、分页，修改添加实验接口参数">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_base_2_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_jaxrs_jackson_jaxrs_json_provider_2_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_jaxb_annotations_2_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_11_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_docker_java_docker_java_3_2_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_docker_java_docker_java_api_3_2_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_docker_java_docker_java_core_3_2_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_docker_java_docker_java_transport_3_2_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_docker_java_docker_java_transport_jersey_3_2_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_docker_java_docker_java_transport_netty_3_2_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_kohlschutter_junixsocket_junixsocket_common_2_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_kohlschutter_junixsocket_junixsocket_native_common_2_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_fileupload_commons_fileupload_1_3_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_http_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_socks_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_proxy_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_epoll_linux_x86_64_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_kqueue_osx_x86_64_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_unix_common_4_1_55_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_activation_jakarta_activation_api_1_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_annotation_jakarta_annotation_api_1_3_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_ws_rs_jakarta_ws_rs_api_2_1_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_xml_bind_jakarta_xml_bind_api_2_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_compress_1_21.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_client5_httpclient5_5_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_core5_httpcore5_5_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_core5_httpcore5_h2_5_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_13_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_13_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_41.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_9_0_41.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcpkix_jdk15on_1_64.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_bouncycastle_bcprov_jdk15on_1_64.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_external_aopalliance_repackaged_2_6_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_external_jakarta_inject_2_6_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_hk2_api_2_6_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_hk2_locator_2_6_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_hk2_utils_2_6_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_hk2_osgi_resource_locator_1_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jakarta_el_3_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_connectors_jersey_apache_connector_2_30_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_core_jersey_client_2_30_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_core_jersey_common_2_30_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_inject_jersey_hk2_2_30_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_25_0_GA.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_30.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_30.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_30.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_2_3_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_3_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_2_3_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_2_3_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_3_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_2_3_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_2_3_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_websocket_2_3_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_messaging_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_websocket_5_2_12_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_26.xml" beforeDir="false" />
+    <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="修改选课和查询选课、查询课程信息接口">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/PublicController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/PublicController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/admin/AdminClassController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/admin/AdminClassController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseSectionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseSectionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/admin/ClassName.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/admin/ClassName.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/student/StudentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/student/StudentMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/admin/AdminClassServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/admin/AdminClassServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/CourseSectionServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/domain/course/Course.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/PublicController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/PublicController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/admin/AdminClassController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/admin/AdminClassController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseSectionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseSectionController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/admin/ClassName.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/admin/ClassName.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/Course.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/domain/course/Course.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseSectionMapper.xml" afterDir="false" />
@@ -396,7 +300,7 @@
       <workItem from="1681361592453" duration="204000" />
       <workItem from="1681390558189" duration="63000" />
       <workItem from="1681390642329" duration="330000" />
-      <workItem from="1681393037218" duration="2985000" />
+      <workItem from="1681393037218" duration="5188000" />
     </task>
     <task id="LOCAL-00001" summary="修复webssh输入后响应问题">
       <created>1669120575079</created>
@@ -650,7 +554,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681054844097</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="修改选课和查询选课、查询课程信息接口">
+      <created>1681396228812</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1681396228812</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -671,7 +582,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="增加登录验证鉴定权限，添加学生" />
     <MESSAGE value="新增多个接口" />
     <MESSAGE value="添加修改学生头像、查询学生头像链接" />
     <MESSAGE value="新增管理员接口：分页查询所有学生、老师、课程、课程实验，批量删除学生、批量删除老师、批量删除课程等" />
@@ -696,7 +606,8 @@
     <MESSAGE value="创建容器接口修改接收参数" />
     <MESSAGE value="修改学生、老师查询章节接口，修复无法删除小节" />
     <MESSAGE value="查询实验添加筛选、分页，修改添加实验接口参数" />
-    <option name="LAST_COMMIT_MESSAGE" value="查询实验添加筛选、分页，修改添加实验接口参数" />
+    <MESSAGE value="修改选课和查询选课、查询课程信息接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改选课和查询选课、查询课程信息接口" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

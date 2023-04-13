@@ -67,7 +67,7 @@
       and sex like '%' #{sex} '%'
     </if>
     <if test="class_name !=null and class_name!=''">
-      and class_name like '%' #{class_name} '%'
+      and class_name like '%' #{className} '%'
     </if>
 </select>
 <!--  查询学生账号信息-->
@@ -116,13 +116,13 @@
       and sex like '%' #{student.sex} '%'
     </if>
     <if test="student.class_name !=null and student.class_name!=''">
-      and class_name like '%' #{student.class_name} '%'
+      and class_name like '%' #{student.className} '%'
     </if>
     limit #{pageNum},#{pageSize}
   </select>
 <!--  修改学生基本信息-->
   <update id="updateStudent" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
-    update student_t set name=#{name},age=#{age},sex=#{sex},class_name=#{class_name},identity=#{identity}
+    update student_t set name=#{name},age=#{age},sex=#{sex},class_name=#{className},identity=#{identity}
     <if test="passwd !=null and passwd!=''">
       ,passwd = #{passwd}
     </if>
