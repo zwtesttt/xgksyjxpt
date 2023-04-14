@@ -73,35 +73,37 @@ public class PublicController {
                 if (studentService.selectNotDelStudent(id)!=null||teacherService.selectNotDelTeacher(id)!=null){
                     CourseTest courseTest=courseTestService.selectCourseTestByTestId(testId);
                     if (courseTest!=null){
-                        if (studentService.selectStudentTestBySidAndTestId(id,testId)!=null){
-                            if (CourseStatus.COURSE_START.equals(courseTest.getTest_status())){
-                                String conId= dockerService.createQueryId(imagesName,id,DockerConfig.DOCKER_NETWORK_NAME,testId);
-                                if (conId!=null){
-                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-                                    re.setMessage("运行成功");
-                                    re.setData(conId);
-                                }else{
-                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                                    re.setMessage("运行容器失败");
-                                }
-                                }else if (CourseStatus.COURSE_END.equals(courseTest.getTest_status())) {
-                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                                    re.setMessage("实验已结束");
-                                } else if (CourseStatus.COURSE_NOT_START.equals(courseTest.getTest_status())) {
-                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                                    re.setMessage("实验未开始");
-                                }
-                        }else{
-                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                            re.setMessage("找不到该实验");
+                        if (studentService.selectNotDelStudent(id)!=null||teacherService.selectNotDelTeacher(id)==null){
+                            if (studentService.selectStudentTestBySidAndTestId(id,testId)==null){
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                re.setMessage("该学生无该实验");
+                                return re;
+                            }
                         }
+                        if (CourseStatus.COURSE_START.equals(courseTest.getTest_status())){
+                            String conId= dockerService.createQueryId(imagesName,id,DockerConfig.DOCKER_NETWORK_NAME,testId);
+                            if (conId!=null){
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                                re.setMessage("运行成功");
+                                re.setData(conId);
+                            }else{
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                re.setMessage("运行容器失败");
+                            }
+                            }else if (CourseStatus.COURSE_END.equals(courseTest.getTest_status())) {
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                re.setMessage("实验已结束");
+                            } else if (CourseStatus.COURSE_NOT_START.equals(courseTest.getTest_status())) {
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                re.setMessage("实验未开始");
+                            }
                     }else {
                         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                         re.setMessage("实验不存在");
                     }
                 }else{
                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                    re.setMessage("学号不存在");
+                    re.setMessage("账号不存在");
                 }
             }else{
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);

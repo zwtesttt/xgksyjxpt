@@ -57,6 +57,7 @@ public interface TeacherMapper extends BaseMapper<Teacher> {
     int updateByPrimaryKey(Teacher record);
     //查询老师
     Teacher selectTeacher(String id);
+
     //只查询正常状态老师
     Teacher selectNotDelTeacher(String id);
     //添加老师账号

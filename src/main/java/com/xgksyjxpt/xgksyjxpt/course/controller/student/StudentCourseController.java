@@ -2,9 +2,11 @@ package com.xgksyjxpt.xgksyjxpt.course.controller.student;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseChapter;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseChapterService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseSectionService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseTestService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +35,8 @@ public class StudentCourseController {
     private CourseService courseService;
     @Autowired
     private CourseSectionService courseSectionService;
+    @Resource
+    private CourseTestService courseTestService;
     /**
      * 查询学生选课信息
      */
@@ -178,37 +183,61 @@ public class StudentCourseController {
         return re;
     }
     /**
-     * 查询课程实验状态为已开始的实验
+     * 查询学生实验
      */
-    @GetMapping("/getStudentStartTest")
-    @ApiOperation("根据学号和课程号查询状态为已开始的实验")
+    @GetMapping("/getStudentTest")
+    @ApiOperation("根据学号查询实验")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
-            @ApiImplicitParam(name="cid",value="课程号",dataType="string",required = true),
-            @ApiImplicitParam(name="sid",value="学号",dataType="String",required = true),
+            @ApiImplicitParam(name="id",value="学号",dataType="String",required = true),
             @ApiImplicitParam(name="pageNum",value="页号",dataType="int",required = true),
             @ApiImplicitParam(name="pageSize",value="每页数据条数",dataType="int",required = true)
     })
-    public Object getStudentStartTest(String sid, String cid, Integer pageNum,Integer pageSize){
-        ReturnObject re=new ReturnObject();
-        if (sid!=null&&cid!=null&&pageNum!=null&&pageSize!=null){
-            if (studentService.selectNotDelStudent(sid)!=null){
-                if (courseService.selectCourseByCid(cid)!=null){
-                    List<Map<String,Object>> slist=studentService.selectStudentTestInfo(sid,cid,(pageNum-1)*pageSize,pageSize);
-                    re.setData(slist);
+    public Object getStudentStartTest(CourseTest courseTest, String id, Integer pageNum, Integer pageSize){
+        ReturnObject re =new ReturnObject();
+        if (id!=null){
+            if (studentService.selectNotDelStudent(id) != null) {
+                if (pageNum != null && pageSize != null) {
+                    Map<String,Object> remap=new HashMap<>();
+                    List<Map<String,Object>> relist=new ArrayList<>();
+                    //查询实验
+                    List<CourseTest> list=courseTestService.queryCourseTestByTidOrSid(null,id,courseTest,(pageNum-1)*pageSize,pageSize);
+                    for (CourseTest ct:list
+                    ) {
+                        //封装实验信息对象
+                        Map<String,Object> map=new HashMap<>();
+                        //实验id
+                        map.put("testId",ct.getTest_id());
+                        //实验名
+                        map.put("testName",ct.getTest_name());
+                        //实验开始时间
+                        map.put("testStartTime",ct.getTest_start_time());
+                        //实验结束时间
+                        map.put("testEndTime",ct.getTest_end_time());
+                        //使用镜像名
+                        map.put("testImageName",ct.getTest_image_name());
+                        //实验状态
+                        map.put("testStatus",ct.getTest_status());
+                        //实验描述
+                        map.put("testDescription",ct.getTest_description());
+                        relist.add(map);
+                    }
+                    remap.put("testList",relist);
+                    remap.put("total",courseTestService.queryCourseTestCountByTidOrSid(null,id,courseTest));
                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                     re.setMessage("查询成功");
+                    re.setData(remap);
                 }else{
                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                    re.setMessage("课程不存在");
+                    re.setMessage("查询失败，分页参数不能为空");
                 }
             }else{
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-                re.setMessage("学号不存在");
+                re.setMessage("查询失败，学生不存在");
             }
-        }else{
+        }else {
             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
-            re.setMessage("学号、课程号、分页参数不能为空");
+            re.setMessage("查询失败，id不能为空");
         }
         return re;
     }

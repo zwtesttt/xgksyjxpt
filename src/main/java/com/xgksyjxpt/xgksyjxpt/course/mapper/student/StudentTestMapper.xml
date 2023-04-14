@@ -53,7 +53,31 @@
   <select id="selectStudentTestInfo" resultType="map">
     select
     st.test_id,st.cid,ct.test_name,ct.test_image_name,ct.test_description,ct.test_start_time,ct.test_end_time,ct.test_status
-    from student_test_t as st,course_test_t as ct where st.test_id=ct.test_id and ct.delete_time is null and st.sid=#{sid} and st.cid=#{cid} and ct.test_status='已开始'
+    from student_test_t as st,course_test_t as ct where st.test_id=ct.test_id and ct.delete_time is null and st.sid=#{sid}  and ct.test_status='已开始'
+    <if test="courseTest.cid !=null and courseTest.cid!=''">
+      and ct.cid=#{courseTest.cid}
+    </if>
+    <if test="courseTest.testId !=null and courseTest.testId!=''">
+      and ct.test_id like '%' #{courseTest.testId} '%'
+    </if>
+    <if test="courseTest.testName !=null and courseTest.testName!=''">
+      and ct.test_name like '%' #{courseTest.testName} '%'
+    </if>
+    <if test="courseTest.testImageName !=null and courseTest.testImageName!=''">
+      and ct.test_image_name like '%' #{courseTest.testImageName} '%'
+    </if>
+    <if test="courseTest.testStartTime !=null and courseTest.testStartTime!=''">
+      and ct.test_start_time&gt;=#{courseTest.testStartTime}
+    </if>
+    <if test="courseTest.testEndTime !=null and courseTest.testEndTime!=''">
+      and ct.test_end_time&lt;=#{courseTest.testEndTime}
+    </if>
+    <if test="courseTest.testStatus !=null and courseTest.testStatus!=''">
+      and ct.test_status like '%' #{courseTest.testStatus} '%'
+    </if>
+    <if test="courseTest.chapterId !=null and courseTest.chapterId!=''">
+      and ct.chapter_id=#{courseTest.chapterId}
+    </if>
     limit #{pageNum},#{pageSize}
   </select>
 <!--  根据学号和实验号查询实验-->

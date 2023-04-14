@@ -39,31 +39,88 @@
     test_description
   </sql>
 <!--  查询课程实验总数-->
-  <select id="queryCourseCountByCid" resultType="int">
-    select count(*) from course_test_t where delete_time is null
-    <if test="courseTest.cid !=null and courseTest.cid!=''">
-      and cid=#{courseTest.cid}
+  <select id="queryCourseCountByTidOrSid" resultType="int">
+    select count(*)
+    <if test="sid !=null and sid!=''">
+      from course_test_t ct,student_test_t st where ct.delete_time is null and st.delete_time is null and st.sid=#{sid} and ct.test_id=st.test_id
+      <if test="courseTest.cid !=null and courseTest.cid!=''">
+        and ct.cid=#{courseTest.cid}
+      </if>
+      <if test="courseTest.testId !=null and courseTest.testId!=''">
+        and ct.test_id like '%' #{courseTest.testId} '%'
+      </if>
+      <if test="courseTest.testName !=null and courseTest.testName!=''">
+        and ct.test_name like '%' #{courseTest.testName} '%'
+      </if>
+      <if test="courseTest.testImageName !=null and courseTest.testImageName!=''">
+        and ct.test_image_name like '%' #{courseTest.testImageName} '%'
+      </if>
+      <if test="courseTest.testStartTime !=null and courseTest.testStartTime!=''">
+        and ct.test_start_time&gt;=#{courseTest.testStartTime}
+      </if>
+      <if test="courseTest.testEndTime !=null and courseTest.testEndTime!=''">
+        and ct.test_end_time&lt;=#{courseTest.testEndTime}
+      </if>
+      <if test="courseTest.testStatus !=null and courseTest.testStatus!=''">
+        and ct.test_status like '%' #{courseTest.testStatus} '%'
+      </if>
+      <if test="courseTest.chapterId !=null and courseTest.chapterId!=''">
+        and ct.chapter_id=#{courseTest.chapterId}
+      </if>
     </if>
-    <if test="courseTest.testId !=null and courseTest.testId!=''">
-      and test_id like '%' #{courseTest.testId} '%'
+    <if test="tid !=null and tid!=''">
+      from course_test_t ct,course_t cct where ct.delete_time is null and cct.delete_time is null and cct.tid=#{tid} and ct.cid=cct.cid
+      <if test="courseTest.cid !=null and courseTest.cid!=''">
+        and ct.cid=#{courseTest.cid}
+      </if>
+      <if test="courseTest.testId !=null and courseTest.testId!=''">
+        and ct.test_id like '%' #{courseTest.testId} '%'
+      </if>
+      <if test="courseTest.testName !=null and courseTest.testName!=''">
+        and ct.test_name like '%' #{courseTest.testName} '%'
+      </if>
+      <if test="courseTest.testImageName !=null and courseTest.testImageName!=''">
+        and ct.test_image_name like '%' #{courseTest.testImageName} '%'
+      </if>
+      <if test="courseTest.testStartTime !=null and courseTest.testStartTime!=''">
+        and ct.test_start_time&gt;=#{courseTest.testStartTime}
+      </if>
+      <if test="courseTest.testEndTime !=null and courseTest.testEndTime!=''">
+        and ct.test_end_time&lt;=#{courseTest.testEndTime}
+      </if>
+      <if test="courseTest.testStatus !=null and courseTest.testStatus!=''">
+        and ct.test_status like '%' #{courseTest.testStatus} '%'
+      </if>
+      <if test="courseTest.chapterId !=null and courseTest.chapterId!=''">
+        and ct.chapter_id=#{courseTest.chapterId}
+      </if>
     </if>
-    <if test="courseTest.testName !=null and courseTest.testName!=''">
-      and test_name like '%' #{courseTest.testName} '%'
-    </if>
-    <if test="courseTest.testImageName !=null and courseTest.testImageName!=''">
-      and test_image_name like '%' #{courseTest.testImageName} '%'
-    </if>
-    <if test="courseTest.testStartTime !=null and courseTest.testStartTime!=''">
-      and test_start_time&gt;=#{courseTest.testStartTime}
-    </if>
-    <if test="courseTest.testEndTime !=null and courseTest.testEndTime!=''">
-      and test_end_time&lt;=#{courseTest.testEndTime}
-    </if>
-    <if test="courseTest.testStatus !=null and courseTest.testStatus!=''">
-      and test_status like '%' #{courseTest.testStatus} '%'
-    </if>
-    <if test="courseTest.chapterId !=null and courseTest.chapterId!=''">
-      and chapter_id=#{courseTest.chapterId}
+    <if test="sid ==null and sid=='' and tid ==null and tid==''">
+      from course_test_t where delete_time is null
+      <if test="courseTest.cid !=null and courseTest.cid!=''">
+        and cid=#{courseTest.cid}
+      </if>
+      <if test="courseTest.testId !=null and courseTest.testId!=''">
+        and test_id like '%' #{courseTest.testId} '%'
+      </if>
+      <if test="courseTest.testName !=null and courseTest.testName!=''">
+        and test_name like '%' #{courseTest.testName} '%'
+      </if>
+      <if test="courseTest.testImageName !=null and courseTest.testImageName!=''">
+        and test_image_name like '%' #{courseTest.testImageName} '%'
+      </if>
+      <if test="courseTest.testStartTime !=null and courseTest.testStartTime!=''">
+        and test_start_time&gt;=#{courseTest.testStartTime}
+      </if>
+      <if test="courseTest.testEndTime !=null and courseTest.testEndTime!=''">
+        and test_end_time&lt;=#{courseTest.testEndTime}
+      </if>
+      <if test="courseTest.testStatus !=null and courseTest.testStatus!=''">
+        and test_status like '%' #{courseTest.testStatus} '%'
+      </if>
+      <if test="courseTest.chapterId !=null and courseTest.chapterId!=''">
+        and chapter_id=#{courseTest.chapterId}
+      </if>
     </if>
   </select>
   <!--  添加课程实验-->
@@ -118,34 +175,92 @@
     from course_test_t where delete_time is null
     limit #{pageNum},#{pageSize}
   </select>
-<!--  根据课程号查询实验-->
-  <select id="queryAllCourseTestByCid" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest">
+<!--  根据学号或者教师号查询实验-->
+  <select id="queryAllCourseTestByTidOrSid" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest">
     select
-    <include refid="Base_Column_List" />
-    from course_test_t where delete_time is null
-    <if test="courseTest.cid !=null and courseTest.cid!=''">
-      and cid=#{courseTest.cid}
+    <if test="sid !=null and sid!='' and tid == null">
+      ct.test_id, ct.cid, ct.chapter_id,ct.test_name, ct.test_image_name,ct.test_description,ct.test_start_time, ct.test_end_time,ct.test_status
+      from course_test_t ct,student_test_t st where ct.delete_time is null and st.delete_time is null and st.sid=#{sid} and ct.test_id=st.test_id
+      <if test="courseTest.cid !=null and courseTest.cid!=''">
+        and ct.cid=#{courseTest.cid}
+      </if>
+      <if test="courseTest.testId !=null and courseTest.testId!=''">
+        and ct.test_id like '%' #{courseTest.testId} '%'
+      </if>
+      <if test="courseTest.testName !=null and courseTest.testName!=''">
+        and ct.test_name like '%' #{courseTest.testName} '%'
+      </if>
+      <if test="courseTest.testImageName !=null and courseTest.testImageName!=''">
+        and ct.test_image_name like '%' #{courseTest.testImageName} '%'
+      </if>
+      <if test="courseTest.testStartTime !=null and courseTest.testStartTime!=''">
+        and ct.test_start_time&gt;=#{courseTest.testStartTime}
+      </if>
+      <if test="courseTest.testEndTime !=null and courseTest.testEndTime!=''">
+        and ct.test_end_time&lt;=#{courseTest.testEndTime}
+      </if>
+      <if test="courseTest.testStatus !=null and courseTest.testStatus!=''">
+        and ct.test_status like '%' #{courseTest.testStatus} '%'
+      </if>
+      <if test="courseTest.chapterId !=null and courseTest.chapterId!=''">
+        and ct.chapter_id=#{courseTest.chapterId}
+      </if>
     </if>
-    <if test="courseTest.testId !=null and courseTest.testId!=''">
-      and test_id like '%' #{courseTest.testId} '%'
+    <if test="tid !=null and tid!='' and sid==null">
+      ct.test_id, ct.cid, ct.chapter_id,ct.test_name, ct.test_image_name,ct.test_description,ct.test_start_time, ct.test_end_time,ct.test_status
+      from course_test_t ct,course_t cct where ct.delete_time is null and cct.delete_time is null and cct.tid=#{tid} and ct.cid=cct.cid
+      <if test="courseTest.cid !=null and courseTest.cid!=''">
+        and ct.cid=#{courseTest.cid}
+      </if>
+      <if test="courseTest.testId !=null and courseTest.testId!=''">
+        and ct.test_id like '%' #{courseTest.testId} '%'
+      </if>
+      <if test="courseTest.testName !=null and courseTest.testName!=''">
+        and ct.test_name like '%' #{courseTest.testName} '%'
+      </if>
+      <if test="courseTest.testImageName !=null and courseTest.testImageName!=''">
+        and ct.test_image_name like '%' #{courseTest.testImageName} '%'
+      </if>
+      <if test="courseTest.testStartTime !=null and courseTest.testStartTime!=''">
+        and ct.test_start_time&gt;=#{courseTest.testStartTime}
+      </if>
+      <if test="courseTest.testEndTime !=null and courseTest.testEndTime!=''">
+        and ct.test_end_time&lt;=#{courseTest.testEndTime}
+      </if>
+      <if test="courseTest.testStatus !=null and courseTest.testStatus!=''">
+        and ct.test_status like '%' #{courseTest.testStatus} '%'
+      </if>
+      <if test="courseTest.chapterId !=null and courseTest.chapterId!=''">
+        and ct.chapter_id=#{courseTest.chapterId}
+      </if>
     </if>
-    <if test="courseTest.testName !=null and courseTest.testName!=''">
-      and test_name like '%' #{courseTest.testName} '%'
-    </if>
-    <if test="courseTest.testImageName !=null and courseTest.testImageName!=''">
-      and test_image_name like '%' #{courseTest.testImageName} '%'
-    </if>
-    <if test="courseTest.testStartTime !=null and courseTest.testStartTime!=''">
-      and test_start_time&gt;=#{courseTest.testStartTime}
-    </if>
-    <if test="courseTest.testEndTime !=null and courseTest.testEndTime!=''">
-      and test_end_time&lt;=#{courseTest.testEndTime}
-    </if>
-    <if test="courseTest.testStatus !=null and courseTest.testStatus!=''">
-      and test_status like '%' #{courseTest.testStatus} '%'
-    </if>
-    <if test="courseTest.chapterId !=null and courseTest.chapterId!=''">
-      and chapter_id=#{courseTest.chapterId}
+    <if test="sid ==null and tid ==null ">
+      <include refid="Base_Column_List" />
+      from course_test_t where delete_time is null
+      <if test="courseTest.cid !=null and courseTest.cid!=''">
+        and cid=#{courseTest.cid}
+      </if>
+      <if test="courseTest.testId !=null and courseTest.testId!=''">
+        and test_id like '%' #{courseTest.testId} '%'
+      </if>
+      <if test="courseTest.testName !=null and courseTest.testName!=''">
+        and test_name like '%' #{courseTest.testName} '%'
+      </if>
+      <if test="courseTest.testImageName !=null and courseTest.testImageName!=''">
+        and test_image_name like '%' #{courseTest.testImageName} '%'
+      </if>
+      <if test="courseTest.testStartTime !=null and courseTest.testStartTime!=''">
+        and test_start_time&gt;=#{courseTest.testStartTime}
+      </if>
+      <if test="courseTest.testEndTime !=null and courseTest.testEndTime!=''">
+        and test_end_time&lt;=#{courseTest.testEndTime}
+      </if>
+      <if test="courseTest.testStatus !=null and courseTest.testStatus!=''">
+        and test_status like '%' #{courseTest.testStatus} '%'
+      </if>
+      <if test="courseTest.chapterId !=null and courseTest.chapterId!=''">
+        and chapter_id=#{courseTest.chapterId}
+      </if>
     </if>
     limit #{pageNum},#{pageSize}
   </select>

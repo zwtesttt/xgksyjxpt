@@ -40,33 +40,39 @@ public class AdminCourseTestController {
         Map<String,Object> remap=new HashMap<>();
         List<Map<String,Object>> relist=new ArrayList<>();
         if (courseTest.getCid()!=null){
-            List<CourseTest> list=courseTestService.queryCourseTestByCid(courseTest,(pageNum-1)*pageSize,pageSize);
-            for (CourseTest ct:list
-            ) {
-                //封装实验信息对象
-                Map<String,Object> map=new HashMap<>();
-                //实验id
-                map.put("testId",ct.getTest_id());
-                //实验名
-                map.put("testName",ct.getTest_name());
-                //实验开始时间
-                map.put("testStartTime",ct.getTest_start_time());
-                //实验结束时间
-                map.put("testEndTime",ct.getTest_end_time());
-                //使用镜像名
-                map.put("testImageName",ct.getTest_image_name());
-                //容器数量
-                map.put("containerCount",containerService.selectContainerIdByTestIds(new String[]{ct.getTest_id()}).size());
-                //实验状态
-                map.put("testStatus",ct.getTest_status());
-                relist.add(map);
+            if (pageNum != null && pageSize !=null) {
+                List<CourseTest> list=courseTestService.queryCourseTestByTidOrSid(null,null,courseTest,(pageNum-1)*pageSize,pageSize);
+                for (CourseTest ct:list
+                ) {
+                    //封装实验信息对象
+                    Map<String,Object> map=new HashMap<>();
+                    //实验id
+                    map.put("testId",ct.getTest_id());
+                    //实验名
+                    map.put("testName",ct.getTest_name());
+                    //实验开始时间
+                    map.put("testStartTime",ct.getTest_start_time());
+                    //实验结束时间
+                    map.put("testEndTime",ct.getTest_end_time());
+                    //使用镜像名
+                    map.put("testImageName",ct.getTest_image_name());
+                    //容器数量
+                    map.put("containerCount",containerService.selectContainerIdByTestIds(new String[]{ct.getTest_id()}).size());
+                    //实验状态
+                    map.put("testStatus",ct.getTest_status());
+                    relist.add(map);
+                }
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                re.setMessage("查询成功");
+                //封装响应对象
+                remap.put("testList",relist);
+                remap.put("total",courseTestService.queryCourseTestCountByTidOrSid(null,null,courseTest));
+                re.setData(remap);
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("查询失败，分页参数不能为空");
             }
-            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-            re.setMessage("查询成功");
-            //封装响应对象
-            remap.put("testList",relist);
-            remap.put("total",courseTestService.queryCourseTestCountByCid(courseTest));
-            re.setData(remap);
+
         }else{
             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
             re.setMessage("课程号不能为空");

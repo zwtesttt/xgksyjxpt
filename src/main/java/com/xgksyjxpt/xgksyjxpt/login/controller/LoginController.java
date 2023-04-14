@@ -82,8 +82,6 @@ public class LoginController {
                 Student user= studentService.selectNotDelStudent(id);
                 if (user!=null){
                     //密码匹配
-
-
                     if (passwordEncoder.matches(passwd,user.getPasswd())){
                         //封装用户信息
                         userInfo.put("id",user.getSid());
@@ -91,10 +89,10 @@ public class LoginController {
                         String url=studentService.selectStuHeadUrl(user.getSid());
                         userInfo.put("head_url",url.substring(7));
                         //创建token
-                        token= jwtUitls.createToken(id,user.getName());
+                        token= jwtUitls.createToken(id,user.getIdentity());
                         userInfo.put("identity",user.getIdentity());
                         userInfo.put("identityPermissions",identityPermissionsService.selectIdentityPermissions(user.getIdentity()));
-                        //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
+                        //登录成功后将token作为key,用户信息作为value保存到redis
                         redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
 
                     }else{
@@ -118,7 +116,7 @@ public class LoginController {
                         userInfo.put("head_url",url.substring(7));
                         userInfo.put("identity",user.getIdentity());
                         userInfo.put("identityPermissions",identityPermissionsService.selectIdentityPermissions(user.getIdentity()));
-                        token= jwtUitls.createToken(id,user.getName());
+                        token= jwtUitls.createToken(id,user.getIdentity());
                         //登录成功后将token作为key,用户信息作为value保存到redis,5分钟过期
                         redisTemplate.opsForValue().set(token,user.toString(),Duration.ofSeconds(es));
                     }else{

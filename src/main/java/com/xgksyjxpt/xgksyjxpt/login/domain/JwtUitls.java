@@ -84,6 +84,7 @@ public class JwtUitls {
             String id = claims.getId();
             //截取id第一个字符，判断身份
             String identity=claims.getSubject();
+            System.out.println(identity);
             Object user=null;
             if (identity.equals("teacher")) {
                 user=teacherService.selectNotDelTeacher(id);

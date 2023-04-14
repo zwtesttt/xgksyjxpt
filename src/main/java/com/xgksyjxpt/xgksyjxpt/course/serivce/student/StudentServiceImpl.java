@@ -1,6 +1,7 @@
 package com.xgksyjxpt.xgksyjxpt.course.serivce.student;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentCourse;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
@@ -337,12 +338,12 @@ public class StudentServiceImpl implements StudentService {
     /**
      * 根据学号和课程号查询实验
      * @param sid
-     * @param cid
+     * @param  courseTest
      * @return
      */
     @Override
-    public List<Map<String, Object>> selectStudentTestInfo(String sid, String cid, Integer pageNum,Integer pageSize) {
-        return studentTestMapper.selectStudentTestInfo(sid,cid,pageNum,pageSize);
+    public List<Map<String, Object>> selectStudentTestInfo(String sid, CourseTest courseTest, Integer pageNum, Integer pageSize) {
+        return studentTestMapper.selectStudentTestInfo(sid,courseTest,pageNum,pageSize);
     }
 
     /**

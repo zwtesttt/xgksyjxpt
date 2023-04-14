@@ -2,6 +2,7 @@ package com.xgksyjxpt.xgksyjxpt.course.controller.admin;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.Student;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
+import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminClassService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.ContainerService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.DockerService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
@@ -24,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +50,9 @@ public class AdminStudentController {
 
     @Autowired
     public PasswordEncoder passwordEncoder;
+
+    @Resource
+    private AdminClassService adminClassService;
 
     /**
      * 添加学生
@@ -210,11 +215,19 @@ public class AdminStudentController {
                         stu.setSex(cellvalue);
 //                    第五列为班级
                     }else if (k==4){
+                        if(adminClassService.selectClassNameByClassName(cellvalue)==null){
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("班级不存在");
+                            return re;
+                        }
                         stu.setClass_name(cellvalue);
                     //第六列为密码
                     } else if (k==5) {
                         String enpass= passwordEncoder.encode(cellvalue);
                         stu.setPasswd(enpass);
+                        //第七列为角色
+                    }else if (k==6) {
+                        stu.setIdentity(cellvalue);
                     }
 
                 }

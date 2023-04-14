@@ -251,6 +251,9 @@ public class AdminTeacherController {
                         //加密密码
                         String enpass= passwordEncoder.encode(cellvalue);
                         tea.setPasswd(enpass);
+                        //第五列为角色
+                    }else if (k==5) {
+                        tea.setIdentity(cellvalue);
                     }
 
                 }

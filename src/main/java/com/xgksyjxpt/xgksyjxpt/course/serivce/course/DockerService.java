@@ -46,9 +46,9 @@ public class DockerService {
     /**
      * 根据镜像名和学生id创建容器并并返回id
      */
-    public String createQueryId(String imagesName,String stuId,String networkName,String testid) throws Exception {
+    public String createQueryId(String imagesName,String userId,String networkName,String testid) throws Exception {
 
-        String id=DockerUtil.getContainersId(getDockerClient(),imagesName+"-"+stuId+"-"+testid);
+        String id=DockerUtil.getContainersId(getDockerClient(),imagesName+"-"+userId+"-"+testid);
 //        先判断本地是不是已经存在该名称的容器,不存在才运行新容器
         if(id==null){
             HostConfig hostConfig=new HostConfig().withNetworkMode(networkName).withPrivileged(true);
@@ -65,7 +65,7 @@ public class DockerService {
                     //判断本地是否有该镜像
                     if (localName.equals(imagesName)){
                         //运行容器
-                        id=DockerUtil.runContainers(getDockerClient(),im.getRepoTags()[0],imagesName+"-"+stuId+"-"+testid,hostConfig,sshpasswd);
+                        id=DockerUtil.runContainers(getDockerClient(),im.getRepoTags()[0],imagesName+"-"+userId+"-"+testid,hostConfig,sshpasswd);
                         break;
                     }
                 }
@@ -76,7 +76,7 @@ public class DockerService {
                     .containerStartTime(new Date())
                     .passwd(sshpasswd)
                     .testId(testid)//实验id
-                    .sid(stuId)
+                    .sid(userId)
                     .build();
             try {
                 //添加记录

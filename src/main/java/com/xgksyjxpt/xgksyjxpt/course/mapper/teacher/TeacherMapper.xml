@@ -45,7 +45,7 @@
   <insert id="insertTeachers" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher">
     insert into teacher_t(tid, name, age, sex, passwd,identity) values
     <foreach collection="array" item="teachers" separator=",">
-      (#{teachers.tid},#{teachers.name},#{teachers.age},#{teachers.sex},#{teachers.passwd},#{identity})
+      (#{teachers.tid},#{teachers.name},#{teachers.age},#{teachers.sex},#{teachers.passwd},#{teachers.identity})
     </foreach>
   </insert>
 <!--  查询老师信息-->

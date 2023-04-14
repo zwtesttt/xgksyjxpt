@@ -76,7 +76,7 @@ public interface StudentTestMapper {
     /**
      * 根据学号和课程号查询实验信息
      */
-    List<Map<String,Object>> selectStudentTestInfo(@Param("sid") String sid,@Param("cid") String cid,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
+    List<Map<String,Object>> selectStudentTestInfo(@Param("sid") String sid,@Param("courseTest") CourseTest courseTest,@Param("pageNum") Integer pageNum,@Param("pageSize") Integer pageSize);
     /**
      * 根据学号和实验号查询实验记录
      */

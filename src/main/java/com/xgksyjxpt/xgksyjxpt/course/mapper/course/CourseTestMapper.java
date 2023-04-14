@@ -76,10 +76,10 @@ public interface CourseTestMapper {
      */
     List<CourseTest> queryAllCourseTest( @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
     /**
-     * 根据课程号查询实验
+     * 根据学号或教师号查询实验
      * @return
      */
-    List<CourseTest> queryAllCourseTestByCid(@Param("courseTest")CourseTest courseTest, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
+    List<CourseTest> queryAllCourseTestByTidOrSid(@Param("tid")String tid,@Param("sid")String sid,@Param("courseTest")CourseTest courseTest, @Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize);
     /**
      * 添加课程实验
      */
@@ -111,7 +111,7 @@ public interface CourseTestMapper {
     /**
      * 根据课程号查询所有实验总数
      */
-    int queryCourseCountByCid(@Param("courseTest")CourseTest courseTest);
+    int queryCourseCountByTidOrSid(@Param("tid")String tid,@Param("sid")String sid,@Param("courseTest")CourseTest courseTest);
     /**
      * 批量删除实验
      */

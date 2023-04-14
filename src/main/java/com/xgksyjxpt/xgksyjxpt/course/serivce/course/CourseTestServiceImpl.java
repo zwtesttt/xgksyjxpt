@@ -80,8 +80,8 @@ public class CourseTestServiceImpl implements CourseTestService {
      * @return
      */
     @Override
-    public List<CourseTest> queryCourseTestByCid(CourseTest courseTest,Integer pageNum,Integer pageSize) {
-        return courseTestMapper.queryAllCourseTestByCid(courseTest,pageNum,pageSize);
+    public List<CourseTest> queryCourseTestByTidOrSid(String tid,String sid,CourseTest courseTest,Integer pageNum,Integer pageSize) {
+        return courseTestMapper.queryAllCourseTestByTidOrSid(tid,sid,courseTest,pageNum,pageSize);
     }
 
     /**
@@ -210,12 +210,12 @@ public class CourseTestServiceImpl implements CourseTestService {
     /**
      * 根据课程号查询实验总数
      * @param courseTest
-     * @param cid
+     * @param
      * @return
      */
     @Override
-    public int queryCourseTestCountByCid(CourseTest courseTest) {
-        return courseTestMapper.queryCourseCountByCid(courseTest);
+    public int queryCourseTestCountByTidOrSid(String tid,String sid,CourseTest courseTest) {
+        return courseTestMapper.queryCourseCountByTidOrSid(tid,sid,courseTest);
     }
 
     /**

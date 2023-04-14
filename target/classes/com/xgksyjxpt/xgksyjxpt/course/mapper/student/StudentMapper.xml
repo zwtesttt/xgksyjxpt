@@ -132,7 +132,7 @@
   <insert id="insertStudent" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.student.Student">
     insert into student_t(sid, name, age, sex, passwd,class_name,identity) values
     <foreach collection="array" item="students" separator=",">
-      (#{students.sid},#{students.name},#{students.age},#{students.sex},#{students.passwd},#{students.class_name},#{identity})
+      (#{students.sid},#{students.name},#{students.age},#{students.sex},#{students.passwd},#{students.class_name},#{students.identity})
     </foreach>
   </insert>
 <!--  添加学生-->
