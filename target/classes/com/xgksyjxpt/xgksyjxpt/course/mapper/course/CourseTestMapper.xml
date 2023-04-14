@@ -40,7 +40,10 @@
   </sql>
 <!--  查询课程实验总数-->
   <select id="queryCourseCountByCid" resultType="int">
-    select count(*) from course_test_t where delete_time is null and cid=#{cid}
+    select count(*) from course_test_t where delete_time is null
+    <if test="courseTest.cid !=null and courseTest.cid!=''">
+      and cid=#{courseTest.cid}
+    </if>
     <if test="courseTest.testId !=null and courseTest.testId!=''">
       and test_id like '%' #{courseTest.testId} '%'
     </if>
@@ -119,7 +122,10 @@
   <select id="queryAllCourseTestByCid" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest">
     select
     <include refid="Base_Column_List" />
-    from course_test_t where cid=#{cid} and delete_time is null
+    from course_test_t where delete_time is null
+    <if test="courseTest.cid !=null and courseTest.cid!=''">
+      and cid=#{courseTest.cid}
+    </if>
     <if test="courseTest.testId !=null and courseTest.testId!=''">
       and test_id like '%' #{courseTest.testId} '%'
     </if>

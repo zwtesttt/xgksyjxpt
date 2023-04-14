@@ -11,12 +11,12 @@ public interface CourseTestService {
     int deleteCourseTestByCid(String cid);
     List<String> selectCourseTestIdByCid(String cid);
     List<CourseTest> queryAllCourseTest(Integer pageNum,Integer pageSize);
-    List<CourseTest> queryCourseTestByCid(CourseTest courseTest,String cid,Integer pageNum,Integer pageSize);
+    List<CourseTest> queryCourseTestByCid(CourseTest courseTest,Integer pageNum,Integer pageSize);
     int insertCourseTest(CourseTest courseTest);
 
     int updateCourseTest(CourseTest courseTest);
     int deleteCourseTestByTestId(String testId);
     CourseTest selectCourseTestByTestId(String testId);
-    int queryCourseTestCountByCid(CourseTest courseTest,String cid);
+    int queryCourseTestCountByCid(CourseTest courseTest);
     int deleteCourseTestsByTestIds(String[] ids);
 }

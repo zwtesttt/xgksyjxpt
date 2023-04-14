@@ -25,6 +25,7 @@ public interface TeacherService {
     int deleteTeaHeadByTids(String[] tids);
     int deleteTeachers(String[] tids);
     String selectTeaHeadUrl(String tid);
+    int updateTeacherHead(TeacherHead teacherHead);
 
     int insertTeacher(Teacher teacher);
 

@@ -26,22 +26,21 @@ public class AdminCourseTestController {
     private ContainerService containerService;
 
     /**
-     * 根据课程号查询实验列表
+     * 查询实验列表
      */
     @GetMapping("/getCourseTestsByCid")
-    @ApiOperation("根据课程号查询实验列表")
+    @ApiOperation("查询实验列表")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
     @ApiImplicitParams({
-            @ApiImplicitParam(name="cid",value="课程id",dataType="string",required = true),
             @ApiImplicitParam(name="pageNum",value="页数",dataType="int",required = true),
             @ApiImplicitParam(name="pageSize",value="每页数据条数",dataType="int",required = true)
     })
-    public Object queryCourseTest(CourseTest courseTest, String cid, Integer pageNum, Integer pageSize){
+    public Object getCourseTestsByCid(CourseTest courseTest, Integer pageNum, Integer pageSize){
         ReturnObject re =new ReturnObject();
         Map<String,Object> remap=new HashMap<>();
         List<Map<String,Object>> relist=new ArrayList<>();
-        if (cid!=null){
-            List<CourseTest> list=courseTestService.queryCourseTestByCid(courseTest,cid,(pageNum-1)*pageSize,pageSize);
+        if (courseTest.getCid()!=null){
+            List<CourseTest> list=courseTestService.queryCourseTestByCid(courseTest,(pageNum-1)*pageSize,pageSize);
             for (CourseTest ct:list
             ) {
                 //封装实验信息对象
@@ -66,7 +65,7 @@ public class AdminCourseTestController {
             re.setMessage("查询成功");
             //封装响应对象
             remap.put("testList",relist);
-            remap.put("total",courseTestService.queryCourseTestCountByCid(courseTest,cid));
+            remap.put("total",courseTestService.queryCourseTestCountByCid(courseTest));
             re.setData(remap);
         }else{
             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);

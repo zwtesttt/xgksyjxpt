@@ -168,6 +168,7 @@ public class StudentController {
                         studentHead.setSid(sid);
                         int stu=studentService.updateStuHead(studentHead);
                         if (stu!=0){
+                            re.setData(url.substring(7));
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
                             re.setMessage("修改头像成功");
                         }else{

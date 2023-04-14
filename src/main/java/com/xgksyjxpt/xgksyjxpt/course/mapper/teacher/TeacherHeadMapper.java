@@ -51,6 +51,11 @@ public interface TeacherHeadMapper {
      */
     int updateByPrimaryKey(TeacherHead record);
 
+    /**
+     * 上传老师头像
+     * @param teacherHead
+     * @return
+     */
     int uploadTeaHead(TeacherHead teacherHead);
     /**
      * 查询老师头像url
@@ -64,5 +69,7 @@ public interface TeacherHeadMapper {
      * 批量删除老师头像记录
      */
     int deleteTeaHeadByTids(String[] tids);
+
+    int updateTeacherHead(TeacherHead teacherHead);
 
 }

@@ -95,7 +95,7 @@ public class TeacherCourseTestController {
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                             re.setMessage("实验开始时间不能超过实验结束时间");
                         }else{
-                            //添加课程实验记录
+                            //添加课程实验
                             int stu = courseTestService.insertCourseTest(courseTest);
                             if (stu != 0) {
 //                            给指定班级学生添加实验
@@ -220,32 +220,30 @@ public class TeacherCourseTestController {
         ReturnObject re =new ReturnObject();
         Map<String,Object> remap=new HashMap<>();
         List<Map<String,Object>> relist=new ArrayList<>();
-        if (courseTest.getCid()!=null){
-            //查询实验
-            List<CourseTest> list=courseTestService.queryCourseTestByCid(courseTest,courseTest.getCid(),(pageNum-1)*pageSize,pageSize);
-            for (CourseTest ct:list
-            ) {
-                //封装实验信息对象
-                Map<String,Object> map=new HashMap<>();
-                //实验id
-                map.put("testId",ct.getTest_id());
-                //实验名
-                map.put("testName",ct.getTest_name());
-                //实验开始时间
-                map.put("testStartTime",ct.getTest_start_time());
-                //实验结束时间
-                map.put("testEndTime",ct.getTest_end_time());
-                //使用镜像名
-                map.put("testImageName",ct.getTest_image_name());
-                //实验状态
-                map.put("testStatus",ct.getTest_status());
-                //实验描述
-                map.put("testDescription",ct.getTest_description());
-                relist.add(map);
-            }
+        //查询实验
+        List<CourseTest> list=courseTestService.queryCourseTestByCid(courseTest,(pageNum-1)*pageSize,pageSize);
+        for (CourseTest ct:list
+        ) {
+            //封装实验信息对象
+            Map<String,Object> map=new HashMap<>();
+            //实验id
+            map.put("testId",ct.getTest_id());
+            //实验名
+            map.put("testName",ct.getTest_name());
+            //实验开始时间
+            map.put("testStartTime",ct.getTest_start_time());
+            //实验结束时间
+            map.put("testEndTime",ct.getTest_end_time());
+            //使用镜像名
+            map.put("testImageName",ct.getTest_image_name());
+            //实验状态
+            map.put("testStatus",ct.getTest_status());
+            //实验描述
+            map.put("testDescription",ct.getTest_description());
+            relist.add(map);
         }
         remap.put("testList",relist);
-        remap.put("total",courseTestService.queryCourseTestCountByCid(courseTest,courseTest.getCid()));
+        remap.put("total",courseTestService.queryCourseTestCountByCid(courseTest));
         re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
         re.setMessage("查询成功");
         re.setData(remap);

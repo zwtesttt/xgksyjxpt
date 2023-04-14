@@ -164,6 +164,16 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     /**
+     * 修改老师头像
+     * @param teacherHead
+     * @return
+     */
+    @Override
+    public int updateTeacherHead(TeacherHead teacherHead) {
+        return teacherHeadMapper.updateTeacherHead(teacherHead);
+    }
+
+    /**
      * 添加老师
      * @param teacher
      * @return

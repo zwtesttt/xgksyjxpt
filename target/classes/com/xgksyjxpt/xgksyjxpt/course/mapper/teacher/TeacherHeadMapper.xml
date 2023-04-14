@@ -67,6 +67,10 @@
     </foreach>
     ) and delete_time is null
   </update>
+<!--  修改老师头像-->
+  <update id="updateTeacherHead" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.TeacherHead">
+    update teacher_head_t set head_link=#{head_link} where tid=#{tid}
+  </update>
   <insert id="insertSelective" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.teacher.TeacherHead" >
     <!--
       WARNING - @mbggenerated
@@ -115,4 +119,5 @@
     set head_link = #{head_link,jdbcType=VARCHAR}
     where tid = #{tid,jdbcType=VARCHAR}
   </update>
+
 </mapper>

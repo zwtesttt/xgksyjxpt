@@ -1,14 +1,21 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller.teacher;
 
 
+import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentHead;
 import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.Teacher;
+import com.xgksyjxpt.xgksyjxpt.course.domain.teacher.TeacherHead;
+import com.xgksyjxpt.xgksyjxpt.domain.HeadUrl;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
+import com.xgksyjxpt.xgksyjxpt.util.FastdfsUtil;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +28,9 @@ public class TeacherController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private FastdfsUtil fastdfsUtil;
 
 
     /**
@@ -146,5 +156,61 @@ public class TeacherController {
         return re;
     }
 
+    /**
+     * 修改老师头像
+     */
+    @PostMapping("/updateStuHead")
+    @ApiOperation("修改老师头像")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="file",value="头像文件流",dataType="multipartFile",required = true),
+            @ApiImplicitParam(name="tid",value="老师id",dataType="string",required = true)
+    })
+    public Object updateStuHead(MultipartFile file, String tid) {
+        ReturnObject re =new ReturnObject();
+        try {
+            if (file.isEmpty()==false){
+                String fileType=file.getContentType();
+                if (fileType.equals("image/png")||fileType.equals("image/jpg")||fileType.equals("image/jpeg")){
+                    //删除原来头像
+                    String fileurl= teacherService.selectTeaHeadUrl(tid);
+                    //排除默认头像
+                    if(!HeadUrl.DEFAULT_STU_HEAD.equals(fileurl)){
+                        fastdfsUtil.deleteFile(fileurl);
+                    }
+//                上传新头像
+                    String url=fastdfsUtil.uploadFile(file);
+                    if (url!=null){
+//                    上传成功则更新数据库信息
+                        TeacherHead teacherHead=new TeacherHead();
+                        teacherHead.setHead_link(url);
+                        teacherHead.setTid(tid);
+                        int stu=teacherService.updateTeacherHead(teacherHead);
+                        if (stu!=0){
+                            re.setData(url.substring(7));
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                            re.setMessage("修改头像成功");
+                        }else{
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("修改头像失败");
+                        }
 
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("修改头像失败");
+                    }
+                }else {
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("头像格式错误");
+                }
+
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("修改头像失败");
+        }
+        return re;
+    }
 }
