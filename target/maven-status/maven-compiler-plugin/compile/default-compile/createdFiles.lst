@@ -50,6 +50,7 @@ com\xgksyjxpt\xgksyjxpt\course\domain\course\Container.class
 com\xgksyjxpt\xgksyjxpt\course\domain\admin\Admin.class
 com\xgksyjxpt\xgksyjxpt\course\domain\admin\IdentityPermissions.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentMapper.class
+com\xgksyjxpt\xgksyjxpt\course\domain\course\UpdateCourseTestDocJson.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\teacher\TeacherHeadMapper.class
 com\xgksyjxpt\xgksyjxpt\course\controller\admin\AdminServerController.class
 com\xgksyjxpt\xgksyjxpt\course\controller\student\StudentCourseController.class
@@ -105,6 +106,7 @@ com\xgksyjxpt\xgksyjxpt\course\controller\teacher\TeacherCourseSectionController
 com\xgksyjxpt\xgksyjxpt\course\controller\admin\AdminController.class
 com\xgksyjxpt\xgksyjxpt\course\domain\student\StudentCourse.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\admin\AdminMapper.class
+com\xgksyjxpt\xgksyjxpt\course\domain\course\UpdateCourseTestClassJson.class
 com\xgksyjxpt\xgksyjxpt\XgksyjxptApplication.class
 com\xgksyjxpt\xgksyjxpt\course\domain\course\Course.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\admin\AdminService.class

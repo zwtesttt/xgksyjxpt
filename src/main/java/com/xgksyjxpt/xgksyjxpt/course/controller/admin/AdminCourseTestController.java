@@ -60,6 +60,12 @@ public class AdminCourseTestController {
                     map.put("containerCount",containerService.selectContainerIdByTestIds(new String[]{ct.getTest_id()}).size());
                     //实验状态
                     map.put("testStatus",ct.getTest_status());
+                    //章节名
+                    map.put("chapterId",ct.getChapterId());
+                    //班级列表
+                    map.put("classList",courseTestService.selectCourseTestClass(ct.getTest_id()));
+                    //描述
+                    map.put("testDescription",ct.getTest_description());
                     relist.add(map);
                 }
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);

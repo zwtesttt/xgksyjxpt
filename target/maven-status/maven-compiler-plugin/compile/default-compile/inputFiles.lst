@@ -74,6 +74,7 @@ E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\studen
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\admin\IdentityPermissionsService.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseSectionImageMapper.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseChapterKey.java
+E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course\UpdateCourseTestClassJson.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\teacher\Teacher.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\login\domain\TokenStatus.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\teacher\TeacherCourseChapterController.java
@@ -107,6 +108,7 @@ E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\util\UuidUtil.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\mapper\admin\IdentityPermissionsMapper.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\PublicController.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\teacher\TeacherController.java
+E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course\UpdateCourseTestDocJson.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\webssh\websocket\WebSocketPushHandler.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\admin\AdminTestContainerController.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\course\ContainerService.java

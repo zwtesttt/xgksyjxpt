@@ -136,5 +136,8 @@ public interface ContainerMapper {
      * 根据实验id查询容器总数
      */
     int queryContainerCountByTestId(@Param("container") Container container,@Param("testId") String testId);
-
+    /**
+     * 根据容器id删除容器
+     */
+    int deleteContainerByContainerIds(String[] cids);
 }

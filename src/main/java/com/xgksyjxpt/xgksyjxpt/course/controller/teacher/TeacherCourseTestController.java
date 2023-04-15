@@ -1,8 +1,7 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller.teacher;
 
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.Course;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseSection;
-import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
+import com.xgksyjxpt.xgksyjxpt.course.domain.course.*;
+import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentCourseJson;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminClassService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
@@ -178,6 +177,110 @@ public class TeacherCourseTestController {
         return re;
     }
     /**
+     * 修改实验文档
+     */
+    @PostMapping("/modifyCourseTestDoc")
+    @ApiOperation("修改实验文档")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="testId",value="实验id",dataType="string",required = true),
+            @ApiImplicitParam(name="newText",value="文档",dataType="string",required = true)
+    })
+    public Object modifyCourseTest(@RequestBody UpdateCourseTestDocJson updateCourseTestDocJson){
+        ReturnObject re=new ReturnObject();
+        try {
+            if (updateCourseTestDocJson!=null){
+                int stu=courseTestService.updayeCourseTestDocByTestId(updateCourseTestDocJson.getTestId(),updateCourseTestDocJson.getNewText());
+                if (stu!=0){
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                    re.setMessage("修改成功");
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("修改失败");
+                }
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("参数不能为空");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("修改失败");
+        }
+        return re;
+    }
+
+    /**
+     * 修改实验绑定班级
+     */
+    @PostMapping("/updateCourseTestByClassName")
+    @ApiOperation("修改实验绑定班级")
+    @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="className",value="班级列表",dataType="list",required = true),
+            @ApiImplicitParam(name="className",value="班级列表",dataType="list",required = true),
+            @ApiImplicitParam(name="updateCourseTestClassJson",value="实体类（不用管）",dataType="json",required = false)
+    })
+    public Object updateStudentCourseByClassName(@RequestBody UpdateCourseTestClassJson updateCourseTestClassJson){
+        ReturnObject re=new ReturnObject();
+        try {
+            if (updateCourseTestClassJson!=null){
+                String testId=updateCourseTestClassJson.getTestId();
+                List<String> classNames=updateCourseTestClassJson.getClassName();
+                if (testId!=null&&classNames!=null&&classNames.size()!=0){
+//                校验课程号
+                    CourseTest courseTest=courseTestService.selectCourseTestByTestId(testId);
+                    int count=0;
+                    for (String className:classNames
+                    ) {
+                        if(adminClassService.selectClassNameByClassName(className)!=null){
+                            count++;
+                        }
+                    }
+                    if (count==classNames.size()){
+                        if (courseTest!=null){
+                            //                        验证课程状态
+                            if ("已开始".equals(courseTest.getTest_status())){
+                                String[] classNameArray=classNames.toArray(new String[classNames.size()]);
+                                //修改实验班级
+                                int stu=courseTestService.updateTestClassByTestIdAndClassNames(testId,classNameArray);
+                                if (stu!=0){
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                                    re.setMessage("修改实验班级成功");
+                                }else{
+                                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                    re.setMessage("修改实验班级失败");
+                                }
+                            }else{
+                                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                                re.setMessage("该课程已结束，不允许修改实验班级");
+                            }
+                        }else{
+                            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                            re.setMessage("实验不存在");
+                        }
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("部分或全部班级不存在");
+                    }
+
+                }else{
+                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                    re.setMessage("实验id和班级名不能为空");
+                }
+            }else{
+                re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                re.setMessage("实验id和班级名不能为空");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+            re.setMessage("修改实验班级失败");
+        }
+        return re;
+    }
+    /**
      * 删除课程实验
      */
     @DeleteMapping("/delCourseTest")
@@ -248,6 +351,12 @@ public class TeacherCourseTestController {
                         map.put("testStatus",ct.getTest_status());
                         //实验描述
                         map.put("testDescription",ct.getTest_description());
+                        //章节
+                        map.put("courseChapterId",ct.getChapterId());
+                        //课程号
+                        map.put("cid",ct.getCid());
+                        map.put("classList",courseTestService.selectCourseTestClass(ct.getTest_id()));
+
                         relist.add(map);
                     }
                     remap.put("testList",relist);

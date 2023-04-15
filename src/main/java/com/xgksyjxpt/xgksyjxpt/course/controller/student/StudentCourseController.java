@@ -220,6 +220,12 @@ public class StudentCourseController {
                         map.put("testStatus",ct.getTest_status());
                         //实验描述
                         map.put("testDescription",ct.getTest_description());
+                        //章节
+                        map.put("courseChapterId",ct.getChapterId());
+                        //课程号
+                        map.put("cid",ct.getCid());
+                        map.put("classList",courseTestService.selectCourseTestClass(ct.getTest_id()));
+
                         relist.add(map);
                     }
                     remap.put("testList",relist);

@@ -19,4 +19,10 @@ public interface CourseTestService {
     CourseTest selectCourseTestByTestId(String testId);
     int queryCourseTestCountByTidOrSid(String tid,String sid,CourseTest courseTest);
     int deleteCourseTestsByTestIds(String[] ids);
+
+    List<String> selectCourseTestClass(String testId);
+
+    int updateTestClassByTestIdAndClassNames(String testId,String[] newclassNames);
+
+    int updayeCourseTestDocByTestId(String testId,String doc);
 }

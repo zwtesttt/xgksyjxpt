@@ -84,4 +84,14 @@ public class ContainerServiceImpl implements ContainerService {
     public int queryContainerCountByTestId(Container container, String testId) {
         return containerMapper.queryContainerCountByTestId(container,testId);
     }
+
+    /**
+     * 根据容器id删除容器运行记录
+     * @param cids
+     * @return
+     */
+    @Override
+    public int deleteContainerByContainerIds(String[] cids) {
+        return containerMapper.deleteContainerByContainerIds(cids);
+    }
 }

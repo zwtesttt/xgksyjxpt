@@ -116,4 +116,13 @@ public interface CourseTestMapper {
      * 批量删除实验
      */
     int deleteCourseTestsByTestIds(String[] ids);
+    /**
+     * 根据实验id查询实验班级
+     */
+    List<String> selectCourseTestClass(String testId);
+    /**
+     * 修改实验文档
+     */
+    int updateCourseTestDocByTestId(@Param("testId")String testId,@Param("doc")String doc);
+
 }

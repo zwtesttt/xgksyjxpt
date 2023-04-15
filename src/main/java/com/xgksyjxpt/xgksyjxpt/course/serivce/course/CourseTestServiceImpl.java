@@ -2,7 +2,9 @@ package com.xgksyjxpt.xgksyjxpt.course.serivce.course;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseStatus;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest;
+import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.course.CourseTestMapper;
+import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentTestMapper;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -25,6 +28,9 @@ public class CourseTestServiceImpl implements CourseTestService {
 
     @Resource
     private StudentService studentService;
+
+    @Resource
+    private StudentTestMapper studentTestMapper;
     /**
      * 根据课程号删除课程实验
      * @param cid
@@ -246,6 +252,64 @@ public class CourseTestServiceImpl implements CourseTestService {
         //批量删除学生实验记录
         studentService.deleteStuTestByTestIds(ids);
         return courseTestMapper.deleteCourseTestsByTestIds(ids);
+    }
+
+    /**
+     * 根据实验id查询拥有实验的班级
+     * @param testId
+     * @return
+     */
+    @Override
+    public List<String> selectCourseTestClass(String testId) {
+        return courseTestMapper.selectCourseTestClass(testId);
+    }
+
+    /**
+     * 修改实验班级
+     * @param testId
+     * @param newclassNames
+     * @return
+     */
+    @Override
+    public int updateTestClassByTestIdAndClassNames(String testId, String[] newclassNames) {
+        int res=0;
+//        删除原来的
+        if(studentService.deleteStuTestByTestIds(new String[]{testId})!=0){
+            //查询实验所属课程
+            CourseTest courseTest=courseTestMapper.selectCourseTestByTestId(testId);
+            //拿到要修改的学号
+            List<String> sidList=studentService.selectStudentIdByClassName(newclassNames);
+            StudentTest[] stlist=new StudentTest[sidList.size()];
+            int i=0;
+            for (String sid:sidList
+                 ) {
+                StudentTest st=new StudentTest();
+                st.setTest_id(testId);
+                st.setSid(sid);
+                st.setCid(courseTest.getCid());
+                stlist[i++]=st;
+            }
+            if(i==sidList.size()){
+                //添加学生实验
+                studentService.insertStudentTest(stlist);
+                res=1;
+            }
+        }else{
+            return res;
+        }
+
+        return res;
+    }
+
+    /**
+     * 修改实验文档
+     * @param testId
+     * @param doc
+     * @return
+     */
+    @Override
+    public int updayeCourseTestDocByTestId(String testId, String doc) {
+        return courseTestMapper.updateCourseTestDocByTestId(testId,doc);
     }
 
 }

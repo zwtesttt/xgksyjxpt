@@ -7,10 +7,7 @@ import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +32,9 @@ public class AdminTestContainerController {
     @ApiImplicitParams({
             @ApiImplicitParam(name="testId",value="实验id",dataType="string",required = true),
             @ApiImplicitParam(name="pageNum",value="页数",dataType="int",required = true),
-            @ApiImplicitParam(name="pageSize",value="每页数据条数",dataType="int",required = true)
+            @ApiImplicitParam(name="pageSize",value="每页数据条数",dataType="int",required = true),
+            @ApiImplicitParam(name="passwd",value="ssh密码",dataType="string",required = false),
+            @ApiImplicitParam(name="sid",value="学号",dataType="string",required = false),
     })
     public Object getTestContainer(Container container, String testId, Integer pageNum, Integer pageSize){
         ReturnObject re=new ReturnObject();
@@ -81,7 +80,7 @@ public class AdminTestContainerController {
     @ApiImplicitParams({
             @ApiImplicitParam(name="cids",value="容器id列表",dataType="array",required = true)
     })
-    public Object deleteContainers(String[] cids){
+    public Object deleteContainers(@RequestBody String[] cids){
         ReturnObject re =new ReturnObject();
         try {
             if (cids.length!=0){
@@ -93,8 +92,14 @@ public class AdminTestContainerController {
                 //移除容器
                 int stu=dockerService.removeContainers(list);
                 if (stu==cids.length){
-                    re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
-                    re.setMessage("删除成功");
+                    int resl=containerService.deleteContainerByContainerIds(cids);
+                    if (resl==cids.length){
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);
+                        re.setMessage("删除成功");
+                    }else{
+                        re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
+                        re.setMessage("删除失败");
+                    }
                 }else{
                     re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                     re.setMessage("删除失败");

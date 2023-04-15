@@ -143,6 +143,14 @@
         </foreach>
         ) and delete_time is null
   </select>
+<!--  根据容器id删除记录-->
+  <update id="deleteContainerByContainerIds">
+    update runcontainer set delete_time=now() where container_id in (
+    <foreach collection="array" item="cids" separator=",">
+      #{cids}
+    </foreach>
+    ) and delete_time is null
+  </update>
   <!--  根据实验id查询容器信息-->
   <select id="selectContainerByTestId" resultType="com.xgksyjxpt.xgksyjxpt.course.domain.course.Container">
     select
@@ -212,6 +220,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
   <insert id="insert" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.course.Container" >
     <!--
       WARNING - @mbggenerated
