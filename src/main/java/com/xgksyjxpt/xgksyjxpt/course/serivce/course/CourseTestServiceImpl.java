@@ -7,12 +7,10 @@ import com.xgksyjxpt.xgksyjxpt.course.mapper.course.CourseTestMapper;
 import com.xgksyjxpt.xgksyjxpt.course.mapper.student.StudentTestMapper;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.student.StudentService;
 import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -105,9 +103,9 @@ public class CourseTestServiceImpl implements CourseTestService {
         Date end=null;
         //开始时间
         try {
-            start= DateUtil.getDate(courseTest.getTest_start_time());
+            start= DateUtil.getDate(courseTest.getTestStartTime());
             //结束时间
-            end=DateUtil.getDate(courseTest.getTest_end_time());
+            end=DateUtil.getDate(courseTest.getTestEndTime());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -116,14 +114,14 @@ public class CourseTestServiceImpl implements CourseTestService {
             //实验开始时间在当前时间之后
             if (start.compareTo(nowdate)>0){
                 //创建数据库定时事件
-                courseTestMapper.createCourseTestEvent(courseTest.getTest_start_time(),courseTest.getTest_id(),"courseevent"+courseTest.getTest_id()+"start", CourseStatus.COURSE_START);
+                courseTestMapper.createCourseTestEvent(courseTest.getTestStartTime(),courseTest.getTestId(),"courseevent"+courseTest.getTestId()+"start", CourseStatus.COURSE_START);
                 courseTest.setTest_status(CourseStatus.COURSE_NOT_START);
                 //开课时间在当前时间之前或者等于当前时间
             }else{
                 courseTest.setTest_status(CourseStatus.COURSE_START);
             }
             //创建数据库定时事件
-            courseTestMapper.createCourseTestEvent(courseTest.getTest_end_time(),courseTest.getTest_id(),"courseevent"+courseTest.getTest_id()+"end",CourseStatus.COURSE_END);
+            courseTestMapper.createCourseTestEvent(courseTest.getTestEndTime(),courseTest.getTestId(),"courseevent"+courseTest.getTestId()+"end",CourseStatus.COURSE_END);
             //结束时间在当前之间之前或者相等则把课程状态设置成已结束
         }else{
             courseTest.setTest_status(CourseStatus.COURSE_END);
@@ -140,8 +138,8 @@ public class CourseTestServiceImpl implements CourseTestService {
     @Transactional
     public int updateCourseTest(CourseTest courseTest) {
         //删除之前创建的定时任务
-        courseTestMapper.deleteCourseTestEvent("courseevent"+courseTest.getTest_id()+"start");
-        courseTestMapper.deleteCourseTestEvent("courseevent"+courseTest.getTest_id()+"end");
+        courseTestMapper.deleteCourseTestEvent("courseevent"+courseTest.getTestId()+"start");
+        courseTestMapper.deleteCourseTestEvent("courseevent"+courseTest.getTestId()+"end");
         //设置实验状态
         //比较课程开始时间和当前时间
         //现在时间
@@ -150,9 +148,9 @@ public class CourseTestServiceImpl implements CourseTestService {
         Date end=null;
         //开始时间
         try {
-            start= DateUtil.getDate(courseTest.getTest_start_time());
+            start= DateUtil.getDate(courseTest.getTestStartTime());
             //结束时间
-            end=DateUtil.getDate(courseTest.getTest_end_time());
+            end=DateUtil.getDate(courseTest.getTestEndTime());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -161,14 +159,14 @@ public class CourseTestServiceImpl implements CourseTestService {
             //实验开始时间在当前时间之后
             if (start.compareTo(nowdate)>0){
                 //创建数据库定时事件
-                courseTestMapper.createCourseTestEvent(courseTest.getTest_start_time(),courseTest.getTest_id(),"courseevent"+courseTest.getTest_id()+"start", CourseStatus.COURSE_START);
+                courseTestMapper.createCourseTestEvent(courseTest.getTestStartTime(),courseTest.getTestId(),"courseevent"+courseTest.getTestId()+"start", CourseStatus.COURSE_START);
                 courseTest.setTest_status(CourseStatus.COURSE_NOT_START);
                 //开课时间在当前时间之前或者等于当前时间
             }else{
                 courseTest.setTest_status(CourseStatus.COURSE_START);
             }
             //创建数据库定时事件
-            courseTestMapper.createCourseTestEvent(courseTest.getTest_end_time(),courseTest.getTest_id(),"courseevent"+courseTest.getTest_id()+"end",CourseStatus.COURSE_END);
+            courseTestMapper.createCourseTestEvent(courseTest.getTestEndTime(),courseTest.getTestId(),"courseevent"+courseTest.getTestId()+"end",CourseStatus.COURSE_END);
             //结束时间在当前之间之前或者相等则把课程状态设置成已结束
         }else{
             courseTest.setTest_status(CourseStatus.COURSE_END);

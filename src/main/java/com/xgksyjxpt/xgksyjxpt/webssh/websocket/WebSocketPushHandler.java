@@ -50,23 +50,32 @@ public class WebSocketPushHandler extends TextWebSocketHandler {
         logger.info("成功建立websocket连接");
         //获取会话域对象
         Map<String, Object> map = session.getAttributes();
-        if(DockerConfig.SERVER_ID.equals(map.get("id"))){
-            logger.info("管理员登录宿主机控制台");
-            //开始连接宿主机
-            sshService.initConnection(session,WebSSHData.builder().port(DockerConfig.SERVER_PORT).username(DockerConfig.SERVER_USERNAME).host(DockerConfig.SERVER_IPADDRESS).password(DockerConfig.SERVER_PASSWD).build());
-        }else{
-            logger.info("开始查询id:"+map.get("id")+"的IP地址");
-            String ip=dockerService.getIp((String)map.get("id"),DockerConfig.DOCKER_NETWORK_NAME);
-            logger.info("ip:"+ip);
-            userList.add(session);
-            //在websocket建立连接后直接建立ssh连接
-            logger.info("开始建立ssh连接");
+//        if(DockerConfig.SERVER_ID.equals(map.get("id"))){
+//            logger.info("管理员登录宿主机控制台");
+//            //开始连接宿主机
+//            sshService.initConnection(session,WebSSHData.builder().port(DockerConfig.SERVER_PORT).username(DockerConfig.SERVER_USERNAME).host(DockerConfig.SERVER_IPADDRESS).password(DockerConfig.SERVER_PASSWD).build());
+//        }else{
+//            logger.info("开始查询id:"+map.get("id")+"的IP地址");
+//            String ip=dockerService.getIp((String)map.get("id"),DockerConfig.DOCKER_NETWORK_NAME);
+//            logger.info("ip:"+ip);
+//            userList.add(session);
+//            //在websocket建立连接后直接建立ssh连接
+//            logger.info("开始建立ssh连接");
+////        从数据库获取密码
+//            String passwd=containerService.queryPasswd((String)map.get("id"));
+////            开始连接ssh
+//            sshService.initConnection(session,WebSSHData.builder().port(22).username("root").host(ip).password(passwd).build());
+//        }
+        logger.info("开始查询id:"+map.get("id")+"的IP地址");
+        String ip=dockerService.getIp((String)map.get("id"),DockerConfig.DOCKER_NETWORK_NAME);
+        logger.info("ip:"+ip);
+        userList.add(session);
+        //在websocket建立连接后直接建立ssh连接
+        logger.info("开始建立ssh连接");
 //        从数据库获取密码
-            String passwd=containerService.queryPasswd((String)map.get("id"));
+        String passwd=containerService.queryPasswd((String)map.get("id"));
 //            开始连接ssh
-            sshService.initConnection(session,WebSSHData.builder().port(22).username("root").host(ip).password(passwd).build());
-        }
-
+        sshService.initConnection(session,WebSSHData.builder().port(22).username("root").host(ip).password(passwd).build());
     }
     /**
      * 处理用户请求

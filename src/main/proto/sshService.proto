@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package="com.xgksyjxpt.xgksyjxpt.proto";
+option go_package = "go-webssh/proto";
+package proto;
+service ConService{
+  rpc GetSshInfo(SendId) returns (SshInfo);
+}
+
+//定义服务
+service VerifyAuth {
+  rpc authToken(Request) returns (Response);
+}
+message SendId{
+  string id=1;
+}
+message SshInfo {
+  string ip=1;
+  string password=2;
+}
+//请求
+message Request {
+  string jwtText = 1;
+}
+
+message Response {
+  int32 result = 1;
+}
+
+

@@ -1,0 +1,67 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x0000000051866577, pid=10980, tid=0x00000000000028cc
+#
+# JRE version: OpenJDK Runtime Environment (8.0_342-b07) (build 1.8.0_342-b07)
+# Java VM: OpenJDK 64-Bit Server VM (25.342-b07 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# V  [jvm.dll+0x1e6577]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/corretto/corretto-8/issues/
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000251c3bf2000):  JavaThread "JMX server connection timeout 35" daemon [_thread_in_vm, id=10444, stack(0x000000d8a6100000,0x000000d8a6200000)]
+
+siginfo: ExceptionCode=0xc0000005, writing address 0x000000d8a61fb900
+
+Registers:
+RAX=0x000000d8a61fb900, RBX=0x0000000000000005, RCX=0x0000000000004000, RDX=0x00000251c39e1ad8
+RSP=0x000000d8a61ff900, RBP=0x0000000000000000, RSI=0x000000d8a61ff900, RDI=0x0000000000000005
+R8 =0x0000000000000006, R9 =0x00000251c17f04f0, R10=0x00000251be0cf558, R11=0x000000d8a61ffcf0
+R12=0x000000d8a61ffc00, R13=0x00000251c3bf2000, R14=0x00000251c3bf2000, R15=0x0000000000000000
+RIP=0x0000000051866577, EFLAGS=0x0000000000010206
+
+Top of Stack: (sp=0x000000d8a61ff900)
+0x000000d8a61ff900:   00000251c3bf2000 00000251c3bf2000
+0x000000d8a61ff910:   0000000000000000 00000251c3bf2000
+0x000000d8a61ff920:   00000251be0cf558 0000000051866a56
+0x000000d8a61ff930:   000000d8a61ffa30 000000d8a61ff9c8
+0x000000d8a61ff940:   00000251c17f04f0 0000000000000000
+0x000000d8a61ff950:   0000000000000001 0000000051724fb3
+0x000000d8a61ff960:   000000d8a61ff9a0 000000d8a61ffa30
+0x000000d8a61ff970:   00000251be0cf558 00000251c3bf2000
+0x000000d8a61ff980:   00000251a592c3c0 00000251be0cf558
+0x000000d8a61ff990:   00000251c3bf2000 00000251c3bf2000
+0x000000d8a61ff9a0:   00000251be0cf558 00000251be0cf558
+0x000000d8a61ff9b0:   00000251c3bf2000 000000d8a61ffcf8
+0x000000d8a61ff9c0:   000000d8a61ffad0 00000251c39b9370
+0x000000d8a61ff9d0:   0000000000000005 00000251be0cf558
+0x000000d8a61ff9e0:   00000251c3bf2000 0000000051724b5b
+0x000000d8a61ff9f0:   00000251c17f04f0 00000007c0006c48 
+
+Instructions: (pc=0x0000000051866577)
+0x0000000051866557:   7c 24 38 8b fb 33 ed 66 90 e8 9b 90 08 00 ff c3
+0x0000000051866567:   48 63 c8 48 8b c6 48 0f af cf 48 ff c7 48 2b c1
+0x0000000051866577:   89 28 48 63 c3 48 3b 05 a5 df 5a 00 7e db 48 8b
+0x0000000051866587:   7c 24 38 48 8b 6c 24 30 48 8b 5c 24 40 48 83 c4 
+
+
+Register to memory mapping:
+
+RAX=0x000000d8a61fb900 is pointing into the stack for thread: 0x00000251c3bf2000
+RBX=0x0000000000000005 is an unknown value
+RCX=0x0000000000004000 is an unknown value
+RDX=0x00000251c39e1ad8 is an unknown value
+RSP=0x000000d8a61ff900 is pointing into the stack for thread: 0x00000251c3bf2000
+RBP=0x0000000000000000 is an unknown value
+RSI=0x000000d8a61ff900 is pointing into the stack for thread: 0x00000251c3bf2000
+RDI=0x0000000000000005 is an unknown value
+R8 =0x0000000000000006 is an unknown value
+R9 =0x00000251c17f04f0 is an unknown value
+R10={method} {0x00000251be0cf560} 

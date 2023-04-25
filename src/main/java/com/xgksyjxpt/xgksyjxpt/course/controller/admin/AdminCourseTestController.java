@@ -47,25 +47,25 @@ public class AdminCourseTestController {
                     //封装实验信息对象
                     Map<String,Object> map=new HashMap<>();
                     //实验id
-                    map.put("testId",ct.getTest_id());
+                    map.put("testId",ct.getTestId());
                     //实验名
-                    map.put("testName",ct.getTest_name());
+                    map.put("testName",ct.getTestName());
                     //实验开始时间
-                    map.put("testStartTime",ct.getTest_start_time());
+                    map.put("testStartTime",ct.getTestStartTime());
                     //实验结束时间
-                    map.put("testEndTime",ct.getTest_end_time());
+                    map.put("testEndTime",ct.getTestEndTime());
                     //使用镜像名
-                    map.put("testImageName",ct.getTest_image_name());
+                    map.put("testImageName",ct.getTestImageName());
                     //容器数量
-                    map.put("containerCount",containerService.selectContainerIdByTestIds(new String[]{ct.getTest_id()}).size());
+                    map.put("containerCount",containerService.selectContainerIdByTestIds(new String[]{ct.getTestId()}).size());
                     //实验状态
                     map.put("testStatus",ct.getTest_status());
                     //章节名
                     map.put("chapterId",ct.getChapterId());
                     //班级列表
-                    map.put("classList",courseTestService.selectCourseTestClass(ct.getTest_id()));
+                    map.put("classList",courseTestService.selectCourseTestClass(ct.getTestId()));
                     //描述
-                    map.put("testDescription",ct.getTest_description());
+                    map.put("testDescription",ct.getTestDescription());
                     relist.add(map);
                 }
                 re.setCode(ReturnStatus.RETURN_STUTAS_CODE_CG);

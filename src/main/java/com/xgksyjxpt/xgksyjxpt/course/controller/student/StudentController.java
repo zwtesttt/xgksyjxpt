@@ -59,7 +59,9 @@ public class StudentController {
     @PostMapping("/updateStudent")
     @ApiOperation("更新学生信息")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
-    @ApiImplicitParam(name="passwd",value="密码(不用填)",dataType="string",required = false)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="passwd",value="密码(不用带)",dataType="string",required = false)
+    })
     public Object updateStudent(Student student){
         ReturnObject re=new ReturnObject();
         try {

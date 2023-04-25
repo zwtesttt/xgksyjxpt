@@ -51,21 +51,18 @@ public class SSHService {
         //将这个ssh连接信息放入map中
         sshMap.put("user1", sshConnectInfo);
 //        创建多线程，每次有ws客户端连接就把ssh连接放到线程池里
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
+        executorService.execute(() -> {
+            try {
+                //连接到终端
+                connectToSSH(sshConnectInfo,webSSHData,session);
+            } catch (JSchException | IOException e) {
+                e.printStackTrace();
+                logger.error("webssh连接异常");
+                logger.error("异常信息:{}", e.getMessage());
                 try {
-                    //连接到终端
-                    connectToSSH(sshConnectInfo,webSSHData,session);
-                } catch (JSchException | IOException e) {
-                    e.printStackTrace();
-                    logger.error("webssh连接异常");
-                    logger.error("异常信息:{}", e.getMessage());
-                    try {
-                        close(session);
-                    } catch (IOException ex) {
-                        ex.getMessage();
-                    }
+                    close(session);
+                } catch (IOException ex) {
+                    ex.getMessage();
                 }
             }
         });
@@ -93,7 +90,6 @@ public class SSHService {
         java.util.Properties config = new java.util.Properties();
         config.put("StrictHostKeyChecking", "no");
         session.setConfig(config);
-//        session.setConfig("StrictHostKeyChecking", "no");
         //设置密码
         session.setPassword(webSSHData.getPassword());
         //连接  超时时间10s
@@ -109,7 +105,6 @@ public class SSHService {
 
             //读取ssh返回的信息流
             InputStream inputStream = channel.getInputStream();
-
             //通道连接 超时时间3s
             channel.connect(10000);
             try {

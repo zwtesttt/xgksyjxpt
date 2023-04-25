@@ -125,8 +125,8 @@
   </select>
   <!--  添加课程实验-->
   <insert id="insertCourseTest" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest">
-    insert into course_test_t(test_id, cid, chapter_id,test_name, test_image_name,test_description,test_start_time, test_end_time,test_status)
-    values(#{test_id},#{cid},#{chapterId},#{test_name},#{test_image_name},#{test_description},#{test_start_time},#{test_end_time},#{test_status})
+    insert into course_test_t(test_id, cid, chapter_id,test_name, test_image_name,test_start_time, test_end_time,test_status)
+    values(#{testId},#{cid},#{chapterId},#{testName},#{testImageName},#{testStartTime},#{testEndTime},#{test_status})
   </insert>
   <!--  创建定时任务-->
   <update id="createCourseTestEvent">
@@ -148,8 +148,8 @@
   </update>
 <!--  修改课程实验-->
   <update id="updateCourseTest" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTest">
-    update course_test_t set test_name=#{test_name},test_image_name=#{test_image_name},test_start_time=#{test_start_time},
-                             test_end_time=#{test_end_time},test_status=#{test_status} where test_id=#{test_id} and delete_time is null
+    update course_test_t set test_name=#{testName},test_image_name=#{testImageName},test_start_time=#{testStartTime},
+                             test_end_time=#{testEndTime},test_status=#{testStatus} where test_id=#{testId} and delete_time is null
   </update>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     <!--

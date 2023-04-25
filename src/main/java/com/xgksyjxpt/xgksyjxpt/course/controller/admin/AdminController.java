@@ -47,7 +47,6 @@ public class AdminController {
     @PostMapping("updateAdmin")
     @ApiOperation("修改管理员信息")
     @ApiResponses(@ApiResponse(code = 200,response = ReturnObject.class,message = "成功"))
-
     @ApiImplicitParams({
             @ApiImplicitParam(name="identity",value="身份(不用带)",dataType="string",required = false),
             @ApiImplicitParam(name="passwd",value="密码(不用带)",dataType="string",required = false)

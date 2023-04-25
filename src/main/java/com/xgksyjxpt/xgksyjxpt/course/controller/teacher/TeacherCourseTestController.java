@@ -1,7 +1,6 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller.teacher;
 
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.*;
-import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentCourseJson;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminClassService;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.course.CourseService;
@@ -54,19 +53,19 @@ public class TeacherCourseTestController {
                 //封装实验对象
                 CourseTest courseTest=new CourseTest();
                 //生成uuid作为课程实验主键
-                courseTest.setTest_id(UuidUtil.getUUID());
+                courseTest.setTestId(UuidUtil.getUUID());
                 //课程号
                 courseTest.setCid((String) map.get("cid"));
                 //实验名
-                courseTest.setTest_name((String) map.get("testName"));
+                courseTest.setTestName((String) map.get("testName"));
                 //使用镜像名
-                courseTest.setTest_image_name((String) map.get("testImageName"));
+                courseTest.setTestImageName((String) map.get("testImageName"));
                 //开始时间
-                courseTest.setTest_start_time((String) map.get("testStartTime"));
+                courseTest.setTestStartTime((String) map.get("testStartTime"));
                 //结束时间
-                courseTest.setTest_end_time((String) map.get("testEndTime"));
+                courseTest.setTestEndTime((String) map.get("testEndTime"));
                 //描述
-                courseTest.setTest_description((String) map.get("testDescription"));
+                courseTest.setTestDescription((String) map.get("testDescription"));
                 courseTest.setChapterId((Integer) map.get("chapterId"));
                 //保存班级名
                 List<String> classList= (List<String>) map.get("classList");
@@ -90,11 +89,11 @@ public class TeacherCourseTestController {
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                             re.setMessage("该课程已结束");
 //                        实验结束时间不能超过课程结束时间
-                        }else if(DateUtil.getDate(courseTest.getTest_end_time()).compareTo(DateUtil.getDate(t.getCourseEnd()))>0){
+                        }else if(DateUtil.getDate(courseTest.getTestEndTime()).compareTo(DateUtil.getDate(t.getCourseEnd()))>0){
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                             re.setMessage("实验结束时间不能超过课程结束时间(课程结束时间："+t.getCourseEnd()+")");
                             //实验开始时间不能实验结束时间
-                        }else if(DateUtil.getDate(courseTest.getTest_end_time()).compareTo(DateUtil.getDate(courseTest.getTest_start_time()))<0){
+                        }else if(DateUtil.getDate(courseTest.getTestEndTime()).compareTo(DateUtil.getDate(courseTest.getTestStartTime()))<0){
                             re.setCode(ReturnStatus.RETURN_STUTAS_CODE_SB);
                             re.setMessage("实验开始时间不能超过实验结束时间");
                         }else{
@@ -110,7 +109,7 @@ public class TeacherCourseTestController {
                                 ) {
                                     //封装学生实验对象
                                     StudentTest st=new StudentTest();
-                                    st.setTest_id(courseTest.getTest_id());
+                                    st.setTest_id(courseTest.getTestId());
                                     st.setSid(sid);
                                     st.setCid(courseTest.getCid());
                                     sts[i++]=st;
@@ -338,24 +337,24 @@ public class TeacherCourseTestController {
                         //封装实验信息对象
                         Map<String,Object> map=new HashMap<>();
                         //实验id
-                        map.put("testId",ct.getTest_id());
+                        map.put("testId",ct.getTestId());
                         //实验名
-                        map.put("testName",ct.getTest_name());
+                        map.put("testName",ct.getTestName());
                         //实验开始时间
-                        map.put("testStartTime",ct.getTest_start_time());
+                        map.put("testStartTime",ct.getTestStartTime());
                         //实验结束时间
-                        map.put("testEndTime",ct.getTest_end_time());
+                        map.put("testEndTime",ct.getTestEndTime());
                         //使用镜像名
-                        map.put("testImageName",ct.getTest_image_name());
+                        map.put("testImageName",ct.getTestImageName());
                         //实验状态
                         map.put("testStatus",ct.getTest_status());
                         //实验描述
-                        map.put("testDescription",ct.getTest_description());
+                        map.put("testDescription",ct.getTestDescription());
                         //章节
                         map.put("courseChapterId",ct.getChapterId());
                         //课程号
                         map.put("cid",ct.getCid());
-                        map.put("classList",courseTestService.selectCourseTestClass(ct.getTest_id()));
+                        map.put("classList",courseTestService.selectCourseTestClass(ct.getTestId()));
 
                         relist.add(map);
                     }
