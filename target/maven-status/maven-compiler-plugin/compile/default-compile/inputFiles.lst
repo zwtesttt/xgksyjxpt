@@ -15,9 +15,7 @@ E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\mapper\teache
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\proto\SendId.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\admin\IdentityService.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\config\DockerConfig.java
-E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\webssh\websocket\MyWebSocketInterceptor.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\admin\AdminService.java
-E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\webssh\domain\WebSSHData.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseTestImages.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseSectionService.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\login\domain\User.java
@@ -40,7 +38,6 @@ E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseTestServiceImpl.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseHead.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\admin\ClassName.java
-E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\webssh\domain\SSHConnection.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\config\ComponetImport.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\admin\AdminClassController.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\mapper\admin\AdminHeadMapper.java
@@ -58,7 +55,6 @@ E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\admin
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\student\StudentCourseJson.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\proto\RequestOrBuilder.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentMapper.java
-E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\webssh\websocket\WebSocketConfig.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\admin\IdentityPermissions.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\proto\SshService.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseTestService.java
@@ -69,7 +65,6 @@ E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\util\FileUtil.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseStatus.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\mapper\course\ContainerMapper.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\domain\ReturnStatus.java
-E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\webssh\ssh\SSHService.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\admin\AdminHead.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\student\StudentTest.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\admin\AdminServiceImpl.java
@@ -122,7 +117,6 @@ E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\Pu
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\teacher\TeacherController.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\proto\Request.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\domain\course\UpdateCourseTestDocJson.java
-E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\webssh\websocket\WebSocketPushHandler.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\controller\admin\AdminTestContainerController.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\course\serivce\course\ContainerService.java
 E:\java-dev\xgksyjxpt\src\main\java\com\xgksyjxpt\xgksyjxpt\util\PasswordUtils.java

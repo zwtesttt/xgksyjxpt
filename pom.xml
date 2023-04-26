@@ -26,29 +26,6 @@
             <artifactId>grpc-spring-boot-starter</artifactId>
             <version>${grpc-spring-boot-starter.version}</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>io.grpc</groupId>-->
-<!--            <artifactId>grpc-netty-shaded</artifactId>-->
-<!--            <version>1.54.1</version>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.grpc</groupId>-->
-<!--            <artifactId>grpc-protobuf</artifactId>-->
-<!--            <version>1.54.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.grpc</groupId>-->
-<!--            <artifactId>grpc-stub</artifactId>-->
-<!--            <version>1.54.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency> &lt;!&ndash; necessary for Java 9+ &ndash;&gt;-->
-<!--            <groupId>org.apache.tomcat</groupId>-->
-<!--            <artifactId>annotations-api</artifactId>-->
-<!--            <version>6.0.53</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
 <!--        生成api文档的依赖，测试开发环境下使用，实际生产环境时需要去除-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -65,17 +42,6 @@
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>2.0.9</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-boot-starter</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.xiaoymin</groupId>-->
-<!--            <artifactId>knife4j-spring-boot-starter</artifactId>-->
-<!--            <version>3.0.2</version>-->
-<!--        </dependency>-->
-
         <!--处理excel文件依赖-->
         <dependency>
             <groupId>org.apache.poi</groupId>

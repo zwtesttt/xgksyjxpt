@@ -43,7 +43,6 @@ com\xgksyjxpt\xgksyjxpt\proto\VerifyAuthGrpc$VerifyAuthImplBase.class
 com\xgksyjxpt\xgksyjxpt\course\controller\admin\AdminTestContainerController.class
 com\xgksyjxpt\xgksyjxpt\domain\ReturnObject.class
 com\xgksyjxpt\xgksyjxpt\course\controller\student\StudentController.class
-com\xgksyjxpt\xgksyjxpt\webssh\domain\SSHConnection.class
 com\xgksyjxpt\xgksyjxpt\course\domain\admin\Identity.class
 com\xgksyjxpt\xgksyjxpt\proto\SshService$1.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\student\StudentTestMapper.class
@@ -56,7 +55,6 @@ com\xgksyjxpt\xgksyjxpt\course\domain\course\CourseStatus.class
 com\xgksyjxpt\xgksyjxpt\grpc\AuthGrpcServiceImpl.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseTestImagesMapper.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\ContainerService.class
-com\xgksyjxpt\xgksyjxpt\webssh\websocket\WebSocketConfig.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\admin\PermissionsService.class
 com\xgksyjxpt\xgksyjxpt\proto\SshInfoOrBuilder.class
 com\xgksyjxpt\xgksyjxpt\course\domain\teacher\Teacher.class
@@ -76,7 +74,6 @@ com\xgksyjxpt\xgksyjxpt\course\controller\student\StudentCourseController.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\admin\IdentityPermissionsService.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseSectionServiceImpl.class
 com\xgksyjxpt\xgksyjxpt\proto\SshInfo$Builder.class
-com\xgksyjxpt\xgksyjxpt\webssh\ssh\SSHService.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\teacher\TeacherService.class
 com\xgksyjxpt\xgksyjxpt\course\controller\teacher\TeacherCourseChapterController.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseMapper.class
@@ -100,7 +97,6 @@ com\xgksyjxpt\xgksyjxpt\course\mapper\admin\AdminClassMapper.class
 com\xgksyjxpt\xgksyjxpt\course\controller\admin\AdminClassController.class
 com\xgksyjxpt\xgksyjxpt\course\controller\PublicController.class
 com\xgksyjxpt\xgksyjxpt\proto\Request.class
-com\xgksyjxpt\xgksyjxpt\webssh\domain\WebSSHData$WebSSHDataBuilder.class
 com\xgksyjxpt\xgksyjxpt\proto\VerifyAuthGrpc$VerifyAuthMethodDescriptorSupplier.class
 com\xgksyjxpt\xgksyjxpt\util\DockerUtil.class
 com\xgksyjxpt\xgksyjxpt\proto\SendId$Builder.class
@@ -120,7 +116,6 @@ com\xgksyjxpt\xgksyjxpt\course\mapper\course\CourseSectionImageMapper.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseChapterService.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\admin\IdentityPermissionsMapper.class
 com\xgksyjxpt\xgksyjxpt\proto\SshInfo.class
-com\xgksyjxpt\xgksyjxpt\webssh\websocket\MyWebSocketInterceptor.class
 com\xgksyjxpt\xgksyjxpt\proto\Response$1.class
 com\xgksyjxpt\xgksyjxpt\proto\SendId.class
 com\xgksyjxpt\xgksyjxpt\proto\VerifyAuthGrpc.class
@@ -152,9 +147,7 @@ com\xgksyjxpt\xgksyjxpt\course\domain\course\Container$ContainerBuilder.class
 com\xgksyjxpt\xgksyjxpt\proto\ConServiceGrpc$ConServiceFileDescriptorSupplier.class
 com\xgksyjxpt\xgksyjxpt\util\DateUtil.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseTestServiceImpl.class
-com\xgksyjxpt\xgksyjxpt\webssh\domain\WebSSHData.class
 com\xgksyjxpt\xgksyjxpt\course\mapper\course\ContainerMapper.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\course\CourseServiceImpl.class
-com\xgksyjxpt\xgksyjxpt\webssh\websocket\WebSocketPushHandler.class
 com\xgksyjxpt\xgksyjxpt\course\serivce\admin\AdminClassService.class
 com\xgksyjxpt\xgksyjxpt\course\controller\teacher\TeacherController.class
