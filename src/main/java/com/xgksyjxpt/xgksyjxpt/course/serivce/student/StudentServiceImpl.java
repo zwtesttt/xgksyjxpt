@@ -49,19 +49,21 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public int updateStudentCourseByCid(String cid,String[]newClassArray) {
-        int re;
+        int re = 0;
         //删除学生选课
-        deleteStuCourseByCid(cid);
-        //给学生绑定选课
-        //查询学号
-        List<String> stuIds=studentMapper.selectStudentIdByClassName(newClassArray);
-        String[] stulist=stuIds.toArray(new String[stuIds.size()]);
-        //添加选课
-        int stu=studentCourseMapper.insertStudentCourseByCid(stulist,cid);
-        if (stu!=0){
-            re=1;
-        }else{
-            re=0;
+        int s=deleteStuCourseByCid(cid);
+        if (s != 0) {
+            //给学生绑定选课
+            //查询学号
+            List<String> stuIds=studentMapper.selectStudentIdByClassName(newClassArray);
+            String[] stulist=stuIds.toArray(new String[stuIds.size()]);
+            //添加选课
+            int stu=studentCourseMapper.insertStudentCourseByCid(stulist,cid);
+            if (stu!=0){
+                re=1;
+            }else{
+                re=0;
+            }
         }
         return re;
     }

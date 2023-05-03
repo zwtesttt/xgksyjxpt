@@ -4,8 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="集成grpc">
+    <list default="true" id="c32022cd-44f2-4ab7-9874-e628625fd655" name="变更" comment="移除webssh模块">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/config/DockerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/config/DockerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseTestImagesMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseTestImagesMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/DockerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/course/DockerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/MyFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/xgksyjxpt/xgksyjxpt/login/domain/MyFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/config/DockerConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/config/DockerConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/controller/teacher/TeacherCourseTestController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseTestImagesMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/mapper/course/CourseTestImagesMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/course/DockerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/course/DockerService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/course/serivce/student/StudentServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/controller/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/domain/MyFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xgksyjxpt/xgksyjxpt/login/domain/MyFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/xgksyjxpt-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +92,7 @@
     &quot;project.structure.last.edited&quot;: &quot;项目&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;apifox_uploader.settings.ApifoxUploaderConfigurable.RemoteConfig&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;8b4b94b399c2e8a3ee2d2a35a3e835e3&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -304,6 +323,14 @@
       <workItem from="1682339347219" duration="30000" />
       <workItem from="1682402679264" duration="922000" />
       <workItem from="1682528797946" duration="620000" />
+      <workItem from="1682531245264" duration="981000" />
+      <workItem from="1682597897382" duration="1549000" />
+      <workItem from="1682615002364" duration="420000" />
+      <workItem from="1682864591955" duration="3376000" />
+      <workItem from="1682871261751" duration="2763000" />
+      <workItem from="1682944857610" duration="135000" />
+      <workItem from="1682945008337" duration="1262000" />
+      <workItem from="1683098936225" duration="939000" />
     </task>
     <task id="LOCAL-00001" summary="修复webssh输入后响应问题">
       <created>1669120575079</created>
@@ -599,7 +626,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682402765629</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="移除webssh模块">
+      <created>1682531446876</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1682531446876</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -620,7 +654,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="新增多个管理员接口，修改部分接口逻辑" />
     <MESSAGE value="修改添加课程接口，添加学生选课接口" />
     <MESSAGE value="修改上传图片接口，添加保存上传图片记录接口，新增管理员身份字段，超级管理员接口" />
     <MESSAGE value="新增查询课程章节、小节，添加章节、小节接口" />
@@ -645,7 +678,8 @@
     <MESSAGE value="修复导入学生和老师接口" />
     <MESSAGE value="添加修改实验班级，修改实验文档、调整修改实验信息接口修改字段" />
     <MESSAGE value="集成grpc" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成grpc" />
+    <MESSAGE value="移除webssh模块" />
+    <option name="LAST_COMMIT_MESSAGE" value="移除webssh模块" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -655,10 +689,6 @@
           <line>545</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.io.IOException" package="java.io" />
-          <option name="timeStamp" value="10" />
-        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

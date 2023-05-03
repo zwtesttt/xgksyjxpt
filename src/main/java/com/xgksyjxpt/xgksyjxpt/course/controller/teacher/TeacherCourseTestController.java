@@ -1,5 +1,8 @@
 package com.xgksyjxpt.xgksyjxpt.course.controller.teacher;
 
+import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.model.Image;
+import com.xgksyjxpt.xgksyjxpt.config.DockerConfig;
 import com.xgksyjxpt.xgksyjxpt.course.domain.course.*;
 import com.xgksyjxpt.xgksyjxpt.course.domain.student.StudentTest;
 import com.xgksyjxpt.xgksyjxpt.course.serivce.admin.AdminClassService;
@@ -10,6 +13,7 @@ import com.xgksyjxpt.xgksyjxpt.course.serivce.teacher.TeacherService;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnObject;
 import com.xgksyjxpt.xgksyjxpt.domain.ReturnStatus;
 import com.xgksyjxpt.xgksyjxpt.util.DateUtil;
+import com.xgksyjxpt.xgksyjxpt.util.DockerUtil;
 import com.xgksyjxpt.xgksyjxpt.util.UuidUtil;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +42,16 @@ public class TeacherCourseTestController {
 
     @Resource
     private TeacherService teacherService;
+
+    /**
+     * 查询当前所有实验可用镜像
+     */
+    @GetMapping("/queryTestUseImages")
+    @ApiOperation("查询当前所有实验可用镜像")
+    public List<CourseTestImages> queryTestUseImages(){
+        List<CourseTestImages> list=courseService.selectAllImagesName(null,null,null);
+        return list;
+    }
     /**
      * 添加课程实验
      * 因为要提交复杂的表单数据，所以选择json

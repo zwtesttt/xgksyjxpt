@@ -32,7 +32,9 @@
      <if test="imageName !='' and imageName !=null">
        and images_name like '%' #{imageName} '%'
      </if>
-     limit #{pageNum},#{pageSize}
+    <if test="pageNum !='' and pageNum !=null and pageSize !='' and pageSize !=null">
+      limit #{pageNum},#{pageSize}
+    </if>
   </select>
 <!--  添加新镜像-->
   <insert id="insertCourseTestImages" parameterType="com.xgksyjxpt.xgksyjxpt.course.domain.course.CourseTestImages">

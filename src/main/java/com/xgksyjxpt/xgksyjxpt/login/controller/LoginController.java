@@ -129,7 +129,7 @@ public class LoginController {
                     re.setMessage("该用户不存在");
                     return re;
                 }
-            } else if ("admin".equals(role)) {
+            } else if ("admin".equals(role)||"superadmin".equals(role)) {
                 Admin user=adminService.selectNotDelAdmin(id);
                 if (user!=null){
                     if(passwordEncoder.matches(passwd,user.getPasswd())){

@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 //请求验证拦截器
-//@Component
+@Component
 public class MyFilter implements Filter {
     @Autowired
     private JwtUitls jwtUitls;

@@ -55,7 +55,6 @@ public class DockerService {
             List<Image> imageList=DockerUtil.imageList(getDockerClient());
             //存放本地镜像名
             String localName=null;
-
             //生成随机8位密码
             String sshpasswd=PasswordUtils.getLowerLetterNumber(8);
             for (Image im :imageList) {
